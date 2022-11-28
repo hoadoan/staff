@@ -85,6 +85,9 @@ export class ReturnProductTemplateComponent implements OnInit {
               this.returnTotalPrice += element.quantity * element.unitPrice
             })
           })
+
+          this.switchFullInvocie = true
+
         })
       }
     }

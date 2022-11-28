@@ -89,7 +89,6 @@ export class ReturnProductDetailComponent implements OnInit {
       this.quantityProduct = this.goodReceiptNote.createModel[0]?.batches[this.index]?.convertedQuantity
 
 
-
     })
 
   }
@@ -126,6 +125,8 @@ export class ReturnProductDetailComponent implements OnInit {
       batches: tempBatches
     }]
     tempgood.createModel = tempCreateModel
+
+    this.batchTotalprice = this.quantityProduct * this.productData?.unitPrice
 
     console.log(tempgood)
     this.goodReceiptNote = tempgood

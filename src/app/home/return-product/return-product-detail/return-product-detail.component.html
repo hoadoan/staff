@@ -5,7 +5,7 @@
 <td>{{productData?.returnedQuantity}} {{productData?.viewBaseProductUnit.baseUnit}}</td>
 <td *ngIf="checkFull == true">{{productData?.quantity * productData?.unitPrice | currency:'VND'}}</td>
 <td *ngIf="checkFull != true">
-  <nz-input-number [(ngModel)]="quantityProduct" [nzMin]="1" [nzMax]="productData?.convertedQuantity"
+  <nz-input-number [(ngModel)]="quantityProduct" [nzMin]="1" [nzMax]="productData?.convertedQuantity - productData?.returnedQuantity"
                    [nzStep]="1" (ngModelChange)="changeQuantity()"></nz-input-number>
   {{productData?.viewBaseProductUnit.baseUnit}}
 </td>

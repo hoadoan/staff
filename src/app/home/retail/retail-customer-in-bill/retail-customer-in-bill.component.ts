@@ -214,6 +214,8 @@ export class RetailCustomerInBillComponent implements OnInit {
   usePoineChange() {
     this.invoice = {...this.invoice, usePoint: this.usePoint}
     console.log(this.invoice)
+    this.store.dispatch(counterSlice.addCustomer(this.invoice))
+
   }
 
   addcustomer() {
