@@ -1,0 +1,50 @@
+<nz-layout>
+  <nz-header class="d-flex justify-content-md-between">
+    <div class="header__logo d-flex align-items-end">
+      <img src="./../../../assets/img/logo.png" alt="" height="64">
+      <h4>Út Nhàn</h4>
+    </div>
+    <div class="header__menu">
+      <ul class="d-flex align-items-center">
+        <li class="nav-item d-block " [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact:true}">
+          <a [routerLink]="['/home']">Bán hàng</a>
+        </li>
+        <li class="nav-item d-block " [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact:true}">
+          <a [routerLink]="['/home/sample-prescription']">Đơn mẫu</a>
+        </li>
+        <li class="nav-item d-block" [routerLinkActive]="'active'">
+          <a [routerLink]="['/home/input']">Nhập hàng</a>
+        </li>
+        <li class="nav-item d-block " [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact:true}">
+          <a [routerLink]="['/home/return']">Trả hàng</a>
+        </li>
+      </ul>
+    </div>
+    <div class="header__info d-flex justify-content-md-between align-items-center">
+      <nz-badge [nzCount]="5" role="button">
+        <i class="fa fa-bell" style="font-size: 32px;"></i>
+      </nz-badge>
+      <nz-divider nzType="vertical"></nz-divider>
+      <nz-avatar [nzSrc]="avatar"></nz-avatar>
+      <ul nz-menu nzMode="horizontal" class="pl-1">
+        <li nz-submenu nzPlacement="bottomCenter" [nzTitle]="fullname">
+          <ul>
+            <li nz-menu-item>
+              <a [routerLink]="['/home/profile']"> <span style="margin-right:10px"> <i
+                class="fa fa-user mr-2"></i></span>Tài khoản</a>
+            </li>
+            <li nz-menu-item style="color: red;" (click)="logout()">
+              <span style="margin-right:10px"><i class="fa fa-sign-out-alt"></i></span> <span>Đăng
+                                xuất</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+
+    </div>
+  </nz-header>
+  <nz-content>
+    <router-outlet></router-outlet>
+  </nz-content>
+</nz-layout>

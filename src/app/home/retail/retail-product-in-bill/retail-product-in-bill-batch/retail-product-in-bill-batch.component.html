@@ -1,0 +1,21 @@
+<td></td>
+<td colspan="2">
+  {{batchInfo?.batchBarcode}} - HSD: {{batchInfo?.expiryDate | date:'dd/MM/yyyy'}}
+</td>
+<td>
+  Đơn giá: {{unitInfo?.price}}
+</td>
+<td>
+  <nz-select nzPlaceHolder="Select a person" [(ngModel)]="unitID" (ngModelChange)="changeUnit()">
+    <nz-option *ngFor="let item of listUnitProductPrice"
+               nzLabel="{{item.currentQuantity}} {{item.unit}}"
+               [nzValue]="item.id"></nz-option>
+  </nz-select>
+</td>
+<td>
+  Số lượng:
+  <nz-input-number [(ngModel)]="quantity" (change)="changeQuantity()" [nzMax]="maxQuantity"
+                   [nzMin]="1"></nz-input-number>
+</td>
+<td><i class="fa fa-trash-alt" role="button" (click)="deleteconsignment()"></i></td>
+

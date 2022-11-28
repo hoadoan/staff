@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="row">
+        <div class="col-5">
+            <div class="left__side__info">
+                <nz-avatar [nzSize]="100" [nzSrc]="profile.avatar"></nz-avatar>
+                <h2>{{profile.fullname}}</h2>
+                <span>Nhân viên</span>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="right__side__info">
+                <nz-tabset>
+                    <nz-tab nzTitle="Thông tin">
+                        <h5 style="color: #012970;margin-bottom: 30px;">Thông tin chi tiết</h5>
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <h6> Họ và tên:</h6>
+                            </div>
+                            <div class="col-9">
+                                <p>{{profile.fullname}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <h6>Nhà thuốc:</h6>
+                            </div>
+                            <div class="col-9">
+                                <p>Út nhàn</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <h6>Số điện thoại:</h6>
+                            </div>
+                            <div class="col-9">
+                                <input nz-input placeholder="Số điện thoại" nzSize="default"
+                                 [(ngModel)]="phoneNumber" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <h6>Email:</h6>
+                            </div>
+                            <div class="col-9">
+
+                                <input nz-input placeholder="Email" nzSize="default" [value]="profile.email"
+                                    [(ngModel)]="emailAddressRecovery" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                <h6>Ngày sinh:</h6>
+                            </div>
+                            <div class="col-9">
+                                <p>{{profile.dateOfBirth |date:'dd/MM/yyyy'}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-end">
+                                <button class="btn btn-primary" (click)="updateProfile()">Cập nhật thông tin</button>
+                            </div>
+                        </div>
+                    </nz-tab>
+                    <nz-tab nzTitle="Đổi mật khẩu">
+                        <app-profile-chage-password></app-profile-chage-password>
+                    </nz-tab>
+                </nz-tabset>
+            </div>
+        </div>
+    </div>
+</div>

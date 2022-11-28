@@ -1,0 +1,26 @@
+div.main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+div.form{
+    /* border: 2px solid black; */
+    width: 400px;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0px 0 30px rgb(1 41 112 / 10%);
+}
+
+.login__button{
+    margin-top: 20px;
+    display: flex;
+    justify-content: end;
+}
+.form-group{
+    margin-bottom: 10px;
+}
+
+h4{
+    color: #012970;
+}

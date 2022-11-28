@@ -1,0 +1,18 @@
+<td>{{index + 1}}</td>
+<td>{{ productData?.product.name }}</td>
+<td>{{ productData?.batch.name }}</td>
+<td>{{productData?.convertedQuantity}} {{productData?.viewBaseProductUnit.baseUnit}}</td>
+<td>{{productData?.returnedQuantity}} {{productData?.viewBaseProductUnit.baseUnit}}</td>
+<td *ngIf="checkFull == true">{{productData?.quantity * productData?.unitPrice | currency:'VND'}}</td>
+<td *ngIf="checkFull != true">
+  <nz-input-number [(ngModel)]="quantityProduct" [nzMin]="1" [nzMax]="productData?.convertedQuantity"
+                   [nzStep]="1" (ngModelChange)="changeQuantity()"></nz-input-number>
+  {{productData?.viewBaseProductUnit.baseUnit}}
+</td>
+<td *ngIf="checkFull != true">
+  <nz-input-number [(ngModel)]="batchTotalprice" [nzMin]="1"
+                   [nzStep]="1" (ngModelChange)="changeTotalPrice()"></nz-input-number>
+</td>
+<td *ngIf="checkFull != true">
+  <i class="fa fa-trash" role="button" (click)="deleteBatch()"></i>
+</td>

@@ -1,0 +1,62 @@
+<button class="d-none" id="print__bill__button" (click)="printBill()"></button>
+<button printSectionId="print-section" ngxPrint class="d-none" id="print__bill__data"></button>
+<div id="print-section">
+  <div class="container-fluid"
+       style="
+  margin: 30px 10px;
+  text-align: center;
+  width: 500px;
+"
+  >
+    <img src="./../../../../assets/img/logo.png" alt="" width="50">
+    <h5>Nhà thuốc út nhàn</h5>
+    <div>40 đường 225a, phường Tân Phú, thành phố Thủ Đức</div>
+    <div>Hotline: 093-8970-968</div>
+    <h2>Hóa đơn bán lẻ</h2>
+    <div class="text-center">
+      <ngx-barcode bc-value={{invoiceData?.barcode}} [bc-display-value]="true" [bc-width]="1"
+                   [bc-height]="50"></ngx-barcode>
+    </div>
+    <div class="text-left" style="  float: left; text-align: left;">
+      <div>Ngày: {{today | date:'dd/MM/yy hh:mm'}}</div>
+      <div>NV: {{invoiceData?.createdBy.name}}</div>
+      <div>KH: {{invoiceData?.customer.fullName}}</div>
+      <div>ĐT: {{invoiceData?.customer.phoneNumber}}</div>
+    </div>
+
+    <table style="width: 100%">
+      <thead>
+      <th>STT</th>
+      <th>Tên sản phẩm</th>
+      <th>SL</th>
+      <th>Đơn giá</th>
+      <th>Thành tiền</th>
+      </thead>
+      <tbody *ngFor="let item of invoiceDetail let index = index">
+      <tr style="padding: 10px" class="text-left">
+        <td style="padding: 10px">{{index + 1}}</td>
+        <td style="padding: 10px"> {{item.product.name}}</td>
+        <td style="padding: 10px">{{item.quantity}} {{item.unit}}</td>
+        <td style="padding: 10px">{{item.unitPrice | currency:'VND'}}</td>
+        <td style="padding: 10px">{{item.quantity * item.unitPrice | currency:'VND'}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <nz-divider></nz-divider>
+    <div style="float: right">
+      <h5>Tổng tiền: {{totalBillPrice | currency:'VND'}}</h5>
+      <h5>Giả giá: {{usePointPrice | currency:'VND'}}</h5>
+      <h5>Còn lại {{totalBillPrice - usePointPrice | currency:'VND'}}</h5>
+    </div>
+    <table style="width: 100%">
+      <thead>
+      <th style="padding: 10px"></th>
+      <th style="padding: 10px"></th>
+      <th style="padding: 10px"></th>
+      <th style="padding: 10px"></th>
+      <th style="padding: 10px"></th>
+      </thead>
+    </table>
+  </div>
+
+</div>

@@ -1,0 +1,102 @@
+<div id="input__product">
+  <table class="w-100">
+    <tr>
+      <td><i class="fa fa-trash-alt" role="button" (click)="deleteProduct()"></i></td>
+      <td>STT: {{index + 1}}</td>
+      <td>{{InputProduct.product.barcode}}</td>
+      <td colspan="5" style="width: 75%"><h6>Tên: {{InputProduct.product.name}}</h6></td>
+    </tr>
+    <tr>
+      <td style="width: 5%"></td>
+      <td style="width: 10%">
+        <span role="button" (click)="showModalBatches()">chọn Lô</span>
+        <nz-modal [(nzVisible)]="isVisibleBatches" nzTitle="Chọn Lô" (nzOnCancel)="handleCancelBatches()"
+                  (nzOnOk)="handleOkBatches()">
+          <ng-container *nzModalContent>
+            <div class="form-group">
+              <label>Lô</label>
+              <select type="batche" class="form-control" [(ngModel)]="selectBatch"
+                      (ngModelChange)="getUnitProductPrice()">
+                <option *ngFor="let batche of batchesList" [value]="batche.id">
+                  {{batche.batchBarcode}} - ngày hết hạn: {{batche.expiryDate | date:'dd/MM/yyyy'}}</option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="form-group col-9">
+                <label>Số lượng</label>
+                <input type="number" class="form-control" min="1" [(ngModel)]="quantityBatch">
+              </div>
+              <div class="form-group col-3">
+                <label>Đơn vị</label>
+                <select type="batche" class="form-control" [(ngModel)]="selectUnitProductPrice">
+                  <option *ngFor="let unit of listUnitProductPrice" [value]="unit.id">
+                    {{unit.unit}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Tổng giá</label>
+              <input type="number" class="form-control" min="1" [(ngModel)]="totalPrice">
+            </div>
+
+          </ng-container>
+        </nz-modal>
+      </td>
+
+      <td [colSpan]="5">
+        <nz-tag [nzColor]="'green'" *ngFor="let item of listBatchOfInputProduct, let i = index">
+          <span style="margin: 5px 10px 5px 5px;">{{'Lô: ' + item.batchId}} - {{'Số lượng: ' + item.quantity}}</span>
+          <i class="fa fa-times" role="button" (click)="deleteSelectBatches(i)"></i>
+        </nz-tag>
+      </td>
+
+      <td style="width: 10%" role="button" (click)="showModalNewBatch()">
+        <i class="fa fa-plus"></i>Thêm Lô
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="Tạo lô mới" (nzOnCancel)="handleCancelNewBatch()"
+                  (nzOnOk)="handleOkNewBatch()">
+          <ng-container *nzModalContent>
+            <div class="form-group mb-3">
+              <h5>Sản phẩm: {{InputProduct.product.name}}</h5>
+            </div>
+            <div class="row mb-3">
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Ngày sản xuất</label>
+                  <input type="date" class="form-control" [(ngModel)]="manufacturingDate">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Hạn sử dụng</label>
+                  <input type="date" class="form-control" [(ngModel)]="expiryDate">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-8">
+                <div class="form-group">
+                  <label>Số lượng</label>
+                  <input type="number" class="form-control" min="1" [(ngModel)]="quantityBatch">
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="form-group">
+                  <label>Đơn vị</label>
+                  <select type="batche" class="form-control" [(ngModel)]="selectUnitProductPrice">
+                    <option *ngFor="let unit of listUnitProductPrice" [value]="unit.id">
+                      {{unit.unit}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Tổng giá</label>
+              <input type="number" class="form-control" min="1" [(ngModel)]="totalPrice">
+            </div>
+          </ng-container>
+        </nz-modal>
+      </td>
+
+    </tr>
+  </table>
+</div>

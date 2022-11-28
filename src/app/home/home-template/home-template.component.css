@@ -1,0 +1,29 @@
+nz-header {
+    background-color: white;
+}
+
+.header__menu ul li {
+    margin: 0 10px;
+}
+
+.header__menu ul li a {
+    color: black;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+li.active a {
+    background-color: #c0c3cc !important;
+
+}
+
+nz-content {
+    background-color: #fff;
+    margin-bottom: 30px;
+    min-height: 850px;
+}
+
+nz-layout {
+    background-color: #fff;
+}

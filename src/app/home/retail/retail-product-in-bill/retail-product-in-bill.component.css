@@ -1,0 +1,20 @@
+div.Product__in__bill{
+  /* box-shadow: 0px 0 30px rgb(1 41 112 / 10%); */
+  /* box-shadow: 3px 3px rgba(53, 53, 53, 0.1); */
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+table{
+  width: 100%;
+  box-shadow: 3px 5px 4px 4px rgba(53, 53, 53, 0.149);
+  border-radius: 10px;
+}
+
+tr, td{
+  padding: 10px;
+
+}
+
+nz-select{
+  width: 100%;
+}

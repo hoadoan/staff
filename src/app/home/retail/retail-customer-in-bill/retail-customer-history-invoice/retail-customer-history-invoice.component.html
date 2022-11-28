@@ -1,0 +1,5 @@
+<app-retail-customer-history-invoice-detail *ngFor="let item of listInvoiceID" [invoiceID]="item.id" [invoiceDate]="{
+    createdAt: item. createdAt,
+    createdBy: item.createdBy.name
+}">
+</app-retail-customer-history-invoice-detail>

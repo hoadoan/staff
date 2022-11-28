@@ -1,0 +1,99 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-9">
+      <div class="customer__in__bill p-3">
+        <!-- <app-test-reducer></app-test-reducer> -->
+        <div class="example-input">
+          <div class="d-flex justify-content-md-between align-items-center ">
+            <!--            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Thêm Thuốc vào hóa đơn"-->
+            <!--                       [(ngModel)]="searchValue" style="width: 90%;" (ngModelChange)="addToListBill()"-->
+            <!--                       (nzOnSearch)="searchProduct($event)">-->
+            <!--              <nz-option nzCustomContent *ngFor="let item of listSearchProduct"-->
+            <!--                         [nzLabel]="'Tên '+item.name + ' - vị trí: ' + item.shelf.name" nzValue={{item.id}}>-->
+            <!--                <div class="row border-bottom p-1">-->
+            <!--                  <div class="col-4">-->
+            <!--                    <h6>Tên: {{item.name}}</h6>-->
+            <!--                    <p>Vị trí {{item.shelf.name}}</p>-->
+            <!--                  </div>-->
+            <!--                  <div class="col-8">-->
+            <!--                    <div class="row">-->
+            <!--                      <div *ngFor="let active of item.activeSubstances" class="col-2y mb-3">-->
+            <!--                        <nz-tag nzColor="success">{{active.name}}</nz-tag>-->
+            <!--                      </div>-->
+            <!--                    </div>-->
+
+            <!--                  </div>-->
+            <!--                </div>-->
+            <!--              </nz-option>-->
+            <!--            </nz-select>-->
+
+            <div style="width: 90%;" class="position-relative" (clickOutside)="UnShowListSearchProduct()">
+              <nz-input-group [nzSuffix]="suffixIconSearch" nzSize="large">
+                <input type="text" nz-input placeholder="Tìm kiếm sản phẩm" [(ngModel)]="searchValue"
+                       (ngModelChange)="searchProduct($event)"/>
+              </nz-input-group>
+              <ng-template #suffixIconSearch>
+                <span nz-icon nzType="search"></span>
+              </ng-template>
+              <div class="tippy__search__product position-absolute" id="tippy__search__product">
+                <div *ngIf="listSearchProduct.length > 0 ; else emptySearch">
+
+                </div>
+                <div class="tippy__search__product__item" *ngFor="let item of listSearchProduct"
+                     (click)="addToListBill(item.id)">
+                  <div class="row">
+                    <div class="col-2">
+                      <h6>{{item.name}}</h6>
+                    </div>
+                    <div class="col-3">
+                      <h6>{{item.barcode}}</h6>
+                      <p class="m-0">Vị trí: {{item.shelf.name}}</p>
+                    </div>
+                    <div class="col-7">
+                      <div class="row align-items-center">
+                        <div *ngFor="let active of item.activeSubstances" class="col-3 mb-3">
+                          <nz-tag nzColor="default"
+                                  style="padding: 5px 10px; border-radius: 10px; width: 100%; text-align: center">{{active.name}}</nz-tag>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-template #emptySearch>
+              <div class="tippy__search__product__item d-flex justify-content-center">
+                <div><i class="fa fa-search"></i> <span> Không tìm thấy kết quả</span></div>
+              </div>
+            </ng-template>
+
+            <!--            <i class="fa fa-barcode" role="button" style="font-size: 20px;"></i>-->
+            <!--            <i class="fa fa-clipboard-list" role="button" style="font-size: 20px;" nz-button></i>-->
+            <div>
+              <label>Xuất hỏng:
+                <nz-switch [(ngModel)]="switchValue"></nz-switch>
+              </label>
+            </div>
+          </div>
+          <nz-divider></nz-divider>
+          <div>
+            <div class="overflow-auto" style="height: 600px;">
+              <app-retail-product-in-bill *ngFor="let item of listProductInBill, let index = index"
+                                          [productInbill]="item" [index]="index"></app-retail-product-in-bill>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="customer__in__bill p-3 mb-3" style="position: relative;">
+        <div *ngIf="switchValue == false; else brokenProduct">
+          <app-retail-customer-in-bill></app-retail-customer-in-bill>
+        </div>
+      </div>
+      <ng-template #brokenProduct>
+        <app-broken-product></app-broken-product>
+      </ng-template>
+    </div>
+  </div>
+</div>

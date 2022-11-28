@@ -1,0 +1,10 @@
+tr td{
+  padding: 10px;
+}
+
+#input__product{
+  width: 100%;
+  box-shadow: 3px 5px 4px 4px rgba(53, 53, 53, 0.149);
+  border-radius: 10px;
+  margin-bottom: 30px;
+}

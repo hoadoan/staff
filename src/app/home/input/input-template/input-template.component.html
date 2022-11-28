@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-9">
+      <div class="p-3" id="product__in__bill">
+        <div class="example-input">
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Tìm kiếm thuốc" style="width: 100%;" nzSize="large"
+                     [(ngModel)]="inputValue" (nzOnSearch)="onInput($event)" (ngModelChange)="onSelect($event)">
+            <nz-option *ngFor="let option of options let i = index" [nzValue]="option"
+                       [nzLabel]="option.name + ' - ' + option.id">
+            </nz-option>
+          </nz-select>
+        </div>
+        <nz-divider></nz-divider>
+        <div>
+          <div *ngFor="let product of listProductInput; let index = index">
+            <app-input-element [InputProduct]="product" [index]="index"></app-input-element>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="p-3 mb-3 position-relative" id="customer__in__bill">
+        <!-- info -->
+        <app-input-info-supplier></app-input-info-supplier>
+      </div>
+    </div>
+  </div>
+</div>
