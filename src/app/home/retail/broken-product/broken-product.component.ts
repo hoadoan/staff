@@ -21,6 +21,7 @@ export class BrokenProductComponent implements OnInit {
   listProductInBill: any[] = [] // lưu thông tin lấy từ kho lưu trữ (listProductInBill$)
   invocie$: Observable<any> | undefined
   invoice: any
+  totalBillPrice: number = 0
 
 
   confirmModal?: NzModalRef;
@@ -36,6 +37,28 @@ export class BrokenProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.listProductInBill$ = this.store.select(
+      createSelector(counterSlice.selectFeature, (state) => state.ListProductInbill)
+    )
+    this.listProductInBill$.subscribe((result) => {
+      this.listProductInBill = result
+      if (this.listProductInBill.length > 0) {
+        this.totalBillPrice = 0
+        this.listProductInBill.forEach((element) => {
+          element.listBatches.forEach((batch: any) => {
+            this.productservice.getProductUnitbyUnitID(batch.unit).subscribe((result) => {
+              this.totalBillPrice += (batch.quantity * result.data.price)
+            }, err => {
+              this.notification.create(
+                "error",
+                err.error.message,
+                ""
+              )
+            })
+          })
+        })
+      }
+    })
   }
 
   exportBrokenProduct() {

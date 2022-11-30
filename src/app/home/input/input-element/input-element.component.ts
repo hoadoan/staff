@@ -74,7 +74,7 @@ export class InputElementComponent implements OnInit {
       this.batchesList = result.data
       this.listUnitProductPrice = result.data[0].currentQuantity
       console.log(result.data);
-    },err =>{
+    }, err => {
       this.notification.create(
         "error",
         err.error.message,
@@ -101,7 +101,7 @@ export class InputElementComponent implements OnInit {
   getUnitProductPrice() {
     this.productService.getBatchByBatchID(this.selectBatch).subscribe((result) => {
       this.listUnitProductPrice = result.data.currentQuantity
-    },err =>{
+    }, err => {
       this.notification.create(
         "error",
         err.error.message,
@@ -178,6 +178,7 @@ export class InputElementComponent implements OnInit {
 
   handleOkNewBatch(): void {
     this.isVisible = false;
+    this.handleCancelBatches()
 
     this.batch = {
       productId: this.InputProduct.product.id,
@@ -219,7 +220,10 @@ export class InputElementComponent implements OnInit {
   }
 
   handleCancelNewBatch(): void {
+
+    console.log("ok")
     this.isVisible = false;
+
   }
 
   deleteSelectBatches(index: number) {

@@ -78,25 +78,40 @@ const counterSlice = createSlice({
     },
     addProducttoListBill: (state, action) => {
       console.log(action.payload)
-      state.ListProductInbill = [...state.ListProductInbill, action.payload]
-      console.log(state.ListProductInbill);
-      let invocieTemp = {...state.invoice}
-      let productTemp: any[] = state.invoice.product
-      for (let i = 0; i < state.ListProductInbill.length; i++) {
-        if (state.ListProductInbill[i].product.id == action.payload.id) {
-          productTemp = [...productTemp, {
-            productId: action.payload.id,
-            goodsIssueNote: [{
-              quantity: 1,
-              unit: state.ListProductInbill[i].product.productUnits[0].id,
-              batchId: state.ListProductInbill[i].product.batches[0].id
-            }]
-          }]
+
+      let check = true
+
+      state.ListProductInbill.forEach((item) => {
+        if (item.product.id == action.payload.product.id) {
+          check = false
         }
+      })
+
+      if (check) {
+        state.ListProductInbill = [...state.ListProductInbill, action.payload]
+        console.log(state.ListProductInbill);
+        let invocieTemp = {...state.invoice}
+        let productTemp: any[] = state.invoice.product
+        for (let i = 0; i < state.ListProductInbill.length; i++) {
+          if (state.ListProductInbill[i].product.id == action.payload.id) {
+            productTemp = [...productTemp, {
+              productId: action.payload.id,
+              goodsIssueNote: [{
+                quantity: 1,
+                unit: state.ListProductInbill[i].product.productUnits[0].id,
+                batchId: state.ListProductInbill[i].product.batches[0].id
+              }]
+            }]
+          }
+        }
+        invocieTemp.product = productTemp
+        state.invoice = {...invocieTemp}
+        console.log(state.invoice);
+      }else {
+        console.log("Tồn tại")
       }
-      invocieTemp.product = productTemp
-      state.invoice = {...invocieTemp}
-      console.log(state.invoice);
+
+
     }, addBatchesToProductinBill: (state, action) => {
       console.log(action.payload)
       let tempListProductInBill = [...current(state.ListProductInbill)]

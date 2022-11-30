@@ -75,13 +75,14 @@ export class RetailTemplateComponent implements OnInit {
             let checkBatchExist = true
             this.listProductInBill.forEach((item) => {
               if (result.items[0].id === item.product.id) {
-                productsearchInbill = item
+
                 item.listBatches.forEach((batch: any) => {
                   if (batch.batchId === result.items[0].batches[0].id) {
                     checkBatchExist = false
                   }
                 })
                 if (checkBatchExist) {
+                  productsearchInbill = item
                   let tempListBatches = [...productsearchInbill.listBatches]
                   tempListBatches = [...tempListBatches, {
                     quantity: 1,

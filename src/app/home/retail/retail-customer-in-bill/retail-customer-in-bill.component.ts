@@ -48,6 +48,7 @@ export class RetailCustomerInBillComponent implements OnInit {
   // invoiceRedux: any
   totalBillPrice: number = 0
 
+
   constructor(
     private user: UserService,
     private productservice: ProductService,

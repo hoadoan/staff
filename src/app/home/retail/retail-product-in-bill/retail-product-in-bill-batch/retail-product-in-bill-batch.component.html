@@ -1,21 +1,22 @@
-<td></td>
-<td colspan="2">
+<td style="width: 5%"></td>
+<td colspan="2" style="width: 45%">
   {{batchInfo?.batchBarcode}} - HSD: {{batchInfo?.expiryDate | date:'dd/MM/yyyy'}}
 </td>
-<td>
-  Đơn giá: {{unitInfo?.price}}
+<td style="width: 10%; padding-left: 10px">
+  Đơn giá: {{unitInfo?.price | currency:'VND'}}
 </td>
-<td>
-  <nz-select nzPlaceHolder="Select a person" [(ngModel)]="unitID" (ngModelChange)="changeUnit()">
+<td style="width: calc(33%/2)">
+  <nz-select nzPlaceHolder="Select a person" [(ngModel)]="unitID" (ngModelChange)="changeUnit()" class="w-100">
     <nz-option *ngFor="let item of listUnitProductPrice"
                nzLabel="{{item.currentQuantity}} {{item.unit}}"
                [nzValue]="item.id"></nz-option>
   </nz-select>
 </td>
-<td>
+<td style="width: calc(33%/2); text-align: center">
   Số lượng:
   <nz-input-number [(ngModel)]="quantity" (change)="changeQuantity()" [nzMax]="maxQuantity"
                    [nzMin]="1"></nz-input-number>
 </td>
-<td><i class="fa fa-trash-alt" role="button" (click)="deleteconsignment()"></i></td>
-
+<td style="width: 2%"><i class="fa fa-trash-alt" role="button"
+                                                             (click)="deleteconsignment()"></i></td>
+<td style="width: 5%"></td>

@@ -5,28 +5,6 @@
         <!-- <app-test-reducer></app-test-reducer> -->
         <div class="example-input">
           <div class="d-flex justify-content-md-between align-items-center ">
-            <!--            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Thêm Thuốc vào hóa đơn"-->
-            <!--                       [(ngModel)]="searchValue" style="width: 90%;" (ngModelChange)="addToListBill()"-->
-            <!--                       (nzOnSearch)="searchProduct($event)">-->
-            <!--              <nz-option nzCustomContent *ngFor="let item of listSearchProduct"-->
-            <!--                         [nzLabel]="'Tên '+item.name + ' - vị trí: ' + item.shelf.name" nzValue={{item.id}}>-->
-            <!--                <div class="row border-bottom p-1">-->
-            <!--                  <div class="col-4">-->
-            <!--                    <h6>Tên: {{item.name}}</h6>-->
-            <!--                    <p>Vị trí {{item.shelf.name}}</p>-->
-            <!--                  </div>-->
-            <!--                  <div class="col-8">-->
-            <!--                    <div class="row">-->
-            <!--                      <div *ngFor="let active of item.activeSubstances" class="col-2y mb-3">-->
-            <!--                        <nz-tag nzColor="success">{{active.name}}</nz-tag>-->
-            <!--                      </div>-->
-            <!--                    </div>-->
-
-            <!--                  </div>-->
-            <!--                </div>-->
-            <!--              </nz-option>-->
-            <!--            </nz-select>-->
-
             <div style="width: 90%;" class="position-relative" (clickOutside)="UnShowListSearchProduct()">
               <nz-input-group [nzSuffix]="suffixIconSearch" nzSize="large">
                 <input type="text" nz-input placeholder="Tìm kiếm sản phẩm" [(ngModel)]="searchValue"
@@ -86,13 +64,17 @@
       </div>
     </div>
     <div class="col-3">
-      <div class="customer__in__bill p-3 mb-3" style="position: relative;">
-        <div *ngIf="switchValue == false; else brokenProduct">
+
+      <div *ngIf="switchValue == false; else brokenProduct">
+        <div class="customer__in__bill p-3 mb-3" style="position: relative;">
           <app-retail-customer-in-bill></app-retail-customer-in-bill>
         </div>
       </div>
       <ng-template #brokenProduct>
-        <app-broken-product></app-broken-product>
+        <div class="broken__product__info ">
+          <app-broken-product></app-broken-product>
+        </div>
+
       </ng-template>
     </div>
   </div>

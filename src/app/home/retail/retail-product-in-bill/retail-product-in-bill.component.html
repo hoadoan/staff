@@ -3,22 +3,19 @@
     <table class="mb-3">
       <tbody>
       <tr>
-        <td>
+        <td style="width: 5%">
           <h4>{{index + 1}}</h4>
         </td>
-        <!-- <td>
-            {{Product.barcode}}
-        </td> -->
-        <td>
+        <td style="width: 25%">
           <h3>{{productInbill.product.name}}</h3>
         </td>
-        <td>
+        <td style="width: 20%">
           <h6>Đường dùng: {{productInbill.product.routeOfAdministration.name}}</h6>
         </td>
-        <td colspan="3">
+        <td colspan="4">
           <textarea rows="2" placeholder="Ghi chú" nz-input [(ngModel)]="noteInput"></textarea>
         </td>
-        <td style="float: right;" role="button" (click)="showConfirmDeleteProductInBill()">
+        <td style="display: flex; margin: auto; width: 5%" role="button" (click)="showConfirmDeleteProductInBill()">
           <i class="fa fa-times-circle"></i>
         </td>
       </tr>
@@ -26,7 +23,7 @@
       </tr>
       <tr>
         <td colspan="6"></td>
-        <td role="button" (click)="showAddBatchModal()"> <i class="fa fa-plus"></i> thêm Lô</td>
+        <td colspan="2" role="button" (click)="showAddBatchModal()"> <i class="fa fa-plus"></i> thêm Lô</td>
 
       </tr>
       </tbody>

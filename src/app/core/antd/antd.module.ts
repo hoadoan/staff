@@ -40,7 +40,8 @@ import { NzTableModule } from 'ng-zorro-antd/table';
     NzTagModule,
     NzTabsModule,
     NzSwitchModule,
-    NzTableModule
+    NzTableModule,
+    NzIconModule
   ]
 })
 export class AntdModule { }
