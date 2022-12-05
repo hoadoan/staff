@@ -1,0 +1,81 @@
+<a (click)="open()" >
+  <span nz-icon nzType="zoom-in" nzTheme="outline" style="color: rgb(119, 219, 250);font-size: 20px;"></span>
+</a>
+<nz-drawer
+      [nzClosable]="false"
+      [nzVisible]="visible"
+      nzPlacement="right"
+      nzTitle="Thông tin chi tiết"
+      (nzOnClose)="close()"
+      [nzWidth]="850"
+    >
+      <ng-container *nzDrawerContent>
+          <div style="text-align: center">
+            <ngx-barcode bc-value={{barcode}} [bc-display-value]="true" [bc-width]="1"
+                              [bc-height]="30"></ngx-barcode>
+          </div>
+          <br>
+          <div class="row">
+            <b class="col-4">Tên nhân viên</b>
+            <div class="col-8">{{staffName}}</div>
+          </div>
+          <br>
+          <div class="row">
+            <b class="col-4">Tên khách hàng</b>
+            <div class="col-8">{{customerName}}</div>
+          </div>
+          <br>
+          <div class="row">
+            <b class="col-4">Số điện thoại khách hàng</b>
+            <div class="col-8">{{customerPhone}}</div>
+          </div>
+          <br>
+          <div class="row">
+            <b class="col-4">Khuyến mãi</b>
+            <div class="col-8">{{discount}}</div>
+          </div>
+          <br>
+          <div class="row">
+            <b class="col-4">Ngày xuất hàng</b>
+            <div class="col-8">{{createdAt|date:'hh:mm:ss dd-MM-yyyy'}}</div>
+          </div>
+          <br>
+          <nz-table [nzData]="invoiceDetails"
+          [nzFrontPagination]="false"
+          [nzShowPagination]="false">
+            <thead style="text-align: center">
+              <tr>
+                <th scope="col" style="text-align: center;">Mã lô hàng</th>
+                <th scope="col" style="text-align: center;">Dạng hoá đơn</th>
+                <th scope="col" style="text-align: center;">Tên sản phẩm</th>
+                <th scope="col" style="text-align: center;">Số lượng</th>
+                <th scope="col" style="text-align: center;">Đơn vị</th>
+                <th scope="col" style="text-align: center;">Giá bán</th>
+                <th scope="col" style="text-align: center;">Thành tiền</th>
+              </tr>
+            </thead>
+            <tbody  *ngFor="let invoiceDetail of invoiceDetails" style="text-align: center;">
+              <tr>
+                <td >{{invoiceDetail.batch.name}}</td>
+                <td >{{invoiceDetail.goodsIssueNoteType.name}}</td>
+                <td >{{invoiceDetail.product.name}}</td>
+                <td >{{invoiceDetail.quantity}}</td>
+                <td >{{invoiceDetail.unit}}</td>
+                <td >{{invoiceDetail.unitPrice| number}} đ</td>
+                <td >{{(invoiceDetail.quantity*invoiceDetail.unitPrice)|number}} đ</td>
+              </tr>
+            </tbody>
+            <br>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th style="text-align: center">Tổng tiền</th>
+                <th style="text-align: center">{{totalPrice| number}} đ</th>
+              </tr>
+          </nz-table>
+      </ng-container>
+
+    </nz-drawer>

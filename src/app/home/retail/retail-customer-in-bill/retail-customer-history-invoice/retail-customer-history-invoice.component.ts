@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
 export class RetailCustomerHistoryInvoiceComponent implements OnInit {
 
   @Input() customerId: number = 0
+  @Input() status: number = 0
 
   ListProductInInvoiceDetail: any[] = []
 
@@ -28,6 +29,9 @@ export class RetailCustomerHistoryInvoiceComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getListInvoicebyCustomerID(this.customerId).subscribe((result) => {
       this.listInvoiceID = result.data
+
+      console.log(this.listInvoiceID);
+
     }, err => {
       this.notification.create(
         "error",
@@ -36,28 +40,33 @@ export class RetailCustomerHistoryInvoiceComponent implements OnInit {
       )
     })
   }
-  SelectInvoice(id: number) {
-    console.log(id);
-    this.productService.getInvoiceDetailByInvoiceID(id).subscribe((result) => {
-      this.ListProductInInvoiceDetail = result.data
-      console.log(this.ListProductInInvoiceDetail);
-      this.ListProductInInvoiceDetail.forEach((item: any) => {
-        this.productService.getProductByID(item.product.id).subscribe((resultProduct) => {
-          console.log();
-          this.store.dispatch(counterSlice.addProducttoListBill({
-            product: resultProduct.data,
-            use: null,
-            listBatches: []
-          }))
+  SelectInvoice(id: number, barcode: string) {
+
+    if (this.status == 1) {
+      this.store.dispatch(counterSlice.addInvoiceID(barcode))
+    } else {
+      this.productService.getInvoiceDetailByInvoiceID(id).subscribe((result) => {
+        this.ListProductInInvoiceDetail = result.data
+        console.log(this.ListProductInInvoiceDetail);
+        this.ListProductInInvoiceDetail.forEach((item: any) => {
+          this.productService.getProductByID(item.product.id).subscribe((resultProduct) => {
+            console.log();
+            this.store.dispatch(counterSlice.addProducttoListBill({
+              product: resultProduct.data,
+              use: null,
+              listBatches: []
+            }))
+          })
         })
+      }, err => {
+        this.notification.create(
+          "error",
+          err.error.message,
+          ""
+        )
       })
-    }, err => {
-      this.notification.create(
-        "error",
-        err.error.message,
-        ""
-      )
-    })
+    }
+
 
   }
 

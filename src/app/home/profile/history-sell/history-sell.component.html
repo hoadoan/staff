@@ -26,8 +26,8 @@
         <td >{{invoices.createdAt|date:'hh:mm:ss dd-MM-yyyy'}}</td>
         <td >{{invoices.totalPrice| number}} đ</td>
         <td >
-          <a (click)="detailInvoice(invoices.id)">
-            <span nz-icon nzType="zoom-in" nzTheme="outline" style="color: rgb(119, 219, 250);font-size: 20px;"></span>
+          <a>
+            <app-sell-detail [invoiceId]="invoices.id" [barcode]="invoices.barcode"></app-sell-detail>
           </a>
         </td>
       </tr>

@@ -13,7 +13,8 @@
       <td>
         <nz-tag [nzColor]="'#87d068'" *ngFor="let item of listBatchOfInputProduct, let i = index">
           <div class="text-left">
-            <app-batch-tag-infomation class="w-100" [batchInfo]="item"></app-batch-tag-infomation>
+            <app-batch-tag-infomation class="w-100" [batchInfo]="item" [productName]="InputProduct.product">
+            </app-batch-tag-infomation>
           </div>
           <i class="fa fa-times" role="button" (click)="deleteSelectBatches(i)"></i>
         </nz-tag>

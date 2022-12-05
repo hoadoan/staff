@@ -18,7 +18,7 @@ const counterSlice = createSlice({
       product: [] as any,
       customer: null
     } as invoiceInterface,
-    invoiceID: 0,
+    invoiceID: '',
     ListReturnProduct: [] as any,
     goodsReceiptNote: {
       goodsReceiptNoteTypeId: 2,
@@ -38,8 +38,8 @@ const counterSlice = createSlice({
     },
     addInvoiceID: (state, action) => {
       state.invoiceID = action.payload
-      console.log(state.invoiceID)
-      console.log(action.payload)
+      console.log(state.invoiceID);
+      
     },
     resetState: (state, action) => {
       state.ListProductInbill = []

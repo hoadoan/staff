@@ -8,9 +8,16 @@
 
 <nz-divider></nz-divider>
   <div style="width: calc(100% - 32px); margin: auto">
-    <button class="w-100 btn btn-success btn-lg" (click)="exportBrokenProduct()">
-      <span>Xuất hỏng</span>
-    </button>
+    <div *ngIf="totalBillPrice > 0 ; else emptyProduct">
+      <button class="w-100 btn btn-success btn-lg" (click)="exportBrokenProduct()">
+        <span>Xuất hỏng</span>
+      </button>
+    </div>
+    <ng-template #emptyProduct>
+      <button class="w-100 btn btn-success btn-lg" disabled (click)="exportBrokenProduct()" title="chọn sản phẩm và lô sản phẩm cần xuất hỏng">
+        <span>Xuất hỏng</span>
+      </button>
+    </ng-template>
   </div>
   <div>
   </div>

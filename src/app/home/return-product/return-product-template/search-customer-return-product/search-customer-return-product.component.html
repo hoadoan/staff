@@ -1,0 +1,13 @@
+<div style="height: 60vh">
+    <nz-select nzShowSearch nzPlaceHolder="Nhập số điện thoại để chọn khách hàng" [(ngModel)]="selectedValue"
+        style="width: 90%;" (nzOnSearch)="searchcustomer($event)" (ngModelChange)="addcustomer()">
+        <nz-option *ngFor="let item of listCustomer" [nzValue]="item"
+            [nzLabel]="item.phoneNumber + ' - '+ item.fullName">
+        </nz-option>
+    </nz-select>
+    <nz-divider></nz-divider>
+    <div *ngIf="selectedValue" style="height: 53vh;overflow: auto;">
+        <app-retail-customer-history-invoice [status]="1" [customerId]="selectedValue.id">
+        </app-retail-customer-history-invoice>
+    </div>
+</div>

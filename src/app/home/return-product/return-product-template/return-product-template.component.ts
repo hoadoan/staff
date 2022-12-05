@@ -17,6 +17,7 @@ export class ReturnProductTemplateComponent implements OnInit {
 
   isVisibleReturnProduct: boolean = false;
 
+  invoiceBarcode$: Observable<any> | undefined
   invoiceBarcode: string = ''
 
   invoiceData: any
@@ -35,6 +36,7 @@ export class ReturnProductTemplateComponent implements OnInit {
   }
 
 
+
   constructor(
     private productService: ProductService,
     private store: Store<{}>,
@@ -45,6 +47,16 @@ export class ReturnProductTemplateComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.invoiceBarcode$ = this.store.select(
+      createSelector(counterSlice.selectFeature, (state) => state.invoiceID)
+    )
+    this.invoiceBarcode$.subscribe((result) => {
+      this.invoiceBarcode = result
+      if (this.invoiceBarcode != '') {
+        this.searchInvocie()
+        this.isVisibleSearchCustomer = false
+      }
+    })
     this.invoiceDetailData$ = this.store.select(
       createSelector(counterSlice.selectFeature, (state) => state.ListReturnProduct)
     )
@@ -60,7 +72,7 @@ export class ReturnProductTemplateComponent implements OnInit {
   }
 
   searchInvocie() {
-    console.log(this.invoiceBarcode)
+
     if (this.invoiceBarcode.length == 13) {
       if (this.invoiceBarcode.slice(0, 3) === 'INV') {
         this.productService.getInvocieByBarcode(this.invoiceBarcode).subscribe((result) => {
@@ -90,6 +102,12 @@ export class ReturnProductTemplateComponent implements OnInit {
 
           this.switchFullInvocie = true
 
+        }, err => {
+          this.notification.create(
+            "error",
+            err.error.message,
+            ""
+          )
         })
       }
     }
@@ -112,7 +130,7 @@ export class ReturnProductTemplateComponent implements OnInit {
           console.log(result)
           this.listReturnProductId = result.data
           console.log(this.listReturnProductId);
-          
+
           this.isVisibleReturnProduct = true
           this.notification.create(
             "success",
@@ -215,14 +233,25 @@ export class ReturnProductTemplateComponent implements OnInit {
   }
 
 
-  handleCancelReturnProduct(){
+  handleCancelReturnProduct() {
     this.isVisibleReturnProduct = false
   }
 
-  handleOkReturnProduct(){
+  handleOkReturnProduct() {
 
     document.getElementById('print__bill__data__return')?.click()
     this.isVisibleReturnProduct = false
   }
 
+
+  isVisibleSearchCustomer: boolean = false
+  showSearchCustomerModal() {
+    this.isVisibleSearchCustomer = true
+  }
+  handleCancelSearchCustomer() {
+    this.isVisibleSearchCustomer = false
+  }
+  handleOkSearchCustomer() {
+    this.isVisibleSearchCustomer = false
+  }
 }

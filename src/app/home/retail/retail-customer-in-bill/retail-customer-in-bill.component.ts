@@ -63,7 +63,7 @@ export class RetailCustomerInBillComponent implements OnInit {
 
     this.listProductInBill$ = this.store.select(
       createSelector(counterSlice.selectFeature, (state) => state.ListProductInbill)
-      
+
     )
     this.listProductInBill$.subscribe((result) => {
       this.listProductInBill = result
@@ -259,15 +259,24 @@ export class RetailCustomerInBillComponent implements OnInit {
 
   isVisibleInvoicePrint: boolean = false;
   handleCancelInvoicePrint() {
-    this.isVisibleInvoicePrint = false;
-  }
-  handleOkInvoicePrint() {
-    this.isVisibleInvoicePrint = false;
+
 
     if (this.invoiceID != 0) {
+      this.isVisibleInvoicePrint = false;
+      this.store.dispatch(counterSlice.resetState('ok'))
+      let currentUrl = this.router.url;
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([currentUrl]);
+      });
+    }
 
+  }
+  handleOkInvoicePrint() {
+
+
+    if (this.invoiceID != 0) {
+      this.isVisibleInvoicePrint = false;
       document.getElementById('print__bill__data__sale')?.click()
-
       this.store.dispatch(counterSlice.resetState('ok'))
       let currentUrl = this.router.url;
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

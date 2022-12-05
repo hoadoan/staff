@@ -6,6 +6,7 @@
         <div class="example-input">
           <div class="d-flex justify-content-md-between align-items-center ">
             <div style="width: 90%;" class="position-relative" (clickOutside)="UnShowListSearchProduct()">
+              <label style="color: red;">*Tìm kiếm, chọn sản phẩm và lô hàng để thực hiện chức năng</label>
               <nz-input-group [nzSuffix]="suffixIconSearch" nzSize="large">
                 <input type="text" nz-input placeholder="Tìm kiếm sản phẩm" [(ngModel)]="searchValue"
                        (ngModelChange)="searchProduct($event)"/>

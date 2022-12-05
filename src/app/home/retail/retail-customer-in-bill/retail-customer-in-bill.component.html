@@ -1,4 +1,5 @@
 <div>
+  <!-- <label>Tìm kiếm thông tin khách hàng</label> -->
   <div class="d-flex align-items-center justify-content-around">
     <nz-select nzShowSearch nzPlaceHolder="Nhập số điện thoại để chọn khách hàng" [(ngModel)]="selectedValue"
       style="width: 90%;" (nzOnSearch)="searchcustomer($event)" (ngModelChange)="addcustomer()">
@@ -7,8 +8,6 @@
     </nz-select>
 
     <i class=" fa fa-plus" (click)="showModalAddNewCustomer()" role="button"></i>
-
-
     <nz-modal [(nzVisible)]=" isVisibleNewCustomer" nzTitle="Tạo khách hàng" (nzOnCancel)="handleCancelAddNewCustomer()"
       (nzOnOk)="handleOkAddNewCustomer()">
       <ng-container *nzModalContent>
@@ -157,7 +156,7 @@
 
 
     <button printSectionId="print-section" ngxPrint class="d-none" id="print__bill__data__sale"></button>
-    <nz-modal [(nzVisible)]="isVisibleInvoicePrint" nzTitle="The first Modal" (nzOnCancel)="handleCancelInvoicePrint()"
+    <nz-modal [(nzVisible)]="isVisibleInvoicePrint" (nzOnCancel)="handleCancelInvoicePrint()"
       (nzOnOk)="handleOkInvoicePrint()" [nzStyle]="{width: '35%'}" nzOkText="In hóa đơn">
       <ng-container *nzModalContent>
         <div id="print-section" style="height: 50vh; overflow: auto;">

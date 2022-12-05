@@ -1,3 +1,5 @@
+import { batch } from './../input-element.model';
+import { product } from './../../../retail/retail.model';
 import { createSelector } from '@ngrx/store';
 import { Store } from '@ngrx/store';
 import { ListInputProductInterface } from './../../../../core/store/store.model';
@@ -22,6 +24,7 @@ export class BatchTagInfomationComponent implements OnInit {
 
   unit: string = ''
   productInfor: any
+  @Input() productName: any
 
   isVisibleEdit: boolean = false
 
@@ -78,8 +81,6 @@ export class BatchTagInfomationComponent implements OnInit {
     this.productService.getProductUnitbyUnitID(this.batchInfo.productUnitPriceId).subscribe((result) => {
       this.unit = result.data.unit
       this.productInfor = result.data.productId
-      console.log(this.productInfor);
-
     }, err => {
       this.notification.create(
         'error',
@@ -93,13 +94,7 @@ export class BatchTagInfomationComponent implements OnInit {
       this.productService.getBatchById(this.batchInfo.batchId).subscribe((result) => {
         console.log(result.data)
         this.fullInfomationOfBatch = result.data
-
-        // this.fullInfomationOfBatch.currentQuantity.forEach((item: any) => {
-        //   if (item.id == this.batchInfo.productUnitPriceId) {
-        //     this.unit = item.unit
-        //   }
-        // })
-
+        this.productName = this.fullInfomationOfBatch.product
       }, err => {
         this.notification.create(
           'error',
@@ -110,8 +105,6 @@ export class BatchTagInfomationComponent implements OnInit {
     }
 
   }
-
-
   openModalEditBatch() {
     this.isVisibleEdit = true
   }
@@ -122,29 +115,40 @@ export class BatchTagInfomationComponent implements OnInit {
     let tempListBatches: any[] = []
 
     this.isVisibleEdit = false
-
-
-
     tempListProductInput = [...this.listProductInput]
-
     tempListProductInput.forEach((item: any, index) => {
       if (item.product.id == this.productInfor) {
         tempListBatches = item.listBatch
         tempListBatches.forEach((item2: any, i) => {
-          if (item2.batchId == this.batchInfo.batchId) {
-            let temp3 = { ...item2 }
-            temp3.quantity = this.quantityBatch
-            temp3.totalPrice = this.totalPrice
-            let temp2 = [...tempListBatches]
-            temp2[i] = { ...temp3 }
-            tempListBatches = temp2
-            tempListProductInput[index] = { ...tempListProductInput[index], listBatch: tempListBatches }
-      this.store.dispatch(counterSlice.addProductToListInput(tempListProductInput))
+          if (this.batchInfo.batchId != null) {
+            if (item2.batchId == this.batchInfo.batchId) {
+              let temp3 = { ...item2 }
+              temp3.quantity = this.quantityBatch
+              temp3.totalPrice = this.totalPrice
+              let temp2 = [...tempListBatches]
+              temp2[i] = { ...temp3 }
+              tempListBatches = temp2
+              tempListProductInput[index] = { ...tempListProductInput[index], listBatch: tempListBatches }
+              this.store.dispatch(counterSlice.addProductToListInput(tempListProductInput))
+            }
+          } else {
+            if (item2.batch.productId == this.productInfor) {
+              if (item2.batch.manufacturingDate == this.batchInfo.batch.manufacturingDate && item2.batch.expiryDate == this.batchInfo.batch.expiryDate) {
+                let temp3 = { ...item2 }
+                temp3.quantity = this.quantityBatch
+                temp3.totalPrice = this.totalPrice
+                let temp2 = [...tempListBatches]
+                temp2[i] = { ...temp3 }
+                tempListBatches = temp2
+                tempListProductInput[index] = { ...tempListProductInput[index], listBatch: tempListBatches }
+                this.store.dispatch(counterSlice.addProductToListInput(tempListProductInput))
+              }
+            }
           }
         })
       }
 
-      
+
     })
 
 

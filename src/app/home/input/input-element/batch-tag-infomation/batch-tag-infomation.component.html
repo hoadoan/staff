@@ -12,15 +12,18 @@
 </ng-template>
 
 
-<nz-modal [(nzVisible)]="isVisibleEdit" nzTitle="The first Modal" (nzOnCancel)="handleCanceleditBatch()"
+<nz-modal [(nzVisible)]="isVisibleEdit" nzTitle="Chỉnh sửa thông tin lô hàng" (nzOnCancel)="handleCanceleditBatch()"
   (nzOnOk)="handleOkEditBatch()" nzOkText="Thay đổi">
   <ng-container *nzModalContent>
     <div *ngIf="batchInfo.batchId != null; else editNewBatch">
+      <div class="form-group mb-3">
+        <h5>Sản phẩm: {{productName.name}}</h5>
+      </div>
       <div class="row">
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24">Lô hàng</nz-form-label>
           <nz-form-control [nzSm]="17" [nzXs]="24">
-            {{batchInfo.batchId}}
+            {{batchInfo.batchId}} - {{fullInfomationOfBatch.batchBarcode}} - HSD:{{fullInfomationOfBatch.expiryDate | date:'dd/MM/yyyy'}}
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -47,7 +50,7 @@
 
     <ng-template #editNewBatch>
       <div class="form-group mb-3">
-        <h5>Sản phẩm: Tên sản phẩm: </h5>
+        <h5>Sản phẩm: {{productName.name}}</h5>
       </div>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24">Ngày sản xuất</nz-form-label>

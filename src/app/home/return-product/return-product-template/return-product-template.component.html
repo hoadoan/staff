@@ -27,10 +27,17 @@
     </div>
     <div class="col-3">
       <div class="panel__container p-3 position-relative">
-        <input nz-input placeholder="Mã đơn hàng" nzSize="default" [(ngModel)]="invoiceBarcode"
+        <label style="color:red">* Nhập barcode đơn hàng để lấy thông tin</label>
+        <input nz-input placeholder="Mã barcode đơn hàng" nzSize="default" [(ngModel)]="invoiceBarcode"
           (ngModelChange)="searchInvocie()" />
         <div class="text-end mt-4">
-          <button nz-button>Tìm kiếm đơn hàng</button>
+          <button nz-button (click)="showSearchCustomerModal()">Tìm kiếm đơn hàng</button>
+          <nz-modal [(nzVisible)]="isVisibleSearchCustomer" (nzOnCancel)="handleCancelSearchCustomer()"
+            (nzOnOk)="handleOkSearchCustomer()">
+            <ng-container *nzModalContent>
+             <app-search-customer-return-product></app-search-customer-return-product>
+            </ng-container>
+          </nz-modal>
         </div>
         <nz-divider></nz-divider>
         <div class="mb-4 ">

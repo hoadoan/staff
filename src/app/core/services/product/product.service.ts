@@ -92,6 +92,9 @@ export class ProductService {
   getInvocieByInvoiceID(id: number): Observable<any> {
     return this.httpClient.get(DOMAIN + `invoice-management/invoices/${id}`, {headers: this.headers})
   }
+  getDetailInvoiceByID(id: number): Observable<any> {
+    return this.httpClient.get(DOMAIN + `invoice-management/invoices/${id}/invoice-detail`, {headers: this.headers})
+  }
 
   getInvocieDetailByBarcode(barcode: string): Observable<any> {
     return this.httpClient.get(DOMAIN + `invoice-management/invoices/barcode/invoice-detail?barcode=${barcode}`, {headers: this.headers})
