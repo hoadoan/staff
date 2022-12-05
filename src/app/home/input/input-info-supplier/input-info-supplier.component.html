@@ -1,42 +1,67 @@
 <div class="containter-fluid">
-    <div class="d-flex justify-content-around align-items-center">
-        <nz-select nzAllowClear nzPlaceHolder="chọn nhà cung cấp" style="width: 90%;" [(ngModel)]="selectSupplier"
-            (ngModelChange)="selectSupplierChange()" nzShowSearch>
-            <nz-option *ngFor="let supplier of listSuppliers" [nzLabel]="supplier.name" [nzValue]="supplier">
-            </nz-option>
-        </nz-select>
-        <div>
-            <i class=" fa fa-plus" role="button" (click)="showModalAddSupplier()"></i>
-            <nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnOk)="handleOkSupplier()"
+  <div class="d-flex justify-content-around align-items-center">
+    <nz-select nzAllowClear nzPlaceHolder="chọn nhà cung cấp" style="width: 90%;" [(ngModel)]="selectSupplier"
+               (ngModelChange)="selectSupplierChange()" nzShowSearch>
+      <nz-option *ngFor="let supplier of listSuppliers" [nzLabel]="supplier.name" [nzValue]="supplier">
+      </nz-option>
+    </nz-select>
+    <div>
+      <i class=" fa fa-plus" role="button" (click)="showModalAddSupplier()"></i>
+      <nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnOk)="handleOkSupplier()"
                 (nzOnCancel)="handleCancelSupplier()">
-                <ng-container *nzModalContent>
-                    <div class="form-group">
-                        <label>Tên nhà cung cấp:</label>
-                        <input type="text" class="form-control" [(ngModel)]="newSupplier">
-                    </div>
-                </ng-container>
-            </nz-modal>
-        </div>
+        <ng-container *nzModalContent>
+          <div class="form-group">
+            <label>Tên nhà cung cấp:</label>
+            <input type="text" class="form-control" [(ngModel)]="newSupplier">
+          </div>
+        </ng-container>
+      </nz-modal>
     </div>
+  </div>
 
-    <nz-divider></nz-divider>
+  <nz-divider></nz-divider>
 
-    <div>
-        <h5>Thông tin nhà cung cấp</h5>
-        <div class="row">
-            <div class="col-4">
-                <h6>Nhà cung cấp:</h6>
-            </div>
-            <div class="col-8" *ngIf="selectSupplier != '', else supplier">
-                {{selectSupplier?.name}}
-            </div>
-            <ng-template #supplier>
-                {{newSupplier}}
-            </ng-template>
+  <div>
+    <h5 class="mb-5 text-center">Thông tin nhà cung cấp</h5>
+    <div class="row mb-3">
+      <div class="col-4">
+        <h6>Nhà cung cấp:</h6>
+      </div>
+      <div class="col-8" *ngIf="selectSupplier != '', else supplier">
+        <h6>{{selectSupplier?.name}}</h6>
+      </div>
+      <ng-template #supplier>
+        <div class="col-8">
+          <h6>{{newSupplier}}</h6>
         </div>
+      </ng-template>
     </div>
-<nz-divider></nz-divider>
-    <div>
-        <button class="btn btn-success w-100 btn-lg" (click)="inputProduct()">Nhập hàng</button>
+    <div class="row mb-3">
+      <div class="col-4">
+        <h6>Giá trị đơn hàng:</h6>
+      </div>
+      <div class="col-8">
+        <h6>{{totalPrice | currency:'VND'}}</h6>
+      </div>
     </div>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="mt-5" *ngIf="newSupplier != '' || selectSupplier != null; else emptySupplier ">
+    <button class="btn btn-success w-100" (click)="inputProduct()" title="Nhập thông tin nhà cung cấp">Nhập hàng</button>
+  </div>
+  <ng-template #emptySupplier>
+    <button class="btn btn-success w-100" disabled (click)="inputProduct()" title="Nhập thông tin nhà cung cấp">Nhập hàng</button>
+  </ng-template>
 </div>
+
+
+<button printSectionId="print-section" ngxPrint class="d-none" id="print__bill__data"></button>
+
+<nz-modal [(nzVisible)]="isVisiblePrint" nzTitle="Thông tin phiếu nhập hàng" (nzOnCancel)="handleCancelprint()" nzOkText="In Phiếu nhập hàng" (nzOnOk)="handleOkprint()"  [nzStyle]="{ width:'60%' }">
+  <ng-container *nzModalContent >
+    <div id="print-section" style="height: 70vh; overflow: auto;">
+    <app-print-input [listInputID]="listInputId"></app-print-input>
+  </div>
+  </ng-container>
+</nz-modal>
+

@@ -1,29 +1,111 @@
-<div class="container-fluid">
+<!--<div class="container-fluid">-->
+<!--  <div class="row mt-5">-->
+<!--    <div class="col-9">-->
+<!--      <div class="p-3" id="product__in__bill">-->
+<!--        <div class="example-input">-->
+<!--          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Tìm kiếm thuốc" style="width: 100%;" nzSize="large"-->
+<!--                     [(ngModel)]="inputValue" (nzOnSearch)="onInput($event)" (ngModelChange)="onSelect($event)">-->
+<!--            <nz-option *ngFor="let option of options let i = index" [nzValue]="option"-->
+<!--                       [nzLabel]="option.name + ' - ' + option.id">-->
+<!--            </nz-option>-->
+<!--          </nz-select>-->
+<!--        </div>-->
+<!--        <nz-divider></nz-divider>-->
+<!--        <div>-->
+<!--          <div *ngFor="let product of listProductInput; let index = index">-->
+<!--            <app-input-element [InputProduct]="product" [index]="index"></app-input-element>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="col-3">-->
+<!--      <div class="p-3 mb-3 position-relative" id="customer__in__bill">-->
+<!--        &lt;!&ndash; info &ndash;&gt;-->
+<!--        <app-input-info-supplier></app-input-info-supplier>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<div class="container">
   <div class="row mt-5">
-    <div class="col-9">
-      <div class="p-3" id="product__in__bill">
-        <div class="example-input">
-          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Tìm kiếm thuốc" style="width: 100%;" nzSize="large"
-                     [(ngModel)]="inputValue" (nzOnSearch)="onInput($event)" (ngModelChange)="onSelect($event)">
+    <div class="p-3" id="product__in__bill">
+      <nz-steps [nzCurrent]="current" style="width: 500px; margin: auto">
+        <nz-step nzTitle="Thông tin thuốc"></nz-step>
+        <nz-step nzTitle="Thông tin nhà cung cấp"></nz-step>
+      </nz-steps>
+      <!--<nz-divider></nz-divider>-->
+      <div class="steps-content" *ngIf="current == 0">
+        <p style="color: red; margin: 20px 0 0 15px;">* Tìm kiếm, chọn thuốc và chọn lô để nhập hàng</p>
+        <div class="example-input d-flex justify-content-around">
+          <nz-select nzShowSearch nzPlaceHolder="Tìm kiếm thuốc" style="width: 75%;" nzSize="large"
+            [(ngModel)]="inputValue" (nzOnSearch)="onInput($event)" (ngModelChange)="onSelect($event)">
             <nz-option *ngFor="let option of options let i = index" [nzValue]="option"
-                       [nzLabel]="option.name + ' - ' + option.id">
+              [nzLabel]="option.name + ' - ' + option.id">
             </nz-option>
           </nz-select>
+          <button nz-button nzSize="large" (click)="opneModalUploadExcel()">
+            <span nz-icon nzType="upload"></span>
+            Nhập hàng bằng file excel
+          </button>
+          <nz-modal [(nzVisible)]="isVisibleUploadExcel" nzTitle="Nhập hàng bằng file excel"
+            (nzOnCancel)="handleCancelUploadExcel()" (nzOnOk)="handleOkUploadExcel()" nzOkText="Nhập hàng">
+            <ng-container *nzModalContent>
+              <div style="height: 30vh" class="text-center">
+                <button nz-button nzSize="large"><a href="./../../../../assets/InputTemplate.xlsx" download>
+                    <i class="fa fa-download"></i> Tải mẫu nhập hàng</a></button>
+                <nz-divider></nz-divider>
+                <input class="form-control" type="file" accept=".xlsx" id="formFileMultiple" multiple
+                  (change)="handleUpload($event)">
+                <p *ngIf="fileUploadInputProduct == 1" style="color: red; text-align:left">* Chọn file để nhập hàng</p>
+              </div>
+            </ng-container>
+          </nz-modal>
         </div>
         <nz-divider></nz-divider>
-        <div>
-          <div *ngFor="let product of listProductInput; let index = index">
+        <div style="height: 57vh; overflow: auto">
+          <div *ngFor="let product of listProductInput; let index = index" class="p-2">
             <app-input-element [InputProduct]="product" [index]="index"></app-input-element>
           </div>
+        </div>
+        <div style="position: absolute; bottom: 2vh; text-align: end; width: 95%">
+          <nz-divider></nz-divider>
+          <div *ngIf="checkBatchesempty; else emptyBatches">
+            <button nz-button nzType="primary" disabled (click)="next()" *ngIf="current < 2"
+              title="Chọn lô cho sản phẩm">
+              <span>Tiếp theo</span>
+            </button>
+          </div>
 
+          <ng-template #emptyBatches>
+            <button nz-button nzType="primary" (click)="next()" *ngIf="current < 2">
+              <span>Tiếp theo</span>
+            </button>
+          </ng-template>
         </div>
       </div>
-    </div>
-    <div class="col-3">
-      <div class="p-3 mb-3 position-relative" id="customer__in__bill">
-        <!-- info -->
-        <app-input-info-supplier></app-input-info-supplier>
+      <div class="steps-content" *ngIf="current == 1">
+        <div class="mt-5" style="margin: auto; width: 50%">
+          <app-input-info-supplier></app-input-info-supplier>
+        </div>
+        <div style="position: absolute; bottom: 2vh;width: 95%">
+          <nz-divider></nz-divider>
+          <button nz-button nzType="primary" (click)="pre()" *ngIf="current > 0" style="margin-left: 34px">
+            <span>Quay lại</span>
+          </button>
+        </div>
+
       </div>
+
+      <!--      <div class="steps-action" style="position: absolute; bottom: 0">-->
+      <!--        -->
+      <!--        <button nz-button nzType="default" (click)="next()" *ngIf="current < 2">-->
+      <!--          <span>Next</span>-->
+      <!--        </button>-->
+      <!--        <button nz-button nzType="primary" (click)="done()" *ngIf="current === 2">-->
+      <!--          <span>Done</span>-->
+      <!--        </button>-->
+      <!--      </div>-->
     </div>
   </div>
 </div>

@@ -14,7 +14,7 @@ export class ProfileTemplateComponent implements OnInit {
   tempProfile: any = localStorage.getItem(PROFILE)
   emailAddressRecovery: string = ''
   phoneNumber: string = ''
-
+  id: number = 1
   constructor(
     private userService: UserService,
     private notification: NzNotificationService
@@ -27,6 +27,8 @@ export class ProfileTemplateComponent implements OnInit {
       this.profile = result.data
       this.phoneNumber = this.profile.phoneNumber
       this.emailAddressRecovery = this.profile.email
+      this.id = this.profile.userId
+      console.log(this.id)
     })
   }
 

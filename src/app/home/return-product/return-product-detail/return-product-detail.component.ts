@@ -39,6 +39,10 @@ export class ReturnProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.quantityProduct = this.productData?.convertedQuantity - this.productData?.returnedQuantity
+    this.batchTotalprice = this.quantityProduct * this.productData?.unitPrice
+
+
     // this.productService.getListProductUnitByProductId(this.productData.product.id).subscribe((result) => {
     //   this.listUnitProduct = result.data
     //   console.log(this.listUnitProduct[0].id)
@@ -86,7 +90,7 @@ export class ReturnProductDetailComponent implements OnInit {
     this.goodReceiptNote$.subscribe((result) => {
       this.goodReceiptNote = result
       console.log(this.goodReceiptNote)
-      this.quantityProduct = this.goodReceiptNote.createModel[0]?.batches[this.index]?.convertedQuantity
+      // this.quantityProduct = this.goodReceiptNote.createModel[0]?.batches[this.index]?.convertedQuantity
 
 
     })

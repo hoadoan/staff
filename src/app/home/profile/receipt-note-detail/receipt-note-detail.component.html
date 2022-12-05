@@ -1,0 +1,54 @@
+<a (click)="open()" >
+  <span nz-icon nzType="zoom-in" nzTheme="outline" style="color: rgb(119, 219, 250);font-size: 20px;"></span>
+</a>
+<nz-drawer
+      [nzClosable]="false"
+      [nzVisible]="visible"
+      nzPlacement="right"
+      nzTitle="Thông tin chi tiết"
+      (nzOnClose)="close()"
+      [nzWidth]="450"
+    >
+      <ng-container *nzDrawerContent>
+          <div style="text-align: center">
+            <ngx-barcode bc-value={{barcode}} [bc-display-value]="true" [bc-width]="1"
+                              [bc-height]="20"></ngx-barcode>
+          </div>
+          <br>
+          <div class="row">
+            <b class="col-4">Dạng nhập hàng</b>
+            <div class="col-8">{{GRNtype}}</div>
+          </div>
+          <br>
+          <div class="row">
+            <b class="col-4">Ngày sản xuất</b>
+            <div class="col-8">{{manufacturingDate|date:'dd-MM-yyyy'}}</div>
+          </div>
+          <br>
+          <div class="row">
+            <b class="col-4">Hạn sử dụng</b>
+            <div class="col-8">{{expiryDate|date:'dd-MM-yyyy'}}</div>
+          </div>
+          <br>
+          <div class="row">
+            <b class="col-4">Số lượng</b>
+            <div class="col-8">{{quantity}}</div>
+          </div>
+          <br>
+          <div class="row">
+            <b class="col-4">Đơn vị</b>
+            <div class="col-8">{{unit}}</div>
+          </div>
+          <br>
+          <div class="row">
+            <b class="col-4">Tổng tiền</b>
+            <div class="col-8">{{totalPrice|number}} đ</div>
+          </div>
+          <br>
+          <div class="row">
+            <b class="col-4">Ngày nhập hàng</b>
+            <div class="col-8">{{createdAt|date:'hh:mm:ss dd-MM-yyyy'}}</div>
+          </div>
+
+      </ng-container>
+    </nz-drawer>

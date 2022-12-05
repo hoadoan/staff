@@ -1,0 +1,36 @@
+<br>
+<b *ngIf="listInvoice.length <= 0">
+  Nhân viên chưa có đơn hàng
+</b>
+<div *ngIf="listInvoice.length > 0">
+  <nz-table #basicTable [nzData]="listInvoice" style="font-size: 18px;" [nzPageSize]="5"
+    [nzPageSizeOptions]="[5,10,15,20,25,30]" nzShowSizeChanger>
+    <thead style="text-align: center">
+      <tr>
+        <th scope="col" style="text-align: center;">Barcode xuất hàng</th>
+        <th scope="col" style="text-align: center;">Tên khách hàng</th>
+        <th scope="col" style="text-align: center;">Số điện thoại khách hàng</th>
+        <th scope="col" style="text-align: center;">Ngày tạo</th>
+        <th scope="col" style="text-align: center;">Tổng tiền</th>
+        <th>Xem chi tiết</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let invoices of basicTable.data" style="text-align: center;">
+      <tr>
+        <td scope="row">
+          <ngx-barcode bc-value={{invoices.barcode}} [bc-display-value]="true" [bc-width]="1"
+                              [bc-height]="20"></ngx-barcode>
+        </td>
+        <td >{{invoices.customer.fullName}}</td>
+        <td >{{invoices.customer.phoneNumber}}</td>
+        <td >{{invoices.createdAt|date:'hh:mm:ss dd-MM-yyyy'}}</td>
+        <td >{{invoices.totalPrice| number}} đ</td>
+        <td >
+          <a (click)="detailInvoice(invoices.id)">
+            <span nz-icon nzType="zoom-in" nzTheme="outline" style="color: rgb(119, 219, 250);font-size: 20px;"></span>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

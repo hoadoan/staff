@@ -1,0 +1,44 @@
+<br>
+<b *ngIf="listGRNNew.length <= 0">
+  Nhân viên chưa có đơn hàng
+</b>
+<div *ngIf="listGRNNew.length > 0">
+  <nz-table #basicTable [nzData]="listGRNNew" style="font-size: 18px;" [nzPageSize]="5"
+    [nzPageSizeOptions]="[5,10,15,20,25,30]" nzShowSizeChanger>
+    <thead style="text-align: center">
+      <tr>
+        <th scope="col" style="text-align: center;">Barcode nhập hàng</th>
+        <th scope="col" style="text-align: center;"
+        [nzFilters]="nameList"
+        [nzFilterMultiple]="true"
+        [nzFilterFn]="nameFilterFn"
+        >Dạng nhập</th>
+        <th scope="col" style="text-align: center;">Nguồn cung cấp</th>
+        <th scope="col" style="text-align: center;">Ngày tạo</th>
+        <th scope="col" style="text-align: center;">Số lượng</th>
+        <th scope="col" style="text-align: center;">Đơn vị</th>
+        <th scope="col" style="text-align: center;">Tổng tiền</th>
+        <th>Xem chi tiết</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let GRN of basicTable.data" style="text-align: center;">
+      <tr>
+        <td scope="row">
+          <ngx-barcode bc-value={{GRN.data.batch.barcode}} [bc-display-value]="true" [bc-width]="1"
+                              [bc-height]="20"></ngx-barcode>
+        </td>
+        <td >{{GRN.data.goodsReceiptNoteType.name}}</td>
+        <td *ngIf="GRN.data.supplier.name!=null">{{GRN.data.supplier.name}}</td>
+        <td *ngIf="GRN.data.supplier.name==null && GRN.name!=null">{{GRN.name}}</td>
+        <td *ngIf="GRN.data.supplier.name==null && GRN.name==null">Không rõ xuất xứ</td>
+        <td >{{GRN.data.createdAt|date:'hh:mm:ss dd-MM-yyyy'}}</td>
+        <td >{{GRN.data.quantity}}</td>
+        <td >{{GRN.data.unit}}</td>
+        <td >{{GRN.data.totalPrice| number}} đ</td>
+        <td >
+            <app-receipt-note-detail [GRNId]="GRN.data.id"></app-receipt-note-detail>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

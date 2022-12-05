@@ -14,7 +14,7 @@ const loginRoute: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forRoot(loginRoute),
+    RouterModule.forChild(loginRoute),
     FormsModule
   ]
 })

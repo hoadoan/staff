@@ -1,0 +1,12 @@
+.container-fluid {
+  padding: 0 48px;
+  position: absolute;
+}
+
+.sample__template{
+  background-color: white;
+  /* box-shadow: 1px 1px 1px 1px; */
+  box-shadow: 0 0 30px rgb(1 41 112 / 10%);
+  border-radius: 5px;
+  height: 85vh;
+}

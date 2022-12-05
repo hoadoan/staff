@@ -13,17 +13,17 @@
           <h6>Đường dùng: {{productInbill.product.routeOfAdministration.name}}</h6>
         </td>
         <td colspan="4">
-          <textarea rows="2" placeholder="Ghi chú" nz-input [(ngModel)]="noteInput"></textarea>
+          <textarea rows="2" placeholder="Ghi chú" nz-input [(ngModel)]="noteInput" (change)="changeNote()"></textarea>
         </td>
         <td style="display: flex; margin: auto; width: 5%" role="button" (click)="showConfirmDeleteProductInBill()">
           <i class="fa fa-times-circle"></i>
         </td>
       </tr>
-      <tr app-retail-product-in-bill-batch *ngFor="let item of productInbill.listBatches" [batch]="item">
+      <tr app-retail-product-in-bill-batch *ngFor="let item of productInbill.listBatches" [batch]="item" [useNote]="noteInput">
       </tr>
       <tr>
         <td colspan="6"></td>
-        <td colspan="2" role="button" (click)="showAddBatchModal()"> <i class="fa fa-plus"></i> thêm Lô</td>
+        <td colspan="2" role="button" (click)="showAddBatchModal()"><i class="fa fa-plus"></i> thêm Lô</td>
 
       </tr>
       </tbody>
@@ -32,7 +32,7 @@
 </div>
 
 <nz-modal [(nzVisible)]="isVisibleAddBatch" nzTitle="Chọn lô cho thuốc {{productInbill.product.name}}"
-          (nzOnCancel)="handleCancelAddbatch()" (nzOnOk)="handleOkAddBatch()">
+          (nzOnCancel)="handleCancelAddbatch()" (nzOnOk)="handleOkAddBatch()" nzOkText="Chọn lô">
   <ng-container *nzModalContent>
     <div>
       <div class="form-group">
@@ -45,14 +45,16 @@
       </div>
       <div class="form-group">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Đơn vị</nz-form-label>
-        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="goodsIssueNote.unit" (ngModelChange)="changeUnit()">
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="goodsIssueNote.unit"
+                   (ngModelChange)="changeUnit()">
           <nz-option *ngFor="let item of ListUnitOfBatches" nzLabel="Tồn kho: {{item.currentQuantity}} {{item.unit}}"
                      [nzValue]="item.id"></nz-option>
         </nz-select>
       </div>
       <div class="form-group">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Số lượng</nz-form-label>
-        <nz-input-number [(ngModel)]="goodsIssueNote.quantity" [nzMin]="1" [nzMax]="MaxBatchQuantity" class="w-100" [nzStep]="1"></nz-input-number>
+        <nz-input-number [(ngModel)]="goodsIssueNote.quantity" [nzMin]="1" [nzMax]="MaxBatchQuantity" class="w-100"
+                         [nzStep]="1"></nz-input-number>
       </div>
     </div>
   </ng-container>

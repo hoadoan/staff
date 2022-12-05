@@ -1,0 +1,7 @@
+.detail__history:hover {
+    transition: 0.5s;
+    background-color: rgb(160, 160, 160);
+}
+.detail__history{
+    padding: 10px;
+}

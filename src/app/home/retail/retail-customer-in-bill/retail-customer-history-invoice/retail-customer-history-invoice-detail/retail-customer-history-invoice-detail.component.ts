@@ -1,6 +1,6 @@
 import { ProductService } from './../../../../../core/services/product/product.service';
 import { Component, Input, OnInit } from '@angular/core';
-import {NzNotificationService} from "ng-zorro-antd/notification";
+import { NzNotificationService } from "ng-zorro-antd/notification";
 
 @Component({
   selector: 'app-retail-customer-history-invoice-detail',
@@ -22,9 +22,7 @@ export class RetailCustomerHistoryInvoiceDetailComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getInvoiceDetailByInvoiceID(this.invoiceID).subscribe((result) => {
       this.ListProductInInvoiceDetail = result.data
-      console.log(this.ListProductInInvoiceDetail);
-
-    },err =>{
+    }, err => {
       this.notification.create(
         "error",
         err.error.message,

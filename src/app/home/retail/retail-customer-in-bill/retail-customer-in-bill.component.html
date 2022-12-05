@@ -1,17 +1,16 @@
 <div>
   <div class="d-flex align-items-center justify-content-around">
     <nz-select nzShowSearch nzPlaceHolder="Nhập số điện thoại để chọn khách hàng" [(ngModel)]="selectedValue"
-               style="width: 90%;" (nzOnSearch)="searchcustomer($event)" (ngModelChange)="addcustomer()">
-      <nz-option *ngFor="let item of listCustomer" [nzValue]="item"
-                 [nzLabel]="item.phoneNumber + ' - '+ item.fullName">
+      style="width: 90%;" (nzOnSearch)="searchcustomer($event)" (ngModelChange)="addcustomer()">
+      <nz-option *ngFor="let item of listCustomer" [nzValue]="item" [nzLabel]="item.phoneNumber + ' - '+ item.fullName">
       </nz-option>
     </nz-select>
 
     <i class=" fa fa-plus" (click)="showModalAddNewCustomer()" role="button"></i>
 
 
-    <nz-modal [(nzVisible)]=" isVisibleNewCustomer" nzTitle="Tạo khách hàng"
-              (nzOnCancel)="handleCancelAddNewCustomer()" (nzOnOk)="handleOkAddNewCustomer()">
+    <nz-modal [(nzVisible)]=" isVisibleNewCustomer" nzTitle="Tạo khách hàng" (nzOnCancel)="handleCancelAddNewCustomer()"
+      (nzOnOk)="handleOkAddNewCustomer()">
       <ng-container *nzModalContent>
         <div>
           <form nz-form>
@@ -19,16 +18,15 @@
             <nz-form-item>
               <nz-form-label [nzSpan]="6" nzFor="phoneNumber" nzRequired>Số điện thoại</nz-form-label>
               <nz-form-control [nzSpan]="14">
-                <input nz-input name="phoneNumber" type="tel" id="phoneNumber" nz-input
-                       [(ngModel)]="phoneNumber" (input)="onInput($event)" [nzAutocomplete]="auto">
+                <input nz-input name="phoneNumber" type="tel" id="phoneNumber" nz-input [(ngModel)]="phoneNumber"
+                  (input)="onInput($event)" [nzAutocomplete]="auto">
                 <nz-autocomplete [nzDataSource]="options" nzBackfill #auto></nz-autocomplete>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
               <nz-form-label [nzSpan]="6" nzFor="customerName" nzRequired>Họ và Tên</nz-form-label>
               <nz-form-control [nzSpan]="14">
-                <input nz-input name="customerName" type="text" id="customerName"
-                       [(ngModel)]="customerName">
+                <input nz-input name="customerName" type="text" id="customerName" [(ngModel)]="customerName">
               </nz-form-control>
             </nz-form-item>
           </form>
@@ -55,10 +53,10 @@
         </div>
         <div class="col-12 d-flex justify-content-end" *ngIf="customerInfo">
           <button nz-button [nzType]="'dashed'" (click)="showInvoiceHistory()"><span>Lịch sử mua
-                            hàng</span></button>
+              hàng</span></button>
           <nz-modal [(nzVisible)]="isVisibleHistoryInvoice" nzTitle="Lịch sử mua hàng"
-                    (nzOnCancel)="handleCancelInvoiceHistory()" (nzOnOk)="handleOkInvoiceHistory()"
-                    [nzBodyStyle]="{height: '500px', overflow:'auto'}">
+            (nzOnCancel)="handleCancelInvoiceHistory()" (nzOnOk)="handleOkInvoiceHistory()"
+            [nzBodyStyle]="{height: '500px', overflow:'auto'}">
             <ng-container *nzModalContent>
               <app-retail-customer-history-invoice [customerId]="customerInfo.id">
               </app-retail-customer-history-invoice>
@@ -86,17 +84,19 @@
             <div class="col-5">
               <div *ngIf="totalBillPrice/1000 > rewardPoint; else setMaxUsePoint">
                 <nz-input-number nzBorderless [nzMin]="0" [nzStep]="1" [nzMax]="rewardPoint" [(ngModel)]="usePoint"
-                                 (ngModelChange)="usePoineChange()" class="w-100" style="border-bottom: 1px solid !important;">
+                  (ngModelChange)="usePoineChange()" class="w-100" style="border-bottom: 1px solid !important;">
                 </nz-input-number>
               </div>
               <ng-template #setMaxUsePoint>
                 <nz-input-number nzBorderless [nzMin]="0" [nzStep]="1" [nzMax]="totalBillPrice/1000"
-                                 [(ngModel)]="usePoint"
-                                 (ngModelChange)="usePoineChange()" class="w-100" style="border-bottom: 1px solid !important;">
+                  [(ngModel)]="usePoint" (ngModelChange)="usePoineChange()" class="w-100"
+                  style="border-bottom: 1px solid !important;">
                 </nz-input-number>
               </ng-template>
             </div>
-            <div class="col-7"><h6>/ {{rewardPoint}} điểm</h6></div>
+            <div class="col-7">
+              <h6>/ {{rewardPoint}} điểm</h6>
+            </div>
           </div>
         </div>
       </div>
@@ -106,35 +106,32 @@
       <div class="col-7 mb-3">
         <nz-input-number [(ngModel)]="reciveMoney" [nzMin]="1000" [nzStep]="1000" class="w-100">
         </nz-input-number>
+        <p *ngIf="totalBillPrice > 0 && reciveMoney == 0" style="color: red;">Nhập số tiền khách đưa</p>
       </div>
       <div class="col-12 mb-5">
         <div class="row">
           <div class="col-3">
-            <button nz-button nzShape="round" class="money__button"
-                    (click)="addReciveMoney(50000)">₫50.000
+            <button nz-button nzShape="round" class="money__button" (click)="addReciveMoney(50000)">₫50.000
             </button>
           </div>
           <div class="col-3">
-            <button nz-button nzShape="round" class="money__button"
-                    (click)="addReciveMoney(100000)">₫100.000
+            <button nz-button nzShape="round" class="money__button" (click)="addReciveMoney(100000)">₫100.000
             </button>
           </div>
           <div class="col-3">
-            <button nz-button nzShape="round" class="money__button"
-                    (click)="addReciveMoney(200000)">₫200.000
+            <button nz-button nzShape="round" class="money__button" (click)="addReciveMoney(200000)">₫200.000
             </button>
           </div>
           <div class="col-3">
-            <button nz-button nzShape="round" class="money__button"
-                    (click)="addReciveMoney(500000)">₫500.000
+            <button nz-button nzShape="round" class="money__button" (click)="addReciveMoney(500000)">₫500.000
             </button>
           </div>
         </div>
       </div>
       <div class="col-5 mb-5">
-        <h6>Thối lại</h6>
+        <h6>Thối lại:</h6>
       </div>
-      <div class="col-7 mb-5">
+      <div class="col-7 mb-5" *ngIf="reciveMoney > 0">
         <div *ngIf="reciveMoney + (usePoint * pointConvert) - totalBillPrice  >= 0;else empty">
           <h6>{{reciveMoney + (usePoint * pointConvert) - totalBillPrice | currency:'VND'}}</h6>
         </div>
@@ -146,12 +143,28 @@
   </div>
   <nz-divider></nz-divider>
   <div style="position: absolute; bottom: 16px; width: calc(100% - 32px);" class="d-flex align-content-end flex-wrap">
-    <button class="w-100 btn btn-success btn-lg" (click)="createInvoice()">
-      <span>Thanh toán</span>
-    </button>
-    <div class="d-none">
-      <app-retail-invoice [invoiceID]="invoiceID" [totalBillPrice]="totalBillPrice"
-                          [usePointPrice]="(usePoint * pointConvert)"></app-retail-invoice>
+    <div class="w-100" *ngIf="reciveMoney <= 0;else DisableButton">
+      <button class="w-100 btn btn-success btn-lg" disabled (click)="createInvoice()">
+        <span>Thanh toán</span>
+      </button>
     </div>
+
+    <ng-template #DisableButton>
+      <button class="w-100 btn btn-success btn-lg" (click)="createInvoice()">
+        <span>Thanh toán</span>
+      </button>
+    </ng-template>
+
+
+    <button printSectionId="print-section" ngxPrint class="d-none" id="print__bill__data__sale"></button>
+    <nz-modal [(nzVisible)]="isVisibleInvoicePrint" nzTitle="The first Modal" (nzOnCancel)="handleCancelInvoicePrint()"
+      (nzOnOk)="handleOkInvoicePrint()" [nzStyle]="{width: '35%'}" nzOkText="In hóa đơn">
+      <ng-container *nzModalContent>
+        <div id="print-section" style="height: 50vh; overflow: auto;">
+          <app-retail-invoice [invoiceID]="invoiceID" [totalBillPrice]="totalBillPrice"
+            [usePointPrice]="(usePoint * pointConvert)"></app-retail-invoice>
+        </div>
+      </ng-container>
+    </nz-modal>
   </div>
 </div>

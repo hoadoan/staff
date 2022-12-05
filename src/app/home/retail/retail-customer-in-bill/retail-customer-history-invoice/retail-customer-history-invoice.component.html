@@ -1,5 +1,8 @@
-<app-retail-customer-history-invoice-detail *ngFor="let item of listInvoiceID" [invoiceID]="item.id" [invoiceDate]="{
-    createdAt: item. createdAt,
-    createdBy: item.createdBy.name
-}">
-</app-retail-customer-history-invoice-detail>
+<div *ngFor="let item of listInvoiceID">
+    <app-retail-customer-history-invoice-detail [invoiceID]="item.id" [invoiceDate]="{
+        createdAt: item. createdAt,
+        createdBy: item.createdBy.name
+    }" role="button" (click)="SelectInvoice(item.id)">
+    </app-retail-customer-history-invoice-detail>
+    <nz-divider></nz-divider>
+</div>

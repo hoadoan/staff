@@ -4,43 +4,46 @@
       <td style="width: 2%" class="mt-0 pt-0">
         <i class="fa fa-trash-alt" role="button" (click)="deleteProduct()"></i>
       </td>
-      <td style="width: 7%"><h6>{{index + 1}}</h6></td>
-      <td style="width: 15%">
+      <td style="width: 7%">
+        <h5>{{index + 1}}</h5>
+      </td>
+      <td style="width: 20%">
         <h5>Tên: {{InputProduct.product.name}}</h5>
       </td>
       <td>
-        <nz-tag [nzColor]="'green'" *ngFor="let item of listBatchOfInputProduct, let i = index">
-          <span style="margin: 5px 10px 5px 5px;">{{'Lô: ' + item.batchId}} - {{'Số lượng: ' + item.quantity}}</span>
+        <nz-tag [nzColor]="'#87d068'" *ngFor="let item of listBatchOfInputProduct, let i = index">
+          <div class="text-left">
+            <app-batch-tag-infomation class="w-100" [batchInfo]="item"></app-batch-tag-infomation>
+          </div>
           <i class="fa fa-times" role="button" (click)="deleteSelectBatches(i)"></i>
         </nz-tag>
       </td>
       <td style="width: 10%">
         <button nz-button nzType="default" (click)="showModalBatches()">Chọn lô</button>
         <nz-modal [(nzVisible)]="isVisibleBatches" nzTitle="Chọn Lô" (nzOnCancel)="handleCancelBatches()"
-                  (nzOnOk)="handleOkBatches()" nzOkText="Chọn lô">
+          (nzOnOk)="handleOkBatches()" nzOkText="Chọn lô">
           <ng-container *nzModalContent>
             <div class="row">
-
+              <div class="form-group mb-3">
+                <h6>Sản phẩm: {{InputProduct.product.name}}</h6>
+              </div>
               <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Lô hàng</nz-form-label>
-                <nz-form-control [nzSm]="14" [nzXs]="24">
+                <nz-form-control [nzSm]="17" [nzXs]="24">
                   <nz-select nzShowSearch [nzDropdownRender]="renderTemplate" nzPlaceHolder="custom dropdown render"
-                             class="w-100" [(ngModel)]="selectBatch"
-                             (ngModelChange)="getUnitProductPrice()">
+                    class="w-100" [(ngModel)]="selectBatch" (ngModelChange)="getUnitProductPrice()">
                     <nz-option nzCustomContent *ngFor="let batche of batchesList"
-                               nzLabel="{{batche.batchBarcode}} - ngày hết hạn: {{batche.expiryDate | date:'dd/MM/yyyy'}}"
-                               [nzValue]="batche.id">
+                      nzLabel="{{batche.batchBarcode}} - ngày hết hạn: {{batche.expiryDate | date:'dd/MM/yyyy'}}"
+                      [nzValue]="batche.id">
                       {{batche.batchBarcode}} - ngày hết hạn: {{batche.expiryDate | date:'dd/MM/yyyy'}}
                     </nz-option>
                   </nz-select>
                   <ng-template #renderTemplate>
                     <nz-divider></nz-divider>
-                    <div class="container">
+                    <div class="container text-end" style="margin-bottom:10px">
                       <button nz-button nzType="primary" (click)="showModalNewBatch()">
-                        <i class="fa fa-plus"></i>
-                        Thêm Lô
+                        <i class="fa fa-plus"></i> Thêm Lô
                       </button>
-
                     </div>
                   </ng-template>
                 </nz-form-control>
@@ -48,26 +51,24 @@
 
               <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Số lượng</nz-form-label>
-                <nz-form-control [nzSm]="14" [nzXs]="24">
+                <nz-form-control [nzSm]="5" [nzXs]="24">
                   <nz-input-number [(ngModel)]="quantityBatch" [nzMin]="1" [nzStep]="1" class="w-100"></nz-input-number>
                 </nz-form-control>
-              </nz-form-item>
 
-              <nz-form-item>
-                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Đơn vị</nz-form-label>
-                <nz-form-control [nzSm]="14" [nzXs]="24">
+                <nz-form-label [nzSm]="5" [nzXs]="24" nzRequired>Đơn vị</nz-form-label>
+                <nz-form-control [nzSm]="7" [nzXs]="24">
                   <nz-select nzShowSearch nzPlaceHolder="Select a person" [(ngModel)]="selectUnitProductPrice">
-                    <nz-option *ngFor="let unit of listUnitProductPrice" [nzLabel]="unit.unit"
-                               [nzValue]="unit.id"></nz-option>
+                    <nz-option *ngFor="let unit of listUnitProductPrice" [nzLabel]="unit.unit" [nzValue]="unit.id">
+                    </nz-option>
                   </nz-select>
                 </nz-form-control>
               </nz-form-item>
 
               <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Tổng giá nhập</nz-form-label>
-                <nz-form-control [nzSm]="14" [nzXs]="24">
-                  <nz-input-number [(ngModel)]="totalPrice" [nzMin]="1" [nzMax]="10" [nzStep]="1"
-                                   class="w-100"></nz-input-number>
+                <nz-form-control [nzSm]="17" [nzXs]="24">
+                  <nz-input-number [(ngModel)]="totalPrice" [nzMin]="1000" [nzStep]="1000" class="w-100">
+                  </nz-input-number>
                 </nz-form-control>
               </nz-form-item>
             </div>
@@ -76,48 +77,53 @@
       </td>
     </tr>
   </table>
+
 </div>
 
 <nz-modal [(nzVisible)]="isVisible" nzTitle="Tạo lô mới" (nzOnCancel)="handleCancelNewBatch()"
-          (nzOnOk)="handleOkNewBatch()" nzOkText="Thêm lô mới">
+  (nzOnOk)="handleOkNewBatch()" nzOkText="Thêm lô mới">
   <ng-container *nzModalContent>
     <div class="form-group mb-3">
       <h5>Sản phẩm: {{InputProduct.product.name}}</h5>
     </div>
-    <div class="row mb-3">
-      <div class="col-6">
-        <div class="form-group">
-          <label>Ngày sản xuất</label>
-          <input type="date" class="form-control" [(ngModel)]="manufacturingDate">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Ngày sản xuất</nz-form-label>
+      <nz-form-control [nzSm]="17" [nzXs]="24">
+        <nz-date-picker class="w-100" nzPlaceHolder="Chọn ngày sản xuất" nzFormat="yyyy-MM-dd"
+          [nzDisabledDate]="disabledDate" [nzShowToday]="false" [(ngModel)]="manufacturingDate"></nz-date-picker>
+        <div *ngIf="checkManufacturingDate == false">
+          <small style="color: red">Vui lòng chọn ngày sản xuất</small>
         </div>
-      </div>
-      <div class="col-6">
-        <div class="form-group">
-          <label>Hạn sử dụng</label>
-          <input type="date" class="form-control" [(ngModel)]="expiryDate">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Hạn sử dụng</nz-form-label>
+      <nz-form-control [nzSm]="17" [nzXs]="24">
+        <nz-date-picker class="w-100" nzPlaceHolder="Chọn hạn sử dụng" nzFormat="yyyy-MM-dd"
+          [nzDisabledDate]="disabledDateExp" [nzShowToday]="false" [(ngModel)]="expiryDate"></nz-date-picker>
+        <div *ngIf="checkExpiryDate == false">
+          <small style="color: red">Vui lòng chọn hạn sử dụng</small>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-8">
-        <div class="form-group">
-          <label>Số lượng</label>
-          <input type="number" class="form-control" min="1" [(ngModel)]="quantityBatch">
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="form-group">
-          <label>Đơn vị</label>
-          <select type="batche" class="form-control" [(ngModel)]="selectUnitProductPrice">
-            <option *ngFor="let unit of listUnitProductPrice" [value]="unit.id">
-              {{unit.unit}}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Tổng giá</label>
-      <input type="number" class="form-control" min="1" [(ngModel)]="totalPrice">
-    </div>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Số lượng</nz-form-label>
+      <nz-form-control [nzSm]="5" [nzXs]="24">
+        <nz-input-number [(ngModel)]="quantityBatch" [nzMin]="1" [nzStep]="1" class="w-100"></nz-input-number>
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="5" [nzXs]="24" nzRequired>Đơn vị</nz-form-label>
+      <nz-form-control [nzSm]="7" [nzXs]="24">
+        <nz-select nzShowSearch nzPlaceHolder="Select a person" [(ngModel)]="selectUnitProductPrice">
+          <nz-option *ngFor="let unit of listUnitProductPrice" [nzLabel]="unit.unit" [nzValue]="unit.id"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Tổng giá nhập</nz-form-label>
+      <nz-form-control [nzSm]="17" [nzXs]="24">
+        <nz-input-number [(ngModel)]="totalPrice" [nzMin]="1000" [nzStep]="1000" class="w-100"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
   </ng-container>
 </nz-modal>

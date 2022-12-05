@@ -1,7 +1,8 @@
-import {supplier} from "../../home/input/input-element/input-element.model";
+import { supplier } from "../../home/input/input-element/input-element.model";
 
 export interface productinbillInterface {
   product: any,
+  use: string | null
   listBatches: goodsIssueNoteInterface[]
 }
 
@@ -29,6 +30,7 @@ export interface listBatchInterface {
 
 export interface ListInputProductInterface {
   product: any,
+  use: string | null,
   listBatch: listBatchInterface[]
 }
 

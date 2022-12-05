@@ -37,9 +37,6 @@ export class RetailInvoiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  printBill() {
     console.log(this.invoiceID)
     console.log(this.invoiceDetail)
 
@@ -62,31 +59,8 @@ export class RetailInvoiceComponent implements OnInit {
           this.totalBillPrice += item.quantity * item.unitPrice
         })
         console.log(this.invoiceDetail)
-        if (this.invoiceDetail.length != 0) {
-          console.log(this.totalBillPrice)
-          if (this.totalBillPrice > 0) {
-            this.confirmModal = this.modal.confirm({
-              nzTitle: 'Mở máy in',
-              nzContent: 'Bấm ok để mở máy in',
-              nzOnOk: () => {
-                document.getElementById('print__bill__data')?.click()
-
-                this.store.dispatch(counterSlice.resetState('ok'))
-                let currentUrl = this.router.url;
-                this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-                  this.router.navigate([currentUrl]);
-                });
-              },
-              nzOnCancel: () => {
-                this.store.dispatch(counterSlice.resetState('ok'))
-                let currentUrl = this.router.url;
-                this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-                  this.router.navigate([currentUrl]);
-                });
-              }
-            })
-          }
-        }
+        
+        
       },err =>{
         this.notification.create(
           "error",
@@ -98,4 +72,5 @@ export class RetailInvoiceComponent implements OnInit {
       console.log("k in đc:")
     }
   }
+
 }

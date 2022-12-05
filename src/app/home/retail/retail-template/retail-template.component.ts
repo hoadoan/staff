@@ -5,7 +5,6 @@ import {ProductService} from './../../../core/services/product/product.service';
 import {Component, OnInit} from '@angular/core';
 import {NzNotificationService} from 'ng-zorro-antd/notification';
 import * as counterSlice from "./../../../core/store/store.slice";
-import {log} from "ng-zorro-antd/core/logger";
 
 @Component({
   selector: 'app-retail-template',
@@ -46,12 +45,13 @@ export class RetailTemplateComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.listProductInBill$ = this.store.select(
-    //   createSelector(counterSlice.selectFeature, (state) => state.ListProductInbill)
-    // )
-    // this.listProductInBill$.subscribe((result) => {
-    //   this.listProductInBill = result
-    // })
+    this.listProductInBill$ = this.store.select(
+      createSelector(counterSlice.selectFeature, (state) => state.ListProductInbill)
+    )
+    this.listProductInBill$.subscribe((result) => {
+      this.listProductInBill = result
+      
+    })
   }
 
   UnShowListSearchProduct() {
@@ -75,7 +75,6 @@ export class RetailTemplateComponent implements OnInit {
             let checkBatchExist = true
             this.listProductInBill.forEach((item) => {
               if (result.items[0].id === item.product.id) {
-
                 item.listBatches.forEach((batch: any) => {
                   if (batch.batchId === result.items[0].batches[0].id) {
                     checkBatchExist = false
@@ -92,6 +91,7 @@ export class RetailTemplateComponent implements OnInit {
                   this.productservice.getProductByID(result.items[0].id).subscribe((result2) => {
                     this.store.dispatch(counterSlice.addBatchesToProductinBill({
                       product: result2.data,
+                      use: null,
                       listBatches: tempListBatches
                     }))
                   })
@@ -117,7 +117,7 @@ export class RetailTemplateComponent implements OnInit {
                 })
               }
             })
-
+            this.searchValue = ''
           } else {
             this.productservice.getProductByID(result.items[0].id).subscribe((result2) => {
               this.store.dispatch(counterSlice.addProducttoListBill({
@@ -131,23 +131,25 @@ export class RetailTemplateComponent implements OnInit {
                 ]
               }))
             })
-
+            this.searchValue = ''
           }
+        }, err => {
+          this.notification.create(
+            'error',
+            err.error.message,
+            ''
+          )
         })
       }
+    } else {
+      this.productservice.searchProduct(this.searchValue).subscribe((result) => {
+        this.listSearchProduct = result.items
+        let a = document.getElementById('tippy__search__product')?.style
+        if (a) {
+          a.display = "block"
+        }
+      })
     }
-    this.productservice.searchProduct(this.searchValue).subscribe((result) => {
-      this.listSearchProduct = result.items
-      console.log(this.listSearchProduct)
-      let a = document.getElementById('tippy__search__product')?.style
-      // if (this.listSearchProduct.length > 0) {
-      if (a) {
-        a.display = "block"
-      }
-      // }
-    })
-
-
     this.listProductInBill$ = this.store.select(
       createSelector(counterSlice.selectFeature, (state) => state.ListProductInbill)
     )
@@ -158,7 +160,6 @@ export class RetailTemplateComponent implements OnInit {
 
   addToListBill(id: number): void {
     this.searchValue = id
-    console.log(id)
     this.productservice.getProductByID(this.searchValue).subscribe((result) => {
       let checkProductExist = true
       if (this.listProductInBill.length > 0) {
@@ -170,12 +171,13 @@ export class RetailTemplateComponent implements OnInit {
         if (checkProductExist) {
           this.store.dispatch(counterSlice.addProducttoListBill({
             product: result.data,
+            use: null,
             listBatches: []
           }))
           this.searchValue = ''
         } else {
           this.notification.create(
-            'Error',
+            'error',
             'Lỗi',
             'Sản phẩm đã tồn tại trong hóa đơn'
           )
@@ -183,6 +185,7 @@ export class RetailTemplateComponent implements OnInit {
       } else {
         this.store.dispatch(counterSlice.addProducttoListBill({
           product: result.data,
+          use: null,
           listBatches: []
         }))
 

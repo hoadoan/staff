@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ProductService} from "../../../core/services/product/product.service";
-import {createSelector, Store} from "@ngrx/store";
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from "../../../core/services/product/product.service";
+import { createSelector, Store } from "@ngrx/store";
 import * as counterSlice from "./../../../core/store/store.slice";
-import {Observable} from "rxjs";
-import {NzNotificationService} from "ng-zorro-antd/notification";
-import {goodsIssueNoteInterface, goodsReceiptNoteInterface, listBatchInterface} from "../../../core/store/store.model";
-import {goodReceiptNote} from "./../../../core/store/store.slice";
-import {Router} from "@angular/router";
+import { Observable } from "rxjs";
+import { NzNotificationService } from "ng-zorro-antd/notification";
+import { goodsIssueNoteInterface, goodsReceiptNoteInterface, listBatchInterface } from "../../../core/store/store.model";
+import { goodReceiptNote } from "./../../../core/store/store.slice";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-return-product-template',
@@ -14,6 +14,8 @@ import {Router} from "@angular/router";
   styleUrls: ['./return-product-template.component.css']
 })
 export class ReturnProductTemplateComponent implements OnInit {
+
+  isVisibleReturnProduct: boolean = false;
 
   invoiceBarcode: string = ''
 
@@ -93,6 +95,9 @@ export class ReturnProductTemplateComponent implements OnInit {
     }
   }
 
+
+  listReturnProductId: any[] = []
+
   ReturnProduct() {
     if (this.invoiceData) {
       if (this.switchFullInvocie) {
@@ -105,16 +110,20 @@ export class ReturnProductTemplateComponent implements OnInit {
         console.log(full)
         this.productService.PostGoodReceiptNoteManager(full).subscribe((result) => {
           console.log(result)
+          this.listReturnProductId = result.data
+          console.log(this.listReturnProductId);
+          
+          this.isVisibleReturnProduct = true
           this.notification.create(
             "success",
             result.message,
             ""
           )
           this.store.dispatch(counterSlice.resetState('ok'))
-          let currentUrl = this.router.url;
-          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-            this.router.navigate([currentUrl]);
-          });
+          // let currentUrl = this.router.url;
+          // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          //   this.router.navigate([currentUrl]);
+          // });
 
         }, err => {
           this.notification.create(
@@ -130,23 +139,25 @@ export class ReturnProductTemplateComponent implements OnInit {
         let a: any = null
         goodReceiptNote$.subscribe((result1) => {
 
-            a = result1
+          a = result1
 
-          }
+        }
         )
 
         if (a != null) {
           this.productService.PostGoodReceiptNoteManager(a).subscribe((result) => {
+            this.listReturnProductId = result.data
+            this.isVisibleReturnProduct = true
             this.notification.create(
               "success",
               result.message,
               ""
             )
             this.store.dispatch(counterSlice.resetState('ok'))
-            let currentUrl = this.router.url;
-            this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-              this.router.navigate([currentUrl]);
-            });
+            // let currentUrl = this.router.url;
+            // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            //   this.router.navigate([currentUrl]);
+            // });
           }, err => {
             console.log(err.error)
             this.notification.create(
@@ -180,28 +191,38 @@ export class ReturnProductTemplateComponent implements OnInit {
     if (this.switchFullInvocie != true) {
       this.invoiceDetailData.forEach((item: any, index: number) => {
 
-          console.log(item)
+        console.log(item)
 
-          this.productService.getListProductUnitByProductId(item.product.id).subscribe((result) => {
-            listBatch = [...listBatch, {
-              batchId: item.batch.id,
-              quantity: item.quantity,
-              productUnitPriceId: result.data[0].id,
-              totalPrice: item.unitPrice * item.quantity,
-              batch: null
-            }]
+        this.productService.getListProductUnitByProductId(item.product.id).subscribe((result) => {
+          listBatch = [...listBatch, {
+            batchId: item.batch.id,
+            quantity: item.quantity,
+            productUnitPriceId: result.data[0].id,
+            totalPrice: item.unitPrice * item.quantity,
+            batch: null
+          }]
 
-            this.goodsReceiptNote.createModel[0].batches = listBatch
-            console.log(this.goodsReceiptNote)
-            if (this.goodsReceiptNote.createModel[0].batches.length == this.invoiceDetailData.length) {
-              this.store.dispatch(counterSlice.goodReceiptNote(this.goodsReceiptNote))
-            }
-          })
+          this.goodsReceiptNote.createModel[0].batches = listBatch
+          console.log(this.goodsReceiptNote)
+          if (this.goodsReceiptNote.createModel[0].batches.length == this.invoiceDetailData.length) {
+            this.store.dispatch(counterSlice.goodReceiptNote(this.goodsReceiptNote))
+          }
+        })
 
-        }
+      }
       )
     }
-
-
   }
+
+
+  handleCancelReturnProduct(){
+    this.isVisibleReturnProduct = false
+  }
+
+  handleOkReturnProduct(){
+
+    document.getElementById('print__bill__data__return')?.click()
+    this.isVisibleReturnProduct = false
+  }
+
 }

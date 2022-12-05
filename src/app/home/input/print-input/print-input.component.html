@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <div *ngIf="status; else ReturnProduct">
+        <h1 style="text-align: center;">Phiếu Nhập hàng</h1>
+    </div>
+    
+    <ng-template #ReturnProduct>
+        <h1 style="text-align: center;">Phiếu trả hàng</h1>
+    </ng-template>
+
+
+    <div style="margin: 20px;">
+        <h3>Nhà cung cấp: {{listInputInfo[0].data.supplier.name}}</h3>
+        <h3>Tổng tiền: {{totalPriceBill | currency:'VND'}}</h3>
+    </div>
+<div>
+    <!-- <h1>{{item.grnId}}</h1> -->
+    <table class="table" style="width: 100%;">
+        <thead class="table-light">
+            <tr style="font-size: 15px ;">
+                <th>Tên sản phẩm</th>
+                <th >Nhà cung cấp</th>
+                <th>Mã lô sản phẩm</th>
+                <th>Hạn sử dụng</th>
+                <th>Số lượng</th>
+                <th>Đơn vị</th>
+                <th>Thành tiền</th>
+              </tr>
+        </thead>
+        <tbody>
+            <tr  *ngFor="let item of listInputInfo">  
+                <td>{{item.productName}}</td>
+                <td>{{item.data.supplier.name}}</td>
+                <td>{{item.data.batch.barcode}}</td>
+                <td>{{item.data.batch.expiryDate|date:'dd-MM-yyyy'}}</td>
+                <td>{{item.data.quantity}}</td>
+                <td>{{item.data.unit}}</td>
+                <td>{{item.data.totalPrice | currency:'VND'}}</td>
+              </tr>
+        </tbody>
+    </table>
+    
+</div>
+</div>

@@ -18,6 +18,11 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 @NgModule({
   declarations: [],
@@ -41,7 +46,12 @@ import { NzTableModule } from 'ng-zorro-antd/table';
     NzTabsModule,
     NzSwitchModule,
     NzTableModule,
-    NzIconModule
+    NzIconModule,
+    NzStepsModule,
+    NzDatePickerModule,
+    NzDrawerModule,
+    NzUploadModule,
+    NzBreadCrumbModule
   ]
 })
 export class AntdModule { }

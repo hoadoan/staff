@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {createSelector, Store} from '@ngrx/store';
-import {ProductService} from 'src/app/core/services/product/product.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { createSelector, Store } from '@ngrx/store';
+import { ProductService } from 'src/app/core/services/product/product.service';
 import * as counterSlice from "../../../../core/store/store.slice";
-import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
-import {Observable} from "rxjs";
+import { NzModalRef, NzModalService } from "ng-zorro-antd/modal";
+import { Observable } from "rxjs";
 
 @Component({
   selector: '[app-retail-product-in-bill-batch]',
@@ -13,6 +13,7 @@ import {Observable} from "rxjs";
 export class RetailProductInBillBatchComponent implements OnInit {
 
   @Input() batch: any
+  @Input() useNote: string | null = null
   confirmModal?: NzModalRef;
   quantity: number = 0
   unitID: number = 0
@@ -40,16 +41,11 @@ export class RetailProductInBillBatchComponent implements OnInit {
 
 
     this.productService.getBatchByBatchID(this.batch.batchId).subscribe(batch => {
-      console.log(batch.data);
       this.listUnitProductPrice = batch.data.currentQuantity
       this.batchInfo = batch.data
-
-      console.log(this.batchInfo)
-
       this.listUnitProductPrice.forEach((unit: any) => {
         if (unit.id == this.batch.unit) {
           this.maxQuantity = unit.currentQuantity
-          console.log(this.maxQuantity)
         }
       })
 
@@ -82,18 +78,14 @@ export class RetailProductInBillBatchComponent implements OnInit {
   }
 
   changeQuantity() {
-    console.log(this.quantity)
-
     let tempListProductInBill = [...this.listProductInBill]
     let tempListBatches: any[] = []
 
     tempListProductInBill.forEach((unit: any, index) => {
       if (unit.product.id === this.batchInfo.product.id) {
-        console.log('ok', unit)
         tempListBatches = [...unit.listBatches]
         tempListBatches.forEach((batch: any, index: number) => {
           if (batch.batchId === this.batch.batchId) {
-            console.log(batch)
             tempListBatches[index] = {
               ...batch,
               quantity: this.quantity
@@ -105,6 +97,7 @@ export class RetailProductInBillBatchComponent implements OnInit {
 
     this.store.dispatch(counterSlice.addBatchesToProductinBill({
       product: this.productInfo,
+      use: this.useNote,
       listBatches: tempListBatches
     }))
   }
@@ -113,7 +106,6 @@ export class RetailProductInBillBatchComponent implements OnInit {
     this.listUnitProductPrice.forEach((unit: any) => {
       if (unit.id == this.unitID) {
         this.maxQuantity = unit.currentQuantity
-        console.log(this.maxQuantity)
       }
     })
     this.productService.getProductUnitbyUnitID(this.unitID + '').subscribe((result: any) => {
@@ -125,11 +117,9 @@ export class RetailProductInBillBatchComponent implements OnInit {
 
     tempListProductInBill.forEach((unit: any, index) => {
       if (unit.product.id === this.batchInfo.product.id) {
-        console.log('ok', unit)
         tempListBatches = [...unit.listBatches]
         tempListBatches.forEach((batch: any, index: number) => {
           if (batch.batchId === this.batch.batchId) {
-            console.log(batch)
             tempListBatches[index] = {
               ...batch,
               unit: this.unitID
@@ -141,6 +131,7 @@ export class RetailProductInBillBatchComponent implements OnInit {
 
     this.store.dispatch(counterSlice.addBatchesToProductinBill({
       product: this.productInfo,
+      use: this.useNote,
       listBatches: tempListBatches
     }))
   }

@@ -1,13 +1,13 @@
-import {Observable} from 'rxjs';
-import {NzNotificationService} from 'ng-zorro-antd/notification';
-import {NzModalRef, NzModalService} from 'ng-zorro-antd/modal';
-import {Router} from '@angular/router';
-import {UserService} from './../../../core/services/user/user.service';
-import {ProductService} from './../../../core/services/product/product.service';
-import {Component, Input, OnInit} from '@angular/core';
-import {createSelector, Store} from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { Router } from '@angular/router';
+import { UserService } from './../../../core/services/user/user.service';
+import { ProductService } from './../../../core/services/product/product.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { createSelector, Store } from '@ngrx/store';
 import * as counterSlice from "./../../../core/store/store.slice";
-import {POINTCONVERT} from "../../../core/utils/AppConfig";
+import { POINTCONVERT } from "../../../core/utils/AppConfig";
 
 @Component({
   selector: 'app-retail-customer-in-bill',
@@ -63,9 +63,11 @@ export class RetailCustomerInBillComponent implements OnInit {
 
     this.listProductInBill$ = this.store.select(
       createSelector(counterSlice.selectFeature, (state) => state.ListProductInbill)
+      
     )
     this.listProductInBill$.subscribe((result) => {
       this.listProductInBill = result
+      this.isVisibleHistoryInvoice = false
       if (this.listProductInBill.length > 0) {
         this.totalBillPrice = 0
         this.listProductInBill.forEach((element) => {
@@ -130,11 +132,12 @@ export class RetailCustomerInBillComponent implements OnInit {
         this.listProductInBill.forEach((element, index) => {
           tempproduct.push({
             productId: element.product.id,
+            use: element.use,
             goodsIssueNote: element.listBatches
           })
         })
 
-        this.invoice = {...this.invoice, product: tempproduct}
+        this.invoice = { ...this.invoice, product: tempproduct }
 
         if (this.invoice.product.length <= 0) {
           this.notification.create(
@@ -147,7 +150,6 @@ export class RetailCustomerInBillComponent implements OnInit {
           this.productservice.retailInvoice(this.invoice).subscribe((result) => {
             if (result) {
               this.invoiceID = result.data.invoiceId
-              // console.log(result.invoiceId)
 
               console.log("ok")
               if (this.invoiceID != 0) {
@@ -156,29 +158,10 @@ export class RetailCustomerInBillComponent implements OnInit {
                   "Tạo hóa đơn thành công",
                   ""
                 )
+                this.store.dispatch(counterSlice.resetState('ok'))
               }
             }
-            this.confirmModal = this.modal.confirm({
-              nzTitle: 'Bán hàng',
-              nzContent: 'xuất hóa đơn',
-              nzOnOk: () => {
-                console.log(this.invoiceID)
-                if (this.invoiceID != 0) {
-                  document.getElementById('print__bill__button')?.click()
-                  this.store.dispatch(counterSlice.resetState('ok'))
-                }
-              },
-              nzOnCancel: () => {
-                this.store.dispatch(counterSlice.resetState('ok'))
-                let currentUrl = this.router.url;
-                this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-                  this.router.navigate([currentUrl]);
-                  console.log(currentUrl);
-                });
-              }
-            })
-
-
+            this.isVisibleInvoicePrint = true
           }, err => {
             console.log(err)
             this.notification.create(
@@ -213,7 +196,7 @@ export class RetailCustomerInBillComponent implements OnInit {
   }
 
   usePoineChange() {
-    this.invoice = {...this.invoice, usePoint: this.usePoint}
+    this.invoice = { ...this.invoice, usePoint: this.usePoint }
     console.log(this.invoice)
     this.store.dispatch(counterSlice.addCustomer(this.invoice))
 
@@ -230,7 +213,7 @@ export class RetailCustomerInBillComponent implements OnInit {
       this.rewardPoint = result.data.totalPoint
     })
 
-    this.invoice = {...this.invoice, customerId: this.customerInfo.id, customer: null}
+    this.invoice = { ...this.invoice, customerId: this.customerInfo.id, customer: null }
 
     console.log(this.invoice)
 
@@ -238,7 +221,7 @@ export class RetailCustomerInBillComponent implements OnInit {
 
   }
 
-  inputValue ?: string;
+  inputValue?: string;
   options: string[] = [];
 
   onInput(event: Event):
@@ -272,4 +255,26 @@ export class RetailCustomerInBillComponent implements OnInit {
   handleCancelAddNewCustomer(): void {
     this.isVisibleNewCustomer = false;
   }
+
+
+  isVisibleInvoicePrint: boolean = false;
+  handleCancelInvoicePrint() {
+    this.isVisibleInvoicePrint = false;
+  }
+  handleOkInvoicePrint() {
+    this.isVisibleInvoicePrint = false;
+
+    if (this.invoiceID != 0) {
+
+      document.getElementById('print__bill__data__sale')?.click()
+
+      this.store.dispatch(counterSlice.resetState('ok'))
+      let currentUrl = this.router.url;
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([currentUrl]);
+      });
+    }
+  }
+
+
 }

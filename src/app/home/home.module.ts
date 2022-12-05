@@ -27,6 +27,11 @@ import {NgxBarcodeModule} from "@greatcloak/ngx-barcode";
 import { ReturnProductDetailComponent } from './return-product/return-product-detail/return-product-detail.component';
 import {ClickOutsideModule} from "ng-click-outside";
 import { SamplePrescriptionTemplateComponent } from './sample-prescription/sample-prescription-template/sample-prescription-template.component';
+import { BatchTagInfomationComponent } from './input/input-element/batch-tag-infomation/batch-tag-infomation.component';
+import { PrintInputComponent } from './input/print-input/print-input.component';
+import { HistorySellComponent } from './profile/history-sell/history-sell.component';
+import { HistoryReceiptNoteComponent } from './profile/history-receipt-note/history-receipt-note.component';
+import { ReceiptNoteDetailComponent } from './profile/receipt-note-detail/receipt-note-detail.component';
 
 const homeRoute: Routes = [
   {
@@ -60,13 +65,18 @@ const homeRoute: Routes = [
     RetailInvoiceComponent,
     ReturnProductDetailComponent,
     SamplePrescriptionTemplateComponent,
+    BatchTagInfomationComponent,
+    PrintInputComponent,
+    HistorySellComponent,
+    HistoryReceiptNoteComponent,
+    ReceiptNoteDetailComponent,
 
 
   ],
   imports: [
     NgxPrintModule,
     CommonModule,
-    RouterModule.forRoot(homeRoute),
+    RouterModule.forChild(homeRoute),
     AntdModule,
     FormsModule,
     ReactiveFormsModule,
