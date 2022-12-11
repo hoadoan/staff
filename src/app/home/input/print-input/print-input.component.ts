@@ -20,20 +20,16 @@ export class PrintInputComponent implements OnInit {
     private notification: NzNotificationService
   ) { }
 
-  async ngOnInit(): Promise<void> {
-    console.log(this.listInputID);
-    
-    if (this.listInputID) {
-      await this.listInputID.forEach((item) => {
-        this.productService.getGoodsReceiptNoteById(item.grnId).subscribe((result) => {
-          
-          this.productService.getBatchById(result.data.batch.id).subscribe((product)=>{
-            this.listInputInfo.push({data: result.data, productName: product.data.product.name})
-            this.totalPriceBill += result.data.totalPrice
-          })
-          
-          console.log(this.listInputInfo);
-          
+  ngOnInit() {
+    if (this.listInputID.length > 0) {
+      this.listInputID.forEach((item: any) => {
+        this.productService.getGoodsReceiptNoteById(item?.grnId).subscribe((result: any) => {
+          if (result?.data) {
+            this.productService.getBatchById(result.data.batch.id).subscribe((product) => {
+              this.listInputInfo.push({ data: result.data, productName: product.data.product.name })
+              this.totalPriceBill += result.data.totalPrice
+            })
+          }
         }), (err: any) => {
           this.notification.create(
             'error',
@@ -41,10 +37,7 @@ export class PrintInputComponent implements OnInit {
             ''
           )
         }
-
       })
-      
-
     }
   }
 

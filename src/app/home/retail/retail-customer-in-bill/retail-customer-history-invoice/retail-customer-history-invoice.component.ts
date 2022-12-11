@@ -1,5 +1,5 @@
-import { product } from './../../retail.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { product, customer } from './../../retail.model';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ProductService } from "../../../../core/services/product/product.service";
 import { NzNotificationService } from "ng-zorro-antd/notification";
 import * as counterSlice from "./../../../../core/store/store.slice";
@@ -40,6 +40,13 @@ export class RetailCustomerHistoryInvoiceComponent implements OnInit {
       )
     })
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+
+
+  }
+
   SelectInvoice(id: number, barcode: string) {
 
     if (this.status == 1) {
@@ -47,10 +54,8 @@ export class RetailCustomerHistoryInvoiceComponent implements OnInit {
     } else {
       this.productService.getInvoiceDetailByInvoiceID(id).subscribe((result) => {
         this.ListProductInInvoiceDetail = result.data
-        console.log(this.ListProductInInvoiceDetail);
         this.ListProductInInvoiceDetail.forEach((item: any) => {
           this.productService.getProductByID(item.product.id).subscribe((resultProduct) => {
-            console.log();
             this.store.dispatch(counterSlice.addProducttoListBill({
               product: resultProduct.data,
               use: null,
@@ -66,8 +71,6 @@ export class RetailCustomerHistoryInvoiceComponent implements OnInit {
         )
       })
     }
-
-
   }
 
 }

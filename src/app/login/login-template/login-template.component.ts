@@ -38,6 +38,7 @@ export class LoginTemplateComponent implements OnInit {
       var formData = new FormData()
       formData.append('username', this.username)
       formData.append('password', this.password)
+      formData.append('fCMToken', 'fCMToken')
       this.httpclient.post(DOMAIN + 'auth/user/login', formData).subscribe((result: any) => {
         if (result.accessToken) {
           // if (result.isAdmin == false) {

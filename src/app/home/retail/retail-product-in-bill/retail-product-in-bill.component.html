@@ -2,61 +2,62 @@
   <div class="p-2">
     <table class="mb-3">
       <tbody>
-      <tr>
-        <td style="width: 5%">
-          <h4>{{index + 1}}</h4>
-        </td>
-        <td style="width: 25%">
-          <h3>{{productInbill.product.name}}</h3>
-        </td>
-        <td style="width: 20%">
-          <h6>Đường dùng: {{productInbill.product.routeOfAdministration.name}}</h6>
-        </td>
-        <td colspan="4">
-          <textarea rows="2" placeholder="Ghi chú" nz-input [(ngModel)]="noteInput" (change)="changeNote()"></textarea>
-        </td>
-        <td style="display: flex; margin: auto; width: 5%" role="button" (click)="showConfirmDeleteProductInBill()">
-          <i class="fa fa-times-circle"></i>
-        </td>
-      </tr>
-      <tr app-retail-product-in-bill-batch *ngFor="let item of productInbill.listBatches" [batch]="item" [useNote]="noteInput">
-      </tr>
-      <tr>
-        <td colspan="6"></td>
-        <td colspan="2" role="button" (click)="showAddBatchModal()"><i class="fa fa-plus"></i> thêm Lô</td>
+        <tr>
+          <td style="width: 5%">
+            <h4>{{index + 1}}</h4>
+          </td>
+          <td style="width: 25%">
+            <h3>{{productInbill.product.name}}</h3>
+          </td>
+          <td style="width: 20%">
+            <h6>Đường dùng: {{productInbill.product.routeOfAdministration.name}}</h6>
+          </td>
+          <td colspan="4">
+            <textarea rows="2" placeholder="Ghi chú" nz-input [(ngModel)]="noteInput"
+              (change)="changeNote()"></textarea>
+          </td>
+          <td style="display: flex; margin: auto; width: 5%" role="button" (click)="showConfirmDeleteProductInBill()">
+            <i class="fa fa-times-circle"></i>
+          </td>
+        </tr>
+        <tr app-retail-product-in-bill-batch *ngFor="let item of productInbill.listBatches" [batch]="item"
+          [useNote]="noteInput">
+        </tr>
+        <tr>
+          <td colspan="6"></td>
+          <td colspan="2" role="button" (click)="showAddBatchModal()"><i class="fa fa-plus"></i> thêm Lô</td>
 
-      </tr>
+        </tr>
       </tbody>
     </table>
   </div>
 </div>
 
 <nz-modal [(nzVisible)]="isVisibleAddBatch" nzTitle="Chọn lô cho thuốc {{productInbill.product.name}}"
-          (nzOnCancel)="handleCancelAddbatch()" (nzOnOk)="handleOkAddBatch()" nzOkText="Chọn lô">
+  (nzOnCancel)="handleCancelAddbatch()" (nzOnOk)="handleOkAddBatch()" nzOkText="Chọn lô">
   <ng-container *nzModalContent>
     <div>
       <div class="form-group">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Lô</nz-form-label>
         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="goodsIssueNote.batchId"
-                   (ngModelChange)="selectBatchIDChanged()">
+          (ngModelChange)="selectBatchIDChanged()">
           <nz-option *ngFor="let item of ListBatchesOfProductInBill"
-                     nzLabel="{{item.id}} HSD: {{item.expiryDate|date:'dd/MM/yyyy'}}" [nzValue]="item.id"></nz-option>
+            nzLabel="{{item.id}} HSD: {{item.expiryDate|date:'dd/MM/yyyy'}}" [nzValue]="item.id"></nz-option>
         </nz-select>
       </div>
       <div class="form-group">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Đơn vị</nz-form-label>
         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="goodsIssueNote.unit"
-                   (ngModelChange)="changeUnit()">
+          (ngModelChange)="changeUnit()">
           <nz-option *ngFor="let item of ListUnitOfBatches" nzLabel="Tồn kho: {{item.currentQuantity}} {{item.unit}}"
-                     [nzValue]="item.id"></nz-option>
+            [nzValue]="item.id"></nz-option>
         </nz-select>
       </div>
       <div class="form-group">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Số lượng</nz-form-label>
         <nz-input-number [(ngModel)]="goodsIssueNote.quantity" [nzMin]="1" [nzMax]="MaxBatchQuantity" class="w-100"
-                         [nzStep]="1"></nz-input-number>
+          [nzStep]="1"></nz-input-number>
       </div>
     </div>
   </ng-container>
 </nz-modal>
-

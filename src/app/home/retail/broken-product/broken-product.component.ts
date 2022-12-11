@@ -101,7 +101,6 @@ export class BrokenProductComponent implements OnInit {
           this.productservice.retailInvoice(this.invoice).subscribe((result) => {
             console.log(result.message)
             if (result) {
-
               this.notification.create(
                 "success",
                 result.message,

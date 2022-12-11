@@ -7,7 +7,8 @@
     </nz-select>
     <nz-divider></nz-divider>
     <div *ngIf="selectedValue" style="height: 53vh;overflow: auto;">
-        <app-retail-customer-history-invoice [status]="1" [customerId]="selectedValue.id">
+        
+        <app-retail-customer-history-invoice [status]="1" [customerId]="id">
         </app-retail-customer-history-invoice>
     </div>
 </div>

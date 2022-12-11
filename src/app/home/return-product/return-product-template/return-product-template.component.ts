@@ -1,3 +1,5 @@
+import { batchs } from './../../input/input-element/input-element.model';
+import { goodsIssueNote } from './../../retail/retail.model';
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from "../../../core/services/product/product.service";
 import { createSelector, Store } from "@ngrx/store";
@@ -26,11 +28,13 @@ export class ReturnProductTemplateComponent implements OnInit {
   switchFullInvocie: boolean = true
   returnTotalPrice: number = 0
 
-  goodsReceiptNote: goodsReceiptNoteInterface = {
+  goodsIssueNote$: Observable<any> | undefined
+
+  goodsReceiptNote: any = {
     goodsReceiptNoteTypeId: 2,
     createModel: [{
       batches: []
-    }],
+    }] as any,
     invoiceId: 0,
     isFull: true
   }
@@ -46,6 +50,15 @@ export class ReturnProductTemplateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.goodsIssueNote$ = this.store.select(
+      createSelector(counterSlice.selectFeature, (state) => state.goodsReceiptNote)
+    )
+    this.goodsIssueNote$.subscribe((result) => {
+      this.goodsReceiptNote = result
+      console.log(this.goodsReceiptNote);
+
+    })
 
     this.invoiceBarcode$ = this.store.select(
       createSelector(counterSlice.selectFeature, (state) => state.invoiceID)
@@ -76,9 +89,12 @@ export class ReturnProductTemplateComponent implements OnInit {
     if (this.invoiceBarcode.length == 13) {
       if (this.invoiceBarcode.slice(0, 3) === 'INV') {
         this.productService.getInvocieByBarcode(this.invoiceBarcode).subscribe((result) => {
-          this.invoiceData = result.data
-          this.goodsReceiptNote.invoiceId = this.invoiceData.id
-          console.log(this.invoiceData)
+          if (result.data) {
+            this.invoiceData = result.data
+            let tempGoods = { ...this.goodsReceiptNote }
+            tempGoods.invoiceId = this.invoiceData.id
+            this.goodsReceiptNote = { ...tempGoods }
+          }
         }, err => {
           this.notification.create(
             "error",
@@ -87,21 +103,23 @@ export class ReturnProductTemplateComponent implements OnInit {
           )
         })
         this.productService.getInvocieDetailByBarcode(this.invoiceBarcode).subscribe((result) => {
-          this.invoiceDetailData = result.data
-          this.store.dispatch(counterSlice.addListReturnProduct(this.invoiceDetailData))
-          this.invoiceDetailData$ = this.store.select(
-            createSelector(counterSlice.selectFeature, (state) => state.ListReturnProduct)
-          )
-          this.invoiceDetailData$.subscribe((result) => {
-            this.invoiceDetailData = result
-            this.returnTotalPrice = 0
-            this.invoiceDetailData.forEach((element: any, index: number) => {
-              this.returnTotalPrice += element.quantity * element.unitPrice
+
+          if (result.data) {
+            this.invoiceDetailData = result.data
+
+            this.store.dispatch(counterSlice.addListReturnProduct(this.invoiceDetailData))
+            this.invoiceDetailData$ = this.store.select(
+              createSelector(counterSlice.selectFeature, (state) => state.ListReturnProduct)
+            )
+            this.invoiceDetailData$.subscribe((result) => {
+              this.invoiceDetailData = result
+              this.returnTotalPrice = 0
+              this.invoiceDetailData.forEach((element: any, index: number) => {
+                this.returnTotalPrice += element.quantity * element.unitPrice
+              })
             })
-          })
-
-          this.switchFullInvocie = true
-
+            this.switchFullInvocie = true
+          }
         }, err => {
           this.notification.create(
             "error",
@@ -156,15 +174,14 @@ export class ReturnProductTemplateComponent implements OnInit {
         ))
         let a: any = null
         goodReceiptNote$.subscribe((result1) => {
-
           a = result1
+          console.log(a);
 
         }
         )
-
         if (a != null) {
           this.productService.PostGoodReceiptNoteManager(a).subscribe((result) => {
-            this.listReturnProductId = result.data
+            this.listReturnProductId = result?.data
             this.isVisibleReturnProduct = true
             this.notification.create(
               "success",
@@ -177,7 +194,6 @@ export class ReturnProductTemplateComponent implements OnInit {
             //   this.router.navigate([currentUrl]);
             // });
           }, err => {
-            console.log(err.error)
             this.notification.create(
               "error",
               err.error.message,
@@ -189,12 +205,9 @@ export class ReturnProductTemplateComponent implements OnInit {
       }
     } else {
       this
-        .notification
-        .create(
-          "error"
-          ,
-          'Không có thông tin'
-          ,
+        .notification.create(
+          "error",
+          'Không có thông tin',
           'Vui lòng nhập đơn hàng để có thông tin đơn hàng'
         );
     }
@@ -203,44 +216,62 @@ export class ReturnProductTemplateComponent implements OnInit {
   }
 
   checkReturnFullProduct() {
-    this.goodsReceiptNote.isFull = this.switchFullInvocie
-    console.log(this.goodsReceiptNote)
-    let listBatch: any[] = []
-    if (this.switchFullInvocie != true) {
+    // this.goodsReceiptNote.isFull = this.switchFullInvocie
+    let tempGoods = { ...this.goodsReceiptNote }
+    let tempCreateModel = [...tempGoods.createModel]
+    let tempBatch = [...tempCreateModel[0].batches]
+
+    tempGoods.isFull = this.switchFullInvocie
+    this.goodsReceiptNote = { ...tempGoods }
+
+
+    if (this.switchFullInvocie == false) {
+      let listBatch: any[] = []
       this.invoiceDetailData.forEach((item: any, index: number) => {
-
-        console.log(item)
-
         this.productService.getListProductUnitByProductId(item.product.id).subscribe((result) => {
-          listBatch = [...listBatch, {
-            batchId: item.batch.id,
-            quantity: item.quantity,
-            productUnitPriceId: result.data[0].id,
-            totalPrice: item.unitPrice * item.quantity,
-            batch: null
-          }]
-
-          this.goodsReceiptNote.createModel[0].batches = listBatch
-          console.log(this.goodsReceiptNote)
-          if (this.goodsReceiptNote.createModel[0].batches.length == this.invoiceDetailData.length) {
-            this.store.dispatch(counterSlice.goodReceiptNote(this.goodsReceiptNote))
+          if (item.quantity - item.returnedQuantity > 0) {
+            listBatch = [...listBatch, {
+              batchId: item.batch.id,
+              quantity: item.quantity - item.returnedQuantity,
+              productUnitPriceId: result.data[0].id,
+              totalPrice: item.unitPrice * (item.quantity - item.returnedQuantity),
+              batch: null
+            }]
+            tempBatch = [...listBatch]
+            tempCreateModel = [{ batches: tempBatch }]
+            tempGoods.createModel = [...tempCreateModel]
+            this.goodsReceiptNote = { ...tempGoods }
+            console.log(this.goodsReceiptNote);
+            if (this.goodsReceiptNote.createModel[0].batches.length == this.invoiceDetailData.length) {
+              this.store.dispatch(counterSlice.goodReceiptNote(this.goodsReceiptNote))
+              console.log(this.goodsReceiptNote);
+            }
           }
         })
-
-      }
-      )
+      })
+    } else {
+      tempCreateModel = [{ batches: [] }]
+      tempGoods.createModel = [...tempCreateModel]
+      this.goodsReceiptNote = { ...tempGoods }
+      this.store.dispatch(counterSlice.goodReceiptNote(this.goodsReceiptNote))
+      console.log(this.goodsReceiptNote);
     }
   }
 
 
   handleCancelReturnProduct() {
     this.isVisibleReturnProduct = false
+    this.store.dispatch(counterSlice.resetState('ok'))
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    })
   }
 
   handleOkReturnProduct() {
-
     document.getElementById('print__bill__data__return')?.click()
     this.isVisibleReturnProduct = false
+    this.store.dispatch(counterSlice.resetState('ok'))
   }
 
 

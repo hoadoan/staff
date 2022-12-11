@@ -12,6 +12,7 @@ export class SearchCustomerReturnProductComponent implements OnInit {
 
   selectedValue: any
   listCustomer: any[] = []
+  id: number = 0
 
   constructor(
     private user: UserService,
@@ -40,7 +41,10 @@ export class SearchCustomerReturnProductComponent implements OnInit {
   }
 
   addcustomer() {
+    
+    this.id = this.selectedValue.id
 
+    console.log(this.id);
 
   }
 

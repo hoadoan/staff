@@ -86,15 +86,26 @@ export class RetailProductInBillComponent implements OnInit {
         if (this.ListBatchesOfProductInBill[i].id == this.goodsIssueNote.batchId) {
           this.ListUnitOfBatches = this.ListBatchesOfProductInBill[i].currentQuantity
           this.goodsIssueNote.unit = this.ListUnitOfBatches[0].id
+          this.goodsIssueNote.quantity = 1
         }
+      }
+    }
+
+    for (let i = 0; i < this.ListUnitOfBatches.length; i++) {
+      if (this.ListUnitOfBatches[i].id == this.goodsIssueNote.unit) {
+        this.MaxBatchQuantity = this.ListUnitOfBatches[i].currentQuantity
+        
       }
     }
   }
 
   changeUnit() {
+    console.log(this.ListUnitOfBatches);
+    
     for (let i = 0; i < this.ListUnitOfBatches.length; i++) {
       if (this.ListUnitOfBatches[i].id == this.goodsIssueNote.unit) {
-        this.MaxBatchQuantity = this.ListUnitOfBatches[i].quantity
+        this.MaxBatchQuantity = this.ListUnitOfBatches[i].currentQuantity
+        this.goodsIssueNote.quantity = 1
       }
     }
   }

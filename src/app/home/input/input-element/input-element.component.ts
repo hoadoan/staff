@@ -1,3 +1,4 @@
+import { product } from './../../retail/retail.model';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Store, createSelector } from '@ngrx/store';
@@ -36,6 +37,7 @@ export class InputElementComponent implements OnInit {
   quantityBatch: number = 1
   selectUnitProductPrice: number = 0
   listUnitProductPrice: any
+  listUnitProductPriceNew: any
   totalPrice: number = 1000
   listBatches: batchs[] = []
   /* ************************* */
@@ -87,11 +89,23 @@ export class InputElementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productService.getBatchesByProductID(this.InputProduct.product.id).subscribe((result) => {
-      this.batchesList = result.data
-      this.selectBatch = this.batchesList[0].id
-      this.listUnitProductPrice = result.data[0].currentQuantity
-      this.selectUnitProductPrice = this.listUnitProductPrice[0].id
+
+    this.productService.getListProductUnitByProductId(this.InputProduct?.product.id).subscribe((result) => {
+      this.listUnitProductPrice = result.data
+      console.log(result);
+
+      this.selectUnitProductPrice = this.listUnitProductPrice[0]?.id
+    }, err => {
+      this.notification.create(
+        "error",
+        err.error.message,
+        ""
+      )
+    })
+
+    this.productService.getBatchesByProductID(this.InputProduct?.product.id).subscribe((result) => {
+      this.batchesList = result?.data
+      this.selectBatch = this.batchesList[0]?.id
     }, err => {
       this.notification.create(
         "error",

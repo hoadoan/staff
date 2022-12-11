@@ -148,31 +148,37 @@ export class InputInfoSupplierComponent implements OnInit {
             ""
           )
         } else {
-          this.productService.PostGoodReceiptNoteManager(this.goodsReceiptNote).subscribe((resultInput) => {
-            console.log(resultInput)
-            if (resultInput) {
+          if (this.goodsReceiptNote) {
+            this.productService.PostGoodReceiptNoteManager(this.goodsReceiptNote).subscribe((resultInput?) => {
+              console.log(resultInput)
+              if (resultInput) {
 
-              this.listInputId = resultInput.data
-              console.log(this.listInputId);
+                this.listInputId = resultInput?.data
+                // console.log(this.listInputId);
 
 
+                this.notification.create(
+                  'success',
+                  resultInput.message,
+                  ''
+                );
+                this.store.dispatch(counterSlice.resetState('ok'))
+                // this.isVisiblePrint = true;
+                console.log(this.isVisiblePrint);
+
+                if (!this.isVisiblePrint) {
+                  this.isVisiblePrint = true
+                }
+              }
+            }, err => {
+              console.log(err.error.message)
               this.notification.create(
-                'success',
-                resultInput.message,
+                'error',
+                err.error.message,
                 ''
               );
-              this.store.dispatch(counterSlice.resetState('ok'))
-              this.isVisiblePrint = true;
-
-            }
-          }, err => {
-            console.log(err.error.message)
-            this.notification.create(
-              'error',
-              err.error.message,
-              ''
-            );
-          })
+            })
+          }
         }
       }
     });

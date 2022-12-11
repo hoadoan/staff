@@ -123,6 +123,7 @@ export class ReturnProductDetailComponent implements OnInit {
     let tempUnit = {...tempBatches[this.index]}
 
     tempUnit.quantity = this.quantityProduct
+    tempUnit.totalPrice = this.quantityProduct * this.productData?.unitPrice
 
     tempBatches[this.index] = tempUnit
     let tempCreateModel = [{
@@ -161,11 +162,12 @@ export class ReturnProductDetailComponent implements OnInit {
       nzTitle: 'Xóa Lô thuốc này ra khỏi hóa đơn',
       nzContent: 'Khi xóa ra khỏi hóa đơn bạn không thể thêm lại vào danh sách',
       nzOnOk: () => {
+
+        console.log(this.index);
+        
         let temp = [...this.invoiceDetailData]
 
         temp.splice(this.index, 1)
-
-        console.log(temp)
 
         this.invoiceDetailData = [...temp]
 
@@ -173,6 +175,8 @@ export class ReturnProductDetailComponent implements OnInit {
 
         let tempgood = {...this.goodReceiptNote}
         let tempBatches = [...tempgood.createModel[0].batches]
+        console.log(tempBatches);
+        
         tempBatches.splice(this.index, 1)
         let tempCreateModel = [{
           batches: tempBatches

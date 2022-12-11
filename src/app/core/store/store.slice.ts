@@ -22,7 +22,9 @@ const counterSlice = createSlice({
     ListReturnProduct: [] as any,
     goodsReceiptNote: {
       goodsReceiptNoteTypeId: 2,
-      createModel: [] as any,
+      createModel: [{
+        batches: []
+      }] as any,
       invoiceId: 0,
       isFull: true
     }
@@ -39,27 +41,30 @@ const counterSlice = createSlice({
     addInvoiceID: (state, action) => {
       state.invoiceID = action.payload
       console.log(state.invoiceID);
-      
+
     },
     resetState: (state, action) => {
-      state.ListProductInbill = []
-      state.ListInputProduct = []
-      state.listGoodsReceiptNote = []
-      state.ListReturnProduct = []
-      state.invoice = {
-        goodsIssueNoteTypeId: 1,
-        usePoint: 0,
-        customerId: null,
-        product: [] as any,
-        customer: null
-      }
+      state.ListBrokenProduct = [],
+        state.ListProductInbill = [],
+        state.ListInputProduct = [],
+        state.listGoodsReceiptNote = [],
+        state.invoice = {
+          goodsIssueNoteTypeId: 1,
+          usePoint: 0,
+          customerId: null,
+          product: [] as any,
+          customer: null
+        }
+      state.invoiceID = '',
+        state.ListReturnProduct = []
       state.goodsReceiptNote = {
         goodsReceiptNoteTypeId: 2,
-        createModel: [] as any,
+        createModel: [{
+          batches: []
+        }],
         invoiceId: 0,
         isFull: true
       }
-      state.listGoodsReceiptNote = []
     },
     deleteBacthProductInBill: (state, action) => {
       console.log(action.payload)

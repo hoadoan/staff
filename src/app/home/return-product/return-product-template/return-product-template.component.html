@@ -104,7 +104,7 @@
 <nz-modal [(nzVisible)]="isVisibleReturnProduct" nzTitle="The first Modal" (nzOnCancel)="handleCancelReturnProduct()"
   (nzOnOk)="handleOkReturnProduct()" [nzStyle]="{ width:'60%' }">
   <ng-container *nzModalContent>
-    <div id="print-section" style="height: 70vh; overflow: auto;">
+    <div id="print-section" style="height: 70vh; overflow: auto;" *ngIf="listReturnProductId != []">
       <app-print-input [listInputID]="listReturnProductId" [status]="false"></app-print-input>
     </div>
   </ng-container>
