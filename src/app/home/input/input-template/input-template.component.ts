@@ -139,7 +139,7 @@ export class InputTemplateComponent implements OnInit {
       reader.readAsDataURL(this.fileUploadInputProduct);
       reader.onload = () => {
         console.log(reader.result);
-        //gọi API chổ này
+        //gọi API chổ này      *********************************************************************************
       };
       this.fileUploadInputProduct = 0
     } else {

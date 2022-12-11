@@ -260,7 +260,6 @@ export class RetailCustomerInBillComponent implements OnInit {
   isVisibleInvoicePrint: boolean = false;
   handleCancelInvoicePrint() {
 
-
     if (this.invoiceID != 0) {
       this.isVisibleInvoicePrint = false;
       this.store.dispatch(counterSlice.resetState('ok'))
