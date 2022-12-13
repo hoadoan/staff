@@ -53,7 +53,7 @@ export class ProfileTemplateComponent implements OnInit {
           'Thành công',
           'Cập nhật nhân viên thành công'
         );
-      },err =>{
+      }, err => {
         this.notification.create(
           "error",
           err.error.message,
@@ -70,6 +70,36 @@ export class ProfileTemplateComponent implements OnInit {
       );
 
     }
+
+  }
+
+  checkEmailFormat: boolean = true
+  checkPhoneNumberFormat: boolean = true
+  checkEmail() {
+
+    var validRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (this.emailAddressRecovery != '') {
+      if (!this.emailAddressRecovery.match(validRegex)) {
+        this.checkEmailFormat = false
+      } else {
+        this.checkEmailFormat = true
+      }
+    } else {
+      this.checkEmailFormat = true
+    }
+  }
+  checkPhoneNumber() {
+    var validRegex = /^0[0-9]{9}$/g
+    if (this.phoneNumber != '') {
+      if (this.phoneNumber.match(validRegex)) {
+        this.checkPhoneNumberFormat = true
+      } else {
+        this.checkPhoneNumberFormat = false
+      }
+    } else {
+      this.checkPhoneNumberFormat = false
+    }
+
 
   }
 

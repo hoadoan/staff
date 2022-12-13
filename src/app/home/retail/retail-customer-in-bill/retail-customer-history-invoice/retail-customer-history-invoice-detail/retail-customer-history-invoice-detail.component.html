@@ -1,19 +1,33 @@
-<div class="detail__history">
+<div class="detail__history" id="detail__history">
   <table class="w-100">
     <tbody>
-    <tr>
-      <td>
-        <h6>Ngày: {{invoiceDate.createdAt | date:'dd/MM/yyyy'}}</h6>
-      </td>
-      <td>
-        <h6>Người bán: {{invoiceDate.createdBy}}</h6>
-      </td>
-    </tr>
-    <tr *ngFor="let item of ListProductInInvoiceDetail">
-      <td>Tên sản phẩm: {{item.product.name}}</td>
-      <td>số lượng: {{item.quantity}} {{item.unit}}</td>
-    </tr>
+      <tr>
+        <td>
+          <h6>Ngày: {{invoiceDate.createdAt | date:'dd/MM/yyyy'}}</h6>
+        </td>
+        <td>
+          <h6>Người bán: {{invoiceDate.createdBy}}</h6>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <div *ngIf="statusReturnProduct == 2" class="text-end">
+            <!-- <span style="background-color: yellow; border-radius: 5px;" class="p-1">Hóa đơn đã trả 1 phần</span> -->
+            <nz-tag [nzColor]="'gold'">Hóa đơn đã trả 1 phần</nz-tag>
+          </div>
+          <div *ngIf="statusReturnProduct == 3" class="text-end">
+            <!-- <span style="background-color: red; border-radius: 5px;" class="p-1">
+              Hóa đơn đã trả đủ
+            </span> -->
+            <nz-tag [nzColor]="'red'">Hóa đơn đã trả đủ</nz-tag>
+          </div>
+        </td>
+      </tr>
+      <tr *ngFor="let item of ListProductInInvoiceDetail">
+        <td style="width: 50%;">Tên sản phẩm: {{item.product.name}}</td>
+        <td>số lượng: {{item.quantity}} {{item.unit}}</td>
+      </tr>
     </tbody>
   </table>
 </div>
-

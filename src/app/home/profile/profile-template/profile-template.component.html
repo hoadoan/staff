@@ -22,12 +22,7 @@
             </h5>
             <div class="row">
               <div class="col-4" style="text-align: center">
-                <img
-                  src="{{ profile.avatar }}"
-                  alt="Italian Trulli"
-                  width="170"
-                  height="220"
-                />
+                <img src="{{ profile.avatar }}" alt="Italian Trulli" width="170" height="220" />
               </div>
               <div class="col-8">
                 <div class="row mb-3">
@@ -51,12 +46,14 @@
                     <h6>Số điện thoại:</h6>
                   </div>
                   <div class="col-9">
-                    <input
-                      nz-input
-                      placeholder="Số điện thoại"
-                      nzSize="default"
-                      [(ngModel)]="phoneNumber"
-                    />
+                    <input nz-input placeholder="Số điện thoại" nzSize="default" [(ngModel)]="phoneNumber"
+                      [value]="profile.phoneNumber" (ngModelChange)="checkPhoneNumber()" />
+                    <div *ngIf="phoneNumber ==''">
+                      <small style="color: red;">Vui lòng nhập số điện thoại</small>
+                    </div>
+                    <div *ngIf="!checkPhoneNumberFormat">
+                      <small style="color: red;">Số điện thoạt bắt đầu bằng số 0 và có 10 kí tự</small>
+                    </div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -64,13 +61,14 @@
                     <h6>Email:</h6>
                   </div>
                   <div class="col-9">
-                    <input
-                      nz-input
-                      placeholder="Email"
-                      nzSize="default"
-                      [value]="profile.email"
-                      [(ngModel)]="emailAddressRecovery"
-                    />
+                    <input nz-input placeholder="Email" nzSize="default" [value]="profile.email" type="email"
+                      email="true" [(ngModel)]="emailAddressRecovery" #emailRecovery (ngModelChange)="checkEmail()" />
+                    <div *ngIf="emailAddressRecovery ==''">
+                      <small style="color: red;">Vui lòng nhập email</small>
+                    </div>
+                    <div *ngIf="!checkEmailFormat">
+                      <small style="color: red;">Email không đúng định dạng</small>
+                    </div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -85,10 +83,18 @@
             </div>
             <div class="row">
               <div class="col-12 text-end">
-                <button class="btn btn-primary" (click)="updateProfile()">
+                <div
+                  *ngIf="((profile.email != emailAddressRecovery) || (profile.phoneNumber != phoneNumber)) && emailAddressRecovery != '' && phoneNumber != '' && checkEmailFormat && checkPhoneNumberFormat; else updateInfo">
+                  <button class="btn btn-primary" (click)="updateProfile()">
+                    Cập nhật thông tin
+                  </button>
+                </div>
+              </div>
+              <ng-template #updateInfo>
+                <button class="btn btn-primary" disabled (click)="updateProfile()">
                   Cập nhật thông tin
                 </button>
-              </div>
+              </ng-template>
             </div>
           </nz-tab>
           <nz-tab nzTitle="Đổi mật khẩu">

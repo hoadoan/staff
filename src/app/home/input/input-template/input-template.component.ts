@@ -5,7 +5,6 @@ import { Component, OnInit } from '@angular/core';
 import * as counterSlice from "./../../../core/store/store.slice";
 import { Observable } from "rxjs";
 import { NzNotificationService } from "ng-zorro-antd/notification";
-import { ExcelInputTemplateService } from './excel-input-template.service';
 
 @Component({
   selector: 'app-input-template',
@@ -25,7 +24,6 @@ export class InputTemplateComponent implements OnInit {
     private product: ProductService,
     private readonly store: Store<{}>,
     private notification: NzNotificationService,
-    private excelService: ExcelInputTemplateService
   ) {
   }
 
@@ -155,10 +153,4 @@ export class InputTemplateComponent implements OnInit {
     const file = event.target.files[0];
     this.fileUploadInputProduct = file
   }
-
-  generateExcel() {
-
-    this.excelService.generateExcel();
-  }
-
 }

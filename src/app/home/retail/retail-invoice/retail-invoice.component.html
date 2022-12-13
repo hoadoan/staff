@@ -42,9 +42,11 @@
     </table>
     <nz-divider></nz-divider>
     <div style="float: right">
-      <h5>Tổng tiền: {{totalBillPrice | currency:'VND'}}</h5>
-      <h5>Giả giá: {{usePointPrice | currency:'VND'}}</h5>
-      <h5>Còn lại {{totalBillPrice - usePointPrice | currency:'VND'}}</h5>
+      <div style="text-align: start;">
+        <h6>Tổng tiền: {{totalBillPrice | currency:'VND'}}</h6>
+        <h6>Giảm giá: {{usePointPrice | currency:'VND'}}</h6>
+        <h6>Còn lại: {{totalBillPrice - usePointPrice | currency:'VND'}}</h6>
+      </div>
     </div>
   </div>
 

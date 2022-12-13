@@ -89,6 +89,8 @@ export class InputElementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.InputProduct);
+
 
     this.productService.getListProductUnitByProductId(this.InputProduct?.product.id).subscribe((result) => {
       this.listUnitProductPrice = result.data
@@ -130,23 +132,27 @@ export class InputElementComponent implements OnInit {
 
 
   getUnitProductPrice() {
-    this.productService.getBatchByBatchID(this.selectBatch).subscribe((result) => {
-      this.listUnitProductPrice = result.data.currentQuantity
-    }, err => {
-      this.notification.create(
-        "error",
-        err.error.message,
-        ""
-      )
-    })
+    if (this.selectBatch) {
+      this.productService.getBatchByBatchID(this.selectBatch).subscribe((result) => {
+        this.listUnitProductPrice = result.data.currentQuantity
+      }, err => {
+        this.notification.create(
+          "error",
+          err.error.message,
+          ""
+        )
+      })
+    }
   }
 
   showModalBatches(): void {
     this.isVisibleBatches = true;
   }
 
+  checkSelectBatch: boolean = true
   handleOkBatches(): void {
-    this.isVisibleBatches = false;
+
+    
     this.batchs = {
       batchId: this.selectBatch,
       quantity: this.quantityBatch,
@@ -155,31 +161,36 @@ export class InputElementComponent implements OnInit {
       batch: null
     }
 
-    let tempListProductInput: any[] = [...this.listProductInput]
+    if (this.batchs.batchId) {
+      this.isVisibleBatches = false;
+      let tempListProductInput: any[] = [...this.listProductInput]
 
-    tempListProductInput.forEach((item: any, index: number) => {
-      if (item.product.id == this.InputProduct.product.id) {
-        let temp: any[] = []
-        let checkExistBatch = true
-        item.listBatch.forEach((batch: any, index: number) => {
-          if (batch.batchId == this.batchs.batchId) {
-            checkExistBatch = false
+      tempListProductInput.forEach((item: any, index: number) => {
+        if (item.product.id == this.InputProduct.product.id) {
+          let temp: any[] = []
+          let checkExistBatch = true
+          item.listBatch.forEach((batch: any, index: number) => {
+            if (batch.batchId == this.batchs.batchId) {
+              checkExistBatch = false
+            }
+          })
+          if (checkExistBatch) {
+            temp = item.listBatch
+            temp = [...temp, this.batchs]
+            tempListProductInput[index] = { ...tempListProductInput[index], listBatch: temp }
+            this.store.dispatch(counterSlice.addProductToListInput(tempListProductInput))
+          } else {
+            this.notification.create(
+              "error",
+              "Lô hàng đã tồn tại",
+              "Bấm vào lô hàng để chỉnh sửa hoặc chọn lô hàng khác"
+            )
           }
-        })
-        if (checkExistBatch) {
-          temp = item.listBatch
-          temp = [...temp, this.batchs]
-          tempListProductInput[index] = { ...tempListProductInput[index], listBatch: temp }
-          this.store.dispatch(counterSlice.addProductToListInput(tempListProductInput))
-        } else {
-          this.notification.create(
-            "error",
-            "Lô hàng đã tồn tại",
-            "Bấm vào lô hàng để chỉnh sửa hoặc chọn lô hàng khác"
-          )
         }
-      }
-    })
+      })
+    }else{
+      this.checkSelectBatch = false
+    }
   }
 
   handleCancelBatches(): void {

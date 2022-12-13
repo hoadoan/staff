@@ -28,7 +28,7 @@ export class ProfileChagePasswordComponent implements OnInit {
     private fb: FormBuilder,
     private notification: NzNotificationService,
     private userService: UserService,
-    private route: Router
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +47,10 @@ export class ProfileChagePasswordComponent implements OnInit {
           'Thành công',
           result.message
         );
-        this.route.navigate(['home/profile'])
+        let currentUrl = this.router.url;
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate([currentUrl]);
+        });
       }, err => {
         console.log(err.error.message);
         this.notification.create(

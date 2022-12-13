@@ -55,11 +55,13 @@
               hàng</span></button>
           <nz-modal [(nzVisible)]="isVisibleHistoryInvoice" nzTitle="Lịch sử mua hàng"
             (nzOnCancel)="handleCancelInvoiceHistory()" (nzOnOk)="handleOkInvoiceHistory()"
-            [nzBodyStyle]="{height: '500px', overflow:'auto'}">
+            [nzBodyStyle]="{height: '500px', overflow:'auto'}"  [nzFooter]="modalFooter">
             <ng-container *nzModalContent>
               <app-retail-customer-history-invoice [customerId]="customerInfo.id">
               </app-retail-customer-history-invoice>
             </ng-container>
+            <ng-template #modalFooter>
+            </ng-template>
           </nz-modal>
         </div>
       </div>

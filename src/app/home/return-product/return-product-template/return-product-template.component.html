@@ -33,10 +33,12 @@
         <div class="text-end mt-4">
           <button nz-button (click)="showSearchCustomerModal()">Tìm kiếm đơn hàng</button>
           <nz-modal [(nzVisible)]="isVisibleSearchCustomer" (nzOnCancel)="handleCancelSearchCustomer()"
-            (nzOnOk)="handleOkSearchCustomer()">
+            (nzOnOk)="handleOkSearchCustomer()" [nzFooter]="modalFooter">
             <ng-container *nzModalContent>
              <app-search-customer-return-product></app-search-customer-return-product>
             </ng-container>
+            <ng-template #modalFooter>
+            </ng-template>
           </nz-modal>
         </div>
         <nz-divider></nz-divider>

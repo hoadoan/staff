@@ -1,9 +1,9 @@
-import {Observable} from 'rxjs';
-import {invoiceInterface, product} from './../retail.model';
-import {createSelector, Store} from '@ngrx/store';
-import {ProductService} from './../../../core/services/product/product.service';
-import {Component, OnInit} from '@angular/core';
-import {NzNotificationService} from 'ng-zorro-antd/notification';
+import { Observable } from 'rxjs';
+import { invoiceInterface, product } from './../retail.model';
+import { createSelector, Store } from '@ngrx/store';
+import { ProductService } from './../../../core/services/product/product.service';
+import { Component, OnInit } from '@angular/core';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import * as counterSlice from "./../../../core/store/store.slice";
 
 @Component({
@@ -50,7 +50,7 @@ export class RetailTemplateComponent implements OnInit {
     )
     this.listProductInBill$.subscribe((result) => {
       this.listProductInBill = result
-      
+
     })
   }
 
@@ -95,6 +95,10 @@ export class RetailTemplateComponent implements OnInit {
                       listBatches: tempListBatches
                     }))
                   })
+                  let a = document.getElementById('tippy__search__product')?.style
+                  if (a) {
+                    a.display = "none"
+                  }
                 } else {
                   this.notification.create(
                     'error',
@@ -118,6 +122,10 @@ export class RetailTemplateComponent implements OnInit {
               }
             })
             this.searchValue = ''
+            let a = document.getElementById('tippy__search__product')?.style
+            if (a) {
+              a.display = "none"
+            }
           } else {
             this.productservice.getProductByID(result.items[0].id).subscribe((result2) => {
               this.store.dispatch(counterSlice.addProducttoListBill({
@@ -131,8 +139,18 @@ export class RetailTemplateComponent implements OnInit {
                 ]
               }))
             })
+            let a = document.getElementById('tippy__search__product')?.style
+            if (a) {
+              a.display = "none"
+            }
             this.searchValue = ''
           }
+
+          let a = document.getElementById('tippy__search__product')?.style
+          if (a) {
+            a.display = "none"
+          }
+
         }, err => {
           this.notification.create(
             'error',
@@ -142,11 +160,28 @@ export class RetailTemplateComponent implements OnInit {
         })
       }
     } else {
+
+      this.listSearchProduct = []
+
       this.productservice.searchProduct(this.searchValue).subscribe((result) => {
-        this.listSearchProduct = result.items
+        console.log(result.items);
+
+        result.items.forEach((element: any) => {
+          if (element.batches) {
+            this.listSearchProduct.push(element)
+          }
+        });
+
+        // this.listSearchProduct = result.items
         let a = document.getElementById('tippy__search__product')?.style
-        if (a) {
-          a.display = "block"
+        if (this.searchValue != '') {
+          if (a) {
+            a.display = "block"
+          }
+        } else {
+          if (a) {
+            a.display = 'none'
+          }
         }
       })
     }

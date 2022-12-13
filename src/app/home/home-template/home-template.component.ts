@@ -1,8 +1,8 @@
-import { PROFILE } from './../../core/utils/AppConfig';
+import { ACCESSTOKEN, PROFILE } from './../../core/utils/AppConfig';
 import { UserService } from './../../core/services/user/user.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import {NzNotificationService} from "ng-zorro-antd/notification";
+import { NzNotificationService } from "ng-zorro-antd/notification";
 
 @Component({
   selector: 'app-home-template',
@@ -21,18 +21,22 @@ export class HomeTemplateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.user.getProfile().subscribe((result) => {
-      // console.log(result);
-      localStorage.setItem(PROFILE, JSON.stringify(result.data))
-      this.avatar = result.data.avatar
-      this.fullname = result.data.fullname
-    },err =>{
-      this.notification.create(
-        "error",
-        err.error.message,
-        ""
-      )
-    })
+    if (localStorage.getItem(ACCESSTOKEN)) {
+      this.user.getProfile().subscribe((result) => {
+        // console.log(result);
+        localStorage.setItem(PROFILE, JSON.stringify(result.data))
+        this.avatar = result.data.avatar
+        this.fullname = result.data.fullname
+      }, err => {
+        console.log('ok');
+
+        this.notification.create(
+          "error",
+          err.error.message,
+          ""
+        )
+      })
+    }
   }
 
   logout() {

@@ -39,7 +39,7 @@
     <div>
       <div class="form-group">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Lô</nz-form-label>
-        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="goodsIssueNote.batchId"
+        <nz-select nzShowSearch nzPlaceHolder="Select a person" [(ngModel)]="goodsIssueNote.batchId"
           (ngModelChange)="selectBatchIDChanged()">
           <nz-option *ngFor="let item of ListBatchesOfProductInBill"
             nzLabel="{{item.id}} HSD: {{item.expiryDate|date:'dd/MM/yyyy'}}" [nzValue]="item.id"></nz-option>
@@ -47,7 +47,7 @@
       </div>
       <div class="form-group">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Đơn vị</nz-form-label>
-        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="goodsIssueNote.unit"
+        <nz-select nzShowSearch nzPlaceHolder="Select a person" [(ngModel)]="goodsIssueNote.unit"
           (ngModelChange)="changeUnit()">
           <nz-option *ngFor="let item of ListUnitOfBatches" nzLabel="Tồn kho: {{item.currentQuantity}} {{item.unit}}"
             [nzValue]="item.id"></nz-option>

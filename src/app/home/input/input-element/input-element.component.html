@@ -31,21 +31,31 @@
               <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Lô hàng</nz-form-label>
                 <nz-form-control [nzSm]="17" [nzXs]="24">
-                  <nz-select nzShowSearch [nzDropdownRender]="renderTemplate" nzPlaceHolder="custom dropdown render"
-                    class="w-100" [(ngModel)]="selectBatch" (ngModelChange)="getUnitProductPrice()">
-                    <nz-option nzCustomContent *ngFor="let batche of batchesList"
-                      nzLabel="{{batche.batchBarcode}} - ngày hết hạn: {{batche.expiryDate | date:'dd/MM/yyyy'}}"
-                      [nzValue]="batche.id">
-                      {{batche.batchBarcode}} - ngày hết hạn: {{batche.expiryDate | date:'dd/MM/yyyy'}}
-                    </nz-option>
-                  </nz-select>
-                  <ng-template #renderTemplate>
-                    <nz-divider></nz-divider>
-                    <div class="container text-end" style="margin-bottom:10px">
-                      <button nz-button nzType="primary" (click)="showModalNewBatch()">
-                        <i class="fa fa-plus"></i> Thêm Lô
-                      </button>
-                    </div>
+                  <div *ngIf="batchesList; else NullBatch">
+                    <nz-select nzShowSearch [nzDropdownRender]="renderTemplate" nzPlaceHolder="custom dropdown render"
+                      class="w-100" [(ngModel)]="selectBatch" (ngModelChange)="getUnitProductPrice()">
+                      <nz-option *ngFor="let batche of batchesList"
+                        nzLabel="{{batche?.batchBarcode}} - ngày hết hạn: {{batche?.expiryDate | date:'dd/MM/yyyy'}}"
+                        [nzValue]="batche?.id" nzCustomContent>
+                        {{batche?.batchBarcode}} - ngày hết hạn: {{batche?.expiryDate | date:'dd/MM/yyyy' || 'null'}}
+                      </nz-option>
+                    </nz-select>
+                    <ng-template #renderTemplate>
+                      <nz-divider></nz-divider>
+                      <div class="container text-end" style="margin-bottom:10px"
+                        *ngIf="InputProduct.product.isManagedInBatches">
+                        <button nz-button nzType="primary" (click)="showModalNewBatch()">
+                          <i class="fa fa-plus"></i> Tạo lô mới
+                        </button>
+                      </div>
+                    </ng-template>
+                    <small *ngIf="!checkSelectBatch" style="color: red;">Vui lòng chọn Lô sản phẩm hoặc tạo mới</small>
+                  </div>
+                  <ng-template #NullBatch> 
+                    Sản phẩm chưa có lô:
+                    <button nz-button nzType="primary" (click)="showModalNewBatch()">
+                      <i class="fa fa-plus"></i> Tạo lô mới
+                    </button>
                   </ng-template>
                 </nz-form-control>
               </nz-form-item>

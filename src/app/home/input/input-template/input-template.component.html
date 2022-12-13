@@ -41,7 +41,13 @@
           <nz-select nzShowSearch nzPlaceHolder="Tìm kiếm thuốc" style="width: 75%;" nzSize="large"
             [(ngModel)]="inputValue" (nzOnSearch)="onInput($event)" (ngModelChange)="onSelect($event)">
             <nz-option *ngFor="let option of options let i = index" [nzValue]="option"
-              [nzLabel]="option.name + ' - ' + option.id">
+              [nzLabel]="option.name + ' - ' + option.id" nzCustomContent>
+              <div *ngIf="option.batches != null;else nullBatches">
+                {{option.name}}
+              </div>
+              <ng-template #nullBatches>
+                <div style="color: orange;">{{ option.name +' - Sản phẩm này đã hết hàng trong kho'}}</div>
+              </ng-template>
             </nz-option>
           </nz-select>
           <button nz-button nzSize="large" (click)="opneModalUploadExcel()">
@@ -52,6 +58,8 @@
             (nzOnCancel)="handleCancelUploadExcel()" (nzOnOk)="handleOkUploadExcel()" nzOkText="Nhập hàng">
             <ng-container *nzModalContent>
               <div style="height: 30vh" class="text-center">
+                <h5 style="color: red;">* Tính năng trong tương lai</h5>
+                <nz-divider></nz-divider>
                 <button nz-button nzSize="large"><a href="./../../../../assets/InputTemplate.xlsx" download>
                     <i class="fa fa-download"></i> Tải mẫu nhập hàng</a></button>
                 <nz-divider></nz-divider>
