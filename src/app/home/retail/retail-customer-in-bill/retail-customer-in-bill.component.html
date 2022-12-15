@@ -9,7 +9,7 @@
 
     <i class=" fa fa-plus" (click)="showModalAddNewCustomer()" role="button"></i>
     <nz-modal [(nzVisible)]=" isVisibleNewCustomer" nzTitle="Tạo khách hàng" (nzOnCancel)="handleCancelAddNewCustomer()"
-      (nzOnOk)="handleOkAddNewCustomer()">
+      (nzOnOk)="handleOkAddNewCustomer()" [nzFooter]="footerModalCreateCustomer">
       <ng-container *nzModalContent>
         <div>
           <form nz-form>
@@ -18,10 +18,15 @@
               <nz-form-label [nzSpan]="6" nzFor="phoneNumber" nzRequired>Số điện thoại</nz-form-label>
               <nz-form-control [nzSpan]="14">
                 <input nz-input name="phoneNumber" type="tel" id="phoneNumber" nz-input [(ngModel)]="phoneNumber"
-                  (input)="onInput($event)" [nzAutocomplete]="auto">
-                <nz-autocomplete [nzDataSource]="options" nzBackfill #auto></nz-autocomplete>
+                  (input)="onInput($event)" (ngModelChange)="CheckPhoneNumberCustomer()">
+                  <div *ngIf="!checkPhoneNumberFormat">
+                    <small style="color: red;">Số điện thoại bắt đầu bằng số 0 mà có 10 kí tự</small>
+                  </div>
               </nz-form-control>
+
+              
             </nz-form-item>
+           
             <nz-form-item>
               <nz-form-label [nzSpan]="6" nzFor="customerName" nzRequired>Họ và Tên</nz-form-label>
               <nz-form-control [nzSpan]="14">
@@ -31,6 +36,15 @@
           </form>
         </div>
       </ng-container>
+      <ng-template #footerModalCreateCustomer>
+        <div *ngIf="customerInfo !== '' || phoneNumber !== '' ; else validateCreateCustomer">
+          <!-- <button nz-button nzType="primary" disabled>Tạo khách hàng</button> -->
+          <button nz-button nzType="primary" (click)="handleOkAddNewCustomer()">Tạo khách hàng</button>
+        </div>
+        <ng-template #validateCreateCustomer>
+          <button nz-button nzType="primary" (click)="handleOkAddNewCustomer()" disabled>Tạo khách hàng</button>
+        </ng-template>
+      </ng-template>
     </nz-modal>
   </div>
   <nz-divider></nz-divider>

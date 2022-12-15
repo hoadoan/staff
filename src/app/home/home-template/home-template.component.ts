@@ -23,7 +23,6 @@ export class HomeTemplateComponent implements OnInit {
   ngOnInit(): void {
     if (localStorage.getItem(ACCESSTOKEN)) {
       this.user.getProfile().subscribe((result) => {
-        // console.log(result);
         localStorage.setItem(PROFILE, JSON.stringify(result.data))
         this.avatar = result.data.avatar
         this.fullname = result.data.fullname
@@ -41,6 +40,8 @@ export class HomeTemplateComponent implements OnInit {
 
   logout() {
     localStorage.clear()
+    localStorage.removeItem(PROFILE)
+    localStorage.removeItem(ACCESSTOKEN)
     this.route.navigate([''])
   }
 

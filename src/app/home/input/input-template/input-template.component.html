@@ -38,7 +38,7 @@
       <div class="steps-content" *ngIf="current == 0">
         <p style="color: red; margin: 20px 0 0 15px;">* Tìm kiếm, chọn thuốc và chọn lô để nhập hàng</p>
         <div class="example-input d-flex justify-content-around">
-          <nz-select nzShowSearch nzPlaceHolder="Tìm kiếm thuốc" style="width: 75%;" nzSize="large"
+          <nz-select nzShowSearch nzPlaceHolder="Tìm kiếm thuốc" style="width: 100%;" nzSize="large"
             [(ngModel)]="inputValue" (nzOnSearch)="onInput($event)" (ngModelChange)="onSelect($event)">
             <nz-option *ngFor="let option of options let i = index" [nzValue]="option"
               [nzLabel]="option.name + ' - ' + option.id" nzCustomContent>
@@ -50,7 +50,7 @@
               </ng-template>
             </nz-option>
           </nz-select>
-          <button nz-button nzSize="large" (click)="opneModalUploadExcel()">
+          <!-- <button nz-button nzSize="large" (click)="opneModalUploadExcel()">
             <span nz-icon nzType="upload"></span>
             Nhập hàng bằng file excel
           </button>
@@ -68,7 +68,7 @@
                 <p *ngIf="fileUploadInputProduct == 1" style="color: red; text-align:left">* Chọn file để nhập hàng</p>
               </div>
             </ng-container>
-          </nz-modal>
+          </nz-modal> -->
         </div>
         <nz-divider></nz-divider>
         <div style="height: 57vh; overflow: auto">
@@ -102,18 +102,7 @@
             <span>Quay lại</span>
           </button>
         </div>
-
       </div>
-
-      <!--      <div class="steps-action" style="position: absolute; bottom: 0">-->
-      <!--        -->
-      <!--        <button nz-button nzType="default" (click)="next()" *ngIf="current < 2">-->
-      <!--          <span>Next</span>-->
-      <!--        </button>-->
-      <!--        <button nz-button nzType="primary" (click)="done()" *ngIf="current === 2">-->
-      <!--          <span>Done</span>-->
-      <!--        </button>-->
-      <!--      </div>-->
     </div>
   </div>
 </div>

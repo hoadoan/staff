@@ -23,12 +23,21 @@
             </div>
             <div class="form-group">
                 <label for="">Mật khẩu</label>
-                <input type="password" class="form-control" placeholder="" [(ngModel)]="password">
+                <nz-input-group [nzSuffix]="suffixTemplate">
+
+                    <input [type]="passwordVisible ? 'text' : 'password'" style="border: none; width: 100%;"
+                        id="login__password" [(ngModel)]="password">
+
+                </nz-input-group>
                 <div *ngIf="check == false">
                     <div *ngIf="password == ''">
                         <p style="color: red;" class="small">Vui lòng nhập mật khẩu</p>
                     </div>
                 </div>
+                <ng-template #suffixTemplate>
+                    <span nz-icon role="button" [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                        (click)="passwordVisible = !passwordVisible"></span>
+                </ng-template>
             </div>
             <div class="form-group">
                 <div class="text-end" role="button" (click)="showModal()"> Quên mật khẩu?</div>
@@ -140,7 +149,12 @@
 
             </div>
             <div class="form-group login__button">
-                <button class="btn btn-primary w-100" (click)="login()">Đăng nhập</button>
+                <button class="btn btn-primary w-100" (click)="login()">Đăng nhập
+                    <div *ngIf="loadingClick" class="spinner-border" role="status" style="width: 10px; height: 10px">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </button>
+
             </div>
         </div>
     </div>

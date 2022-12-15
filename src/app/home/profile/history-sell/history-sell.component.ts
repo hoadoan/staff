@@ -12,6 +12,13 @@ export class HistorySellComponent implements OnInit {
   tempProfile: any = localStorage.getItem(PROFILE)
   profile: any
   listInvoice: any[] = []
+
+  // nameList = [
+  //   { text: 'Xuất bán', value: 'INV', status: true },
+  //   { text: 'Xuất hỏng', value: 'GIN', status: false }
+  // ];
+
+  // nameFilterFn = (list: string[], item: any): boolean => list.some(name => item.data.name.indexOf(name) !== -1);
   constructor(
     private user: UserService
   ) { }
@@ -20,14 +27,25 @@ export class HistorySellComponent implements OnInit {
     this.profile = JSON.parse(this.tempProfile)
     this.user.getProfile().subscribe((result) => {
       // console.log(result);
-      this.user.getInvoiceByIdStaff(result.data.userId).subscribe((result)=>{
+      this.user.getInvoiceByIdStaff(result.data.userId).subscribe((result) => {
         this.listInvoice = result.data
         console.log(result);
-    })
+      })
     })
   }
 
-  detailInvoice(id: number){
+  detailInvoice(id: number) {
 
   }
+
+  exportType(barcode: string) {
+    let a = barcode.slice(0, 3)
+
+    if (a == 'GIN') {
+      return "Xuất hỏng"
+    }
+    return "Xuất bán"
+
+  }
+
 }

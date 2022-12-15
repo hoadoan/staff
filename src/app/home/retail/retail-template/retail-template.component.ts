@@ -161,11 +161,12 @@ export class RetailTemplateComponent implements OnInit {
       }
     } else {
 
-      this.listSearchProduct = []
+      
 
       this.productservice.searchProduct(this.searchValue).subscribe((result) => {
         console.log(result.items);
 
+        this.listSearchProduct = []
         result.items.forEach((element: any) => {
           if (element.batches) {
             this.listSearchProduct.push(element)

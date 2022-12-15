@@ -6,7 +6,7 @@
     <h6>Tổng tiền : {{totalBillPrice | currency:'VND'}}</h6>
   </div>
 
-<nz-divider></nz-divider>
+  <nz-divider></nz-divider>
   <div style="width: calc(100% - 32px); margin: auto">
     <div *ngIf="totalBillPrice > 0 ; else emptyProduct">
       <button class="w-100 btn btn-success btn-lg" (click)="exportBrokenProduct()">
@@ -14,10 +14,23 @@
       </button>
     </div>
     <ng-template #emptyProduct>
-      <button class="w-100 btn btn-success btn-lg" disabled (click)="exportBrokenProduct()" title="chọn sản phẩm và lô sản phẩm cần xuất hỏng">
+      <button class="w-100 btn btn-success btn-lg" disabled (click)="exportBrokenProduct()"
+        title="chọn sản phẩm và lô sản phẩm cần xuất hỏng">
         <span>Xuất hỏng</span>
       </button>
     </ng-template>
+
+    <button printSectionId="print-section" ngxPrint class="d-none" id="print__bill__data__broken"></button>
+    <nz-modal [(nzVisible)]="isVisibleBrokenReport" nzTitle="báo cáo xuất hỏng"
+      (nzOnCancel)="handleCancelBrokenReport()" (nzOnOk)="handleOkBrokenReport()" nzOkText="In báo cáo"
+      [nzStyle]="{ width:'60%' }">
+      <ng-container *nzModalContent>
+        <div id="print-section" style="height: 70vh; overflow: auto;">
+          <app-report-broken-product [BrokenId]="brokenId"></app-report-broken-product>
+        </div>
+      </ng-container>
+    </nz-modal>
+
   </div>
   <div>
   </div>

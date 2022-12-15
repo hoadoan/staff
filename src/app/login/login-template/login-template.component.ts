@@ -19,6 +19,8 @@ export class LoginTemplateComponent implements OnInit {
   token: string = ''
   check: boolean = true
   currentStep: number = 0
+  passwordVisible = false;
+  loadingClick: boolean = false
 
   isVisibleForgotPassword = false;
   // isConfirmLoading = false;
@@ -52,6 +54,7 @@ export class LoginTemplateComponent implements OnInit {
       this.check = false
     }
     if (this.check) {
+      this.loadingClick = true
       var formData = new FormData()
       formData.append('username', this.username)
       formData.append('password', this.password)
@@ -70,6 +73,7 @@ export class LoginTemplateComponent implements OnInit {
               this.route.navigate(['home'])
             }
           } else {
+            this.loadingClick = false
             this.notification.create(
               'error',
               'Đăng nhập thất bại',
@@ -78,6 +82,7 @@ export class LoginTemplateComponent implements OnInit {
           }
         }
       }, err => {
+        this.loadingClick = false
         this.notification.create(
           'error',
           'Đăng nhập thất bại',

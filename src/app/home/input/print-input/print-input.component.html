@@ -9,7 +9,7 @@
 
 
     <div style="margin: 20px;">
-        <h3>Nhà cung cấp: {{listInputInfo[0].data.supplier.name}}</h3>
+        <h3 *ngIf="status">Nhà cung cấp: {{listInputInfo[0].data.supplier.name}}</h3>
         <h3>Tổng tiền: {{totalPriceBill | currency:'VND'}}</h3>
     </div>
     <div>
@@ -17,6 +17,7 @@
         <table class="table" style="width: 100%;">
             <thead class="table-light">
                 <tr style="font-size: 15px ;">
+                    <!-- <th>Mã đơn</th> -->
                     <th>Tên sản phẩm</th>
                     <th>Mã lô sản phẩm</th>
                     <th>Hạn sử dụng</th>
@@ -27,6 +28,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of listInputInfo">
+                    <!-- <td>{{item.id}}</td> -->
                     <td>{{item.productName}}</td>
                     <td>{{item.data.batch.barcode}}</td>
                     <td>{{item.data.batch.expiryDate|date:'dd-MM-yyyy'}}</td>

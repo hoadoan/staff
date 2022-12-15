@@ -110,7 +110,8 @@ export class RetailCustomerInBillComponent implements OnInit {
   createInvoice() {
     this.confirmModal = this.modal.confirm({
       nzTitle: 'Bán hàng',
-      nzContent: 'bán hàng',
+      nzContent: 'Vui lòng xác nhận thông tin hóa đơn trước khi bán hàng',
+      nzOkText: 'Xác nhận',
       nzOnOk: () => {
 
         this.listProductInBill$ = this.store.select(
@@ -254,6 +255,8 @@ export class RetailCustomerInBillComponent implements OnInit {
 
   handleCancelAddNewCustomer(): void {
     this.isVisibleNewCustomer = false;
+    this.phoneNumber = ''
+    this.customerName = ''
   }
 
 
@@ -284,5 +287,18 @@ export class RetailCustomerInBillComponent implements OnInit {
     }
   }
 
+  checkPhoneNumberFormat: boolean = true
+  CheckPhoneNumberCustomer() {
+    var validRegex = /^0[0-9]{9}$/g
+    // if (this.phoneNumber != '') {
+      if (this.phoneNumber.match(validRegex)) {
+        this.checkPhoneNumberFormat = true
+      } else {
+        this.checkPhoneNumberFormat = false
+      }
+    // } else {
+    //   this.checkPhoneNumberFormat = false
+    // }
+  }
 
 }

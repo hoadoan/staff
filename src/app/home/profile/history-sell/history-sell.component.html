@@ -8,6 +8,7 @@
     <thead style="text-align: center">
       <tr>
         <th scope="col" style="text-align: center;">Barcode xuất hàng</th>
+        <th scope="col" style="text-align: center;">Dạng xuất</th>
         <th scope="col" style="text-align: center;">Tên khách hàng</th>
         <th scope="col" style="text-align: center;">Số điện thoại khách hàng</th>
         <th scope="col" style="text-align: center;">Ngày tạo</th>
@@ -19,13 +20,16 @@
       <tr>
         <td scope="row">
           <ngx-barcode bc-value={{invoices.barcode}} [bc-display-value]="true" [bc-width]="1"
-                              [bc-height]="20"></ngx-barcode>
+            [bc-height]="20"></ngx-barcode>
         </td>
-        <td >{{invoices.customer.fullName}}</td>
-        <td >{{invoices.customer.phoneNumber}}</td>
-        <td >{{invoices.createdAt|date:'hh:mm:ss dd-MM-yyyy'}}</td>
-        <td >{{invoices.totalPrice| number}} đ</td>
-        <td >
+        <td>
+          {{exportType(invoices.barcode)}}
+        </td>
+        <td>{{invoices.customer.fullName}}</td>
+        <td>{{invoices.customer.phoneNumber}}</td>
+        <td>{{invoices.createdAt|date:'hh:mm:ss dd-MM-yyyy'}}</td>
+        <td>{{invoices.totalPrice| number}} đ</td>
+        <td>
           <a>
             <app-sell-detail [invoiceId]="invoices.id" [barcode]="invoices.barcode"></app-sell-detail>
           </a>

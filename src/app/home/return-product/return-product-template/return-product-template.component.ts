@@ -1,3 +1,5 @@
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { batchs } from './../../input/input-element/input-element.model';
 import { goodsIssueNote } from './../../retail/retail.model';
 import { Component, OnInit } from '@angular/core';
@@ -38,6 +40,7 @@ export class ReturnProductTemplateComponent implements OnInit {
     invoiceId: 0,
     isFull: true
   }
+  confirmModal?: NzModalRef;
 
 
 
@@ -45,7 +48,8 @@ export class ReturnProductTemplateComponent implements OnInit {
     private productService: ProductService,
     private store: Store<{}>,
     private notification: NzNotificationService,
-    private router: Router
+    private router: Router,
+    private modal: NzModalService
   ) {
   }
 
@@ -136,73 +140,82 @@ export class ReturnProductTemplateComponent implements OnInit {
 
   ReturnProduct() {
     if (this.invoiceData) {
-      if (this.switchFullInvocie) {
-        let full = {
-          goodsReceiptNoteTypeId: 2,
-          invoiceId: this.invoiceData.id,
-          createModel: null,
-          isFull: true
-        }
-        console.log(full)
-        this.productService.PostGoodReceiptNoteManager(full).subscribe((result) => {
-          console.log(result)
-          this.listReturnProductId = result.data
-          console.log(this.listReturnProductId);
 
-          this.isVisibleReturnProduct = true
-          this.notification.create(
-            "success",
-            result.message,
-            ""
-          )
-          this.store.dispatch(counterSlice.resetState('ok'))
-          // let currentUrl = this.router.url;
-          // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          //   this.router.navigate([currentUrl]);
-          // });
-
-        }, err => {
-          this.notification.create(
-            "error",
-            err.error.message,
-            ""
-          )
-        })
-      } else {
-        let goodReceiptNote$ = this.store.select((
-          createSelector(counterSlice.selectFeature, (state) => state.goodsReceiptNote)
-        ))
-        let a: any = null
-        goodReceiptNote$.subscribe((result1) => {
-          a = result1
-          console.log(a);
-
-        }
-        )
-        if (a != null) {
-          this.productService.PostGoodReceiptNoteManager(a).subscribe((result) => {
-            this.listReturnProductId = result?.data
-            this.isVisibleReturnProduct = true
-            this.notification.create(
-              "success",
-              result.message,
-              ""
+      this.confirmModal = this.modal.confirm({
+        nzTitle: 'Xác Nhận trả hàng?',
+        nzContent: 'Bấm xác nhận để trả hàng',
+        nzOkText:'Xác nhận',
+        nzOnOk: () =>{
+          if (this.switchFullInvocie) {
+            let full = {
+              goodsReceiptNoteTypeId: 2,
+              invoiceId: this.invoiceData.id,
+              createModel: null,
+              isFull: true
+            }
+            this.productService.PostGoodReceiptNoteManager(full).subscribe((result) => {
+              console.log(result)
+              this.listReturnProductId = result.data
+              console.log(this.listReturnProductId);
+    
+              this.isVisibleReturnProduct = true
+              this.notification.create(
+                "success",
+                result.message,
+                ""
+              )
+              this.store.dispatch(counterSlice.resetState('ok'))
+              // let currentUrl = this.router.url;
+              // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              //   this.router.navigate([currentUrl]);
+              // });
+    
+            }, err => {
+              this.notification.create(
+                "error",
+                err.error.message,
+                ""
+              )
+            })
+          } else {
+            let goodReceiptNote$ = this.store.select((
+              createSelector(counterSlice.selectFeature, (state) => state.goodsReceiptNote)
+            ))
+            let a: any = null
+            goodReceiptNote$.subscribe((result1) => {
+              a = result1
+              console.log(a);
+    
+            }
             )
-            this.store.dispatch(counterSlice.resetState('ok'))
-            // let currentUrl = this.router.url;
-            // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            //   this.router.navigate([currentUrl]);
-            // });
-          }, err => {
-            this.notification.create(
-              "error",
-              err.error.message,
-              ""
-            )
-          })
+            if (a != null) {
+              this.productService.PostGoodReceiptNoteManager(a).subscribe((result) => {
+                this.listReturnProductId = result?.data
+                this.isVisibleReturnProduct = true
+                this.notification.create(
+                  "success",
+                  result.message,
+                  ""
+                )
+                this.store.dispatch(counterSlice.resetState('ok'))
+                // let currentUrl = this.router.url;
+                // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+                //   this.router.navigate([currentUrl]);
+                // });
+              }, err => {
+                this.notification.create(
+                  "error",
+                  err.error.message,
+                  ""
+                )
+              })
+            }
+    
+          }
         }
+      });
 
-      }
+
     } else {
       this
         .notification.create(

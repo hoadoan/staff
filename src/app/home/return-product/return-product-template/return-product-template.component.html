@@ -35,7 +35,7 @@
           <nz-modal [(nzVisible)]="isVisibleSearchCustomer" (nzOnCancel)="handleCancelSearchCustomer()"
             (nzOnOk)="handleOkSearchCustomer()" [nzFooter]="modalFooter">
             <ng-container *nzModalContent>
-             <app-search-customer-return-product></app-search-customer-return-product>
+              <app-search-customer-return-product></app-search-customer-return-product>
             </ng-container>
             <ng-template #modalFooter>
             </ng-template>
@@ -103,8 +103,9 @@
 </div>
 
 <button printSectionId="print-section" ngxPrint class="d-none" id="print__bill__data__return"></button>
-<nz-modal [(nzVisible)]="isVisibleReturnProduct" nzTitle="The first Modal" (nzOnCancel)="handleCancelReturnProduct()"
-  (nzOnOk)="handleOkReturnProduct()" [nzStyle]="{ width:'60%' }">
+<nz-modal [(nzVisible)]="isVisibleReturnProduct" nzTitle="Phiếu nhập hàng trả lại"
+  (nzOnCancel)="handleCancelReturnProduct()" nzOkText="In phiếu" (nzOnOk)="handleOkReturnProduct()"
+  [nzStyle]="{ width:'60%' }">
   <ng-container *nzModalContent>
     <div id="print-section" style="height: 70vh; overflow: auto;" *ngIf="listReturnProductId != []">
       <app-print-input [listInputID]="listReturnProductId" [status]="false"></app-print-input>

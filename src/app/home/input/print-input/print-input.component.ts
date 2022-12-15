@@ -24,6 +24,8 @@ export class PrintInputComponent implements OnInit {
     if (this.listInputID.length > 0) {
       this.listInputID.forEach((item: any) => {
         this.productService.getGoodsReceiptNoteById(item?.grnId).subscribe((result: any) => {
+          console.log(result.data);
+          
           if (result?.data) {
             this.productService.getBatchById(result.data.batch.id).subscribe((product) => {
               this.listInputInfo.push({ data: result.data, productName: product.data.product.name })
