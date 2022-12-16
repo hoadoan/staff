@@ -28,7 +28,7 @@
               <div class="form-group mb-3">
                 <h6>Sản phẩm: {{InputProduct.product.name}}</h6>
               </div>
-              <nz-form-item>
+              <nz-form-item *ngIf="InputProduct.product.isManagedInBatches">
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Lô hàng</nz-form-label>
                 <nz-form-control [nzSm]="17" [nzXs]="24">
                   <div *ngIf="batchesList; else NullBatch">
@@ -49,14 +49,16 @@
                         </button>
                       </div>
                     </ng-template>
-                    <small *ngIf="!checkSelectBatch" style="color: red;">Vui lòng chọn Lô sản phẩm hoặc tạo mới</small>
+                    <small *ngIf="!checkSelectBatch" style="color: red;">Vui lòng chọn Lô sản phẩm hoặc tạo
+                      mới</small>
                   </div>
-                  <ng-template #NullBatch> 
+                  <ng-template #NullBatch>
                     Sản phẩm chưa có lô:
                     <button nz-button nzType="primary" (click)="showModalNewBatch()">
                       <i class="fa fa-plus"></i> Tạo lô mới
                     </button>
                   </ng-template>
+
                 </nz-form-control>
               </nz-form-item>
 

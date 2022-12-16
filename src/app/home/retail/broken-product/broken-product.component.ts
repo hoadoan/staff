@@ -87,6 +87,7 @@ export class BrokenProductComponent implements OnInit {
         this.listProductInBill.forEach((element, index) => {
           tempproduct.push({
             productId: element.product.id,
+            use: element.use,
             goodsIssueNote: element.listBatches
           })
         })
