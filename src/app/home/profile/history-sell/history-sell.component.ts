@@ -45,7 +45,6 @@ export class HistorySellComponent implements OnInit {
       return "Xuất hỏng"
     }
     return "Xuất bán"
-
   }
 
 }

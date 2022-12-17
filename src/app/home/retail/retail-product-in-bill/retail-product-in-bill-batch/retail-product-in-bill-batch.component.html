@@ -1,6 +1,9 @@
 <td style="width: 5%"></td>
 <td colspan="2" style="width: 45%">
-  {{batchInfo?.batchBarcode}} - HSD: {{batchInfo?.expiryDate | date:'dd/MM/yyyy'}}
+  <div *ngIf="batchInfo?.expiryDate !== null">
+    {{batchInfo?.batchBarcode}} - HSD: {{batchInfo?.expiryDate | date:'dd/MM/yyyy'}}
+  </div>
+  
 </td>
 <td style="width: 10%; padding-left: 10px">
   Đơn giá: {{unitInfo?.price | currency:'VND'}}

@@ -94,14 +94,14 @@ export class RetailProductInBillComponent implements OnInit {
     for (let i = 0; i < this.ListUnitOfBatches.length; i++) {
       if (this.ListUnitOfBatches[i].id == this.goodsIssueNote.unit) {
         this.MaxBatchQuantity = this.ListUnitOfBatches[i].currentQuantity
-        
+
       }
     }
   }
 
   changeUnit() {
     console.log(this.ListUnitOfBatches);
-    
+
     for (let i = 0; i < this.ListUnitOfBatches.length; i++) {
       if (this.ListUnitOfBatches[i].id == this.goodsIssueNote.unit) {
         this.MaxBatchQuantity = this.ListUnitOfBatches[i].currentQuantity
@@ -115,6 +115,7 @@ export class RetailProductInBillComponent implements OnInit {
     this.confirmModal = this.modal.confirm({
       nzTitle: 'Bạn có muốn xóa sản phẩm này?',
       nzContent: 'khi bấm vào nút ok sản phẩm sẽ được xóa khỏi danh sách',
+      nzOkText: 'Xác nhận',
       nzOnOk: () => {
         this.store.dispatch(counterSlice.deleteProductInBill(this.productInbill.product.id))
       }

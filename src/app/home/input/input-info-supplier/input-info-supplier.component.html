@@ -1,12 +1,12 @@
 <div class="containter-fluid">
   <div class="d-flex justify-content-around align-items-center">
-    <nz-select nzAllowClear nzPlaceHolder="chọn nhà cung cấp" style="width: 90%;" [(ngModel)]="selectSupplier"
+    <nz-select nzAllowClear nzPlaceHolder="chọn nhà cung cấp" style="width: 100%;" [(ngModel)]="selectSupplier"
                (ngModelChange)="selectSupplierChange()" nzShowSearch>
       <nz-option *ngFor="let supplier of listSuppliers" [nzLabel]="supplier.name" [nzValue]="supplier">
       </nz-option>
     </nz-select>
     <div>
-      <i class=" fa fa-plus" role="button" (click)="showModalAddSupplier()"></i>
+      <!-- <i class=" fa fa-plus" role="button" (click)="showModalAddSupplier()"></i>
       <nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnOk)="handleOkSupplier()"
                 (nzOnCancel)="handleCancelSupplier()">
         <ng-container *nzModalContent>
@@ -15,7 +15,7 @@
             <input type="text" class="form-control" [(ngModel)]="newSupplier">
           </div>
         </ng-container>
-      </nz-modal>
+      </nz-modal> -->
     </div>
   </div>
 

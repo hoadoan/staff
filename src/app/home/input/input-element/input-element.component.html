@@ -11,7 +11,7 @@
         <h5>Tên: {{InputProduct.product.name}}</h5>
       </td>
       <td>
-        <nz-tag [nzColor]="'#87d068'" *ngFor="let item of listBatchOfInputProduct, let i = index">
+        <nz-tag [nzColor]="'#fff'" style="color: black; border: 1px solid rgba(0, 0, 0, 0.329); font-size: 17px; width: 80%; padding: 5px 6px; border-radius: 5px;" *ngFor="let item of listBatchOfInputProduct, let i = index">
           <div class="text-left">
             <app-batch-tag-infomation class="w-100" [batchInfo]="item" [productName]="InputProduct.product">
             </app-batch-tag-infomation>
