@@ -1,3 +1,4 @@
+import { isLoginGuard } from './../core/guards/isLogin.guard';
 import {StoreModule} from '@ngrx/store';
 
 import {RetailTemplateComponent} from './retail/retail-template/retail-template.component';
@@ -38,7 +39,7 @@ import { ReportBrokenProductComponent } from './retail/broken-product/report-bro
 
 const homeRoute: Routes = [
   {
-    path: 'home', component: HomeTemplateComponent, children: [
+    path: 'home', component: HomeTemplateComponent,canActivate:[isLoginGuard], children: [
       {path: '', component: RetailTemplateComponent},
       {path: 'input', component: InputTemplateComponent},
       {path: 'profile', component: ProfileTemplateComponent},

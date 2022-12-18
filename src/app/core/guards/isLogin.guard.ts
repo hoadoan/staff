@@ -1,24 +1,21 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {ACCESSTOKEN} from "../utils/AppConfig";
-import {Observable} from "rxjs";
+import { ACCESSTOKEN } from './../utils/AppConfig';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class isLoginGuard implements CanActivate {
 
-  //router dùng để chuyển hướng trang (giống history.push của react)
-  constructor(private router: Router) {
-  }
+    //router dùng để chuyển hướng trang (giống history.push của react)
+    constructor(private router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    console.log("vô rồi nè")
+        if (localStorage.getItem(ACCESSTOKEN)) {
+            return true;
+        }
 
-    if (localStorage.getItem(ACCESSTOKEN)) {
-      return true;
+        alert('Đăng nhập để vào trang này !')
+        this.router.navigate(['/login'])
+        return false;
     }
-    alert('Đăng nhập để vào trang này !')
-    this.router.navigate([''])
-    return false;
-  }
 }

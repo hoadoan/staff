@@ -33,9 +33,10 @@
     </table>
   </div>
 </div>
-
+<!-- (nzOnCancel)="handleCancelAddbatch()" -->
 <nz-modal [(nzVisible)]="isVisibleAddBatch" nzTitle="Thông tin hàng bán" (nzOnOk)="handleOkAddBatch()"
-  (nzOnCancel)="handleCancelAddbatch()" nzOkText="Xác nhận" [nzFooter]="modalFooter" [nzStyle]="{width: '32%'}">
+   nzOkText="Xác nhận" [nzFooter]="modalFooter" [nzStyle]="{width: '32%'}"
+  [nzClosable]="false">
   <ng-container *nzModalContent>
     <div>
       <div class="mb-3">
