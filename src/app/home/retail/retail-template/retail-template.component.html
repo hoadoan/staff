@@ -6,10 +6,11 @@
         <div class="example-input">
           <div class="d-flex justify-content-md-between align-items-center ">
             <div style="width: 90%;" class="position-relative" (clickOutside)="UnShowListSearchProduct()">
-              <label style="color: red;">*Tìm kiếm, chọn sản phẩm và lô hàng để thực hiện chức năng</label>
+              <label><span style="color: red;">*</span><span>Tìm kiếm, chọn sản phẩm và lô hàng để thực hiện chức
+                  năng</span></label>
               <nz-input-group [nzSuffix]="suffixIconSearch" nzSize="large">
                 <input type="text" nz-input placeholder="Tìm kiếm sản phẩm" [(ngModel)]="searchValue"
-                       (ngModelChange)="searchProduct($event)"/>
+                  (ngModelChange)="searchProduct($event)" />
               </nz-input-group>
               <ng-template #suffixIconSearch>
                 <span nz-icon nzType="search"></span>
@@ -19,7 +20,7 @@
 
                 </div>
                 <div class="tippy__search__product__item" *ngFor="let item of listSearchProduct"
-                     (click)="addToListBill(item.id)">
+                  (click)="addToListBill(item.id)">
                   <div class="row">
                     <div class="col-2">
                       <h6>{{item.name}}</h6>
@@ -32,7 +33,7 @@
                       <div class="row align-items-center">
                         <div *ngFor="let active of item.activeSubstances" class="col-3 mb-3">
                           <nz-tag nzColor="default"
-                                  style="padding: 5px 10px; border-radius: 10px; width: 100%; text-align: center">{{active.name}}</nz-tag>
+                            style="padding: 5px 10px; border-radius: 10px; width: 100%; text-align: center">{{active.name}}</nz-tag>
                         </div>
                       </div>
                     </div>
@@ -58,7 +59,7 @@
           <div>
             <div class="overflow-auto" style="height: 600px;">
               <app-retail-product-in-bill *ngFor="let item of listProductInBill, let index = index"
-                                          [productInbill]="item" [index]="index"></app-retail-product-in-bill>
+                [productInbill]="item" [index]="index"></app-retail-product-in-bill>
             </div>
           </div>
         </div>

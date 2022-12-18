@@ -12,6 +12,7 @@ export class RetailCustomerHistoryInvoiceDetailComponent implements OnInit {
   @Input() invoiceID: number = 0
   @Input() invoiceDate: any
   @Input() statusReturnProduct: number = 0
+  @Input() Infor: any
 
   ListProductInInvoiceDetail: any[] = []
 
@@ -22,18 +23,7 @@ export class RetailCustomerHistoryInvoiceDetailComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.statusReturnProduct);
-
-    // let element = document.getElementById('detail__history')
-
-    // if(element){
-    //   if(this.statusReturnProduct == 2){
-    //     element.style.backgroundColor = 'yellow'
-    //   }else if(this.statusReturnProduct == 3){
-    //     element.style.backgroundColor = 'red'
-    //   }
-
-    // }
-
+    console.log(this.Infor);
     this.productService.getInvoiceDetailByInvoiceID(this.invoiceID).subscribe((result) => {
       this.ListProductInInvoiceDetail = result.data
     }, err => {

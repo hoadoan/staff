@@ -19,14 +19,14 @@
               <nz-form-control [nzSpan]="14">
                 <input nz-input name="phoneNumber" type="tel" id="phoneNumber" nz-input [(ngModel)]="phoneNumber"
                   (input)="onInput($event)" (ngModelChange)="CheckPhoneNumberCustomer()">
-                  <div *ngIf="!checkPhoneNumberFormat">
-                    <small style="color: red;">Số điện thoại bắt đầu bằng số 0 mà có 10 kí tự</small>
-                  </div>
+                <div *ngIf="!checkPhoneNumberFormat">
+                  <small style="color: red;">Số điện thoại bắt đầu bằng số 0 mà có 10 kí tự</small>
+                </div>
               </nz-form-control>
 
-              
+
             </nz-form-item>
-           
+
             <nz-form-item>
               <nz-form-label [nzSpan]="6" nzFor="customerName" nzRequired>Họ và Tên</nz-form-label>
               <nz-form-control [nzSpan]="14">
@@ -69,7 +69,7 @@
               hàng</span></button>
           <nz-modal [(nzVisible)]="isVisibleHistoryInvoice" nzTitle="Lịch sử mua hàng"
             (nzOnCancel)="handleCancelInvoiceHistory()" (nzOnOk)="handleOkInvoiceHistory()"
-            [nzBodyStyle]="{height: '500px', overflow:'auto'}"  [nzFooter]="modalFooter">
+            [nzBodyStyle]="{height: '500px', overflow:'auto'}" [nzFooter]="modalFooter">
             <ng-container *nzModalContent>
               <app-retail-customer-history-invoice [customerId]="customerInfo.id">
               </app-retail-customer-history-invoice>
@@ -113,14 +113,12 @@
               <h6>/ {{rewardPoint}} điểm</h6>
             </div>
           </div>
-          <div class="row">
-            <div class="col-5">
-              Thành tiến:
-            </div>
-            <div class="col-7">
-              <h6>{{usePoint * converPoint}}</h6>
-            </div>
-          </div>
+        </div>
+        <div class="col-5">
+          <h6>Thành tiền:</h6>
+        </div>
+        <div class="col-7 mb-3">
+          <h6>{{usePoint * converPoint | currency:'VND'}}</h6>
         </div>
       </div>
       <div class="col-5 mb-5">

@@ -65,7 +65,6 @@ export class RetailTemplateComponent implements OnInit {
   }
 
   searchProduct(value: any): void {
-
     let productsearchInbill
 
     if (this.searchValue.length === 13) {
@@ -161,7 +160,7 @@ export class RetailTemplateComponent implements OnInit {
       }
     } else {
 
-      
+
 
       this.productservice.searchProduct(this.searchValue).subscribe((result) => {
         console.log(result.items);

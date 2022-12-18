@@ -7,9 +7,9 @@
   </div>
   <ng-template #newBatch>
     <span role="button" (click)="openModalEditBatch()" style="margin: 5px 10px 5px 5px;">
-      NSX: {{batchInfo?.batch.manufacturingDate}}
+      Lô hàng mới - NSX: {{batchInfo?.batch.manufacturingDate | date:'dd/MM/yyyy'}}
       - HSD: {{batchInfo?.batch.expiryDate | date:'dd/MM/yyyy'}}
-      - {{'Số lượng: ' + batchInfo.quantity}} {{unit.unitName}} - Tổng giá: {{batchInfo.totalPrice |
+      - {{'SL: ' + batchInfo.quantity}} {{unit.unitName}} - Tổng: {{batchInfo.totalPrice |
       currency:'VND'}}</span>
   </ng-template>
 </div>

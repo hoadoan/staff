@@ -35,13 +35,13 @@
         <nz-step nzTitle="Thông tin nhà cung cấp"></nz-step>
       </nz-steps>
       <!--<nz-divider></nz-divider>-->
-      <div class="steps-content" *ngIf="current == 0">
-        <p style="color: red; margin: 20px 0 0 15px;">* Tìm kiếm, chọn sản phẩm và chọn lô để nhập hàng</p>
+      <div class="steps-content mt-2" *ngIf="current == 0">
+        <span style="color: red;">*</span><span>Tìm kiếm, chọn sản phẩm và chọn lô để nhập hàng</span>
         <div class="example-input d-flex justify-content-around">
           <nz-select nzShowSearch nzPlaceHolder="Tìm kiếm sản phẩm" style="width: 100%;" nzSize="large"
             [(ngModel)]="inputValue" (nzOnSearch)="onInput($event)" (ngModelChange)="onSelect($event)">
-            <nz-option *ngFor="let option of options let i = index" [nzValue]="option"
-              [nzLabel]="option.name " nzCustomContent>
+            <nz-option *ngFor="let option of options let i = index" [nzValue]="option" [nzLabel]="option.name "
+              nzCustomContent>
               <div *ngIf="option.batches != null;else nullBatches">
                 {{option.name}}
               </div>

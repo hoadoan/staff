@@ -3,9 +3,10 @@
         <app-retail-customer-history-invoice-detail [invoiceID]="item.id" [invoiceDate]="{
             createdAt: item. createdAt,
             createdBy: item.createdBy.name
-        }" role="button" (click)="SelectInvoice(item.id, item.barcode)" [statusReturnProduct]="item.isReturn">
+        }" role="button" (click)="SelectInvoice(item.id, item.barcode)" [statusReturnProduct]="item.isReturn"
+            [Infor]="item">
         </app-retail-customer-history-invoice-detail>
     </div>
-    
+
     <nz-divider></nz-divider>
 </div>
