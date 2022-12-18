@@ -9,14 +9,14 @@ import * as http from "http";
 })
 export class ProductService {
 
-  token = localStorage.getItem(ACCESSTOKEN);
+  // token = localStorage.getItem(ACCESSTOKEN);
   headers: any;
 
   constructor(
     private httpClient: HttpClient
   ) {
     this.headers = new HttpHeaders({
-      'authorization': this.token!,
+      'authorization': localStorage.getItem(ACCESSTOKEN)!,
       'accept': '*/*',
       'Access-Control-Allow-Origin': '*'
     });

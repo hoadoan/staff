@@ -8,13 +8,13 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
 
-  token = localStorage.getItem(ACCESSTOKEN);
+  // token = ;
   headers: any;
   constructor(
     private httpClient: HttpClient
   ) {
     this.headers = new HttpHeaders({
-      'authorization': this.token!,
+      'authorization': localStorage.getItem(ACCESSTOKEN)!,
       'accept': '*/*',
       'Access-Control-Allow-Origin': '*'
     });
@@ -25,6 +25,15 @@ export class UserService {
   }
 
   getProfile(): Observable<any> {
+    console.log(localStorage.getItem(ACCESSTOKEN));
+
+    this.headers = new HttpHeaders({
+      'authorization': localStorage.getItem(ACCESSTOKEN)!,
+      'accept': '*/*',
+      'Access-Control-Allow-Origin': '*'
+    });
+    
+    
     return this.httpClient.get(DOMAIN + 'user-management/auth/user/profile', { headers: this.headers })
   }
 
