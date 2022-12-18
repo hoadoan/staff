@@ -116,4 +116,7 @@ export class ProductService {
     return this.httpClient.get(DOMAIN + `/batch-management/batches/${id}`, { headers: this.headers })
   }
 
+  getPointInfomation(): Observable<any> {
+    return this.httpClient.get(DOMAIN + 'point-management/points/information', { headers: this.headers })
+  }
 }

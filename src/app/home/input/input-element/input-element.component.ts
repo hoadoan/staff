@@ -91,7 +91,9 @@ export class InputElementComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.InputProduct);
 
-
+    if (this.InputProduct.listBatch.length == 0) {
+      this.isVisibleBatches = true
+    }
     this.productService.getListProductUnitByProductId(this.InputProduct?.product.id).subscribe((result) => {
       this.listUnitProductPrice = result.data
       console.log(result);
@@ -152,7 +154,7 @@ export class InputElementComponent implements OnInit {
   checkSelectBatch: boolean = true
   handleOkBatches(): void {
 
-    
+
     this.batchs = {
       batchId: this.selectBatch,
       quantity: this.quantityBatch,
@@ -188,7 +190,7 @@ export class InputElementComponent implements OnInit {
           }
         }
       })
-    }else{
+    } else {
       this.checkSelectBatch = false
     }
   }
@@ -304,6 +306,7 @@ export class InputElementComponent implements OnInit {
     this.confirmModal = this.modal.confirm({
       nzTitle: 'Xóa sản phẩm đã chọn',
       nzContent: 'Bạn muốn xóa thuốc này, khi xóa các lô của sản phẩm này cũng sẽ bị xóa',
+      nzOkText: 'Xác nhận',
       nzOnOk: () => {
         let tempListProductInput: any[] = [...this.listProductInput]
         tempListProductInput.forEach((item: any, index: number) => {

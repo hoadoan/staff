@@ -47,6 +47,8 @@ export class LoginTemplateComponent implements OnInit {
 
   login() {
 
+    console.log('ok');
+    this.check = true
     if (this.username == '') {
       this.check = false
     }

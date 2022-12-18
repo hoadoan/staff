@@ -43,19 +43,9 @@ export class BatchTagInfomationComponent implements OnInit {
   //new batch
   manufacturingDate: string = ''
   expiryDate: string = '';
-  // checkManufacturingDate: boolean = true
-  // checkExpiryDate: boolean = true
-
-  // today = new Date();
-  // tomorow: any = new Date().setDate(this.today.getDate() + 1)
 
 
-  // disabledDate = (current: Date): boolean => {
-  //   return differenceInCalendarDays(current, this.today) > 0;
-  // }
-  // disabledDateExp = (current: Date): boolean => {
-  //   return differenceInCalendarDays(this.tomorow, current) > 0;
-  // }
+  checkNoBatchProduct: boolean = true
 
 
   constructor(
@@ -68,7 +58,7 @@ export class BatchTagInfomationComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.batchInfo);
     console.log(this.productName);
-
+    this.checkNoBatchProduct = this.productName.manufacturingDate
 
 
     this.listProductInput$ = this.store.select(
@@ -119,7 +109,7 @@ export class BatchTagInfomationComponent implements OnInit {
       this.productService.getBatchById(this.batchInfo.batchId).subscribe((result) => {
         console.log(result.data)
         this.fullInfomationOfBatch = result.data
-        this.productName = this.fullInfomationOfBatch.product
+        // this.productName = this.fullInfomationOfBatch.product
       }, err => {
         this.notification.create(
           'error',

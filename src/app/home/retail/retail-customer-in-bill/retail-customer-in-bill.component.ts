@@ -42,6 +42,7 @@ export class RetailCustomerInBillComponent implements OnInit {
   rewardPoint: number = 0
   pointConvert: number = 1000
   usePoint: number = 0
+  converPoint: number = 0
 
 
   // invoiceRedux$: Observable<any> | undefined
@@ -60,6 +61,12 @@ export class RetailCustomerInBillComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+    this.productservice.getPointInfomation().subscribe((result)=>{
+      this.converPoint = result.data.toMoney
+    })
+
 
     this.listProductInBill$ = this.store.select(
       createSelector(counterSlice.selectFeature, (state) => state.ListProductInbill)
@@ -291,11 +298,11 @@ export class RetailCustomerInBillComponent implements OnInit {
   CheckPhoneNumberCustomer() {
     var validRegex = /^0[0-9]{9}$/g
     // if (this.phoneNumber != '') {
-      if (this.phoneNumber.match(validRegex)) {
-        this.checkPhoneNumberFormat = true
-      } else {
-        this.checkPhoneNumberFormat = false
-      }
+    if (this.phoneNumber.match(validRegex)) {
+      this.checkPhoneNumberFormat = true
+    } else {
+      this.checkPhoneNumberFormat = false
+    }
     // } else {
     //   this.checkPhoneNumberFormat = false
     // }

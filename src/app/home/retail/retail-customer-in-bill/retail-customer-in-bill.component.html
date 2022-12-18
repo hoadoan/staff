@@ -97,13 +97,13 @@
         <div class="col-7 mb-3">
           <div class="row">
             <div class="col-5">
-              <div *ngIf="totalBillPrice/1000 > rewardPoint; else setMaxUsePoint">
+              <div *ngIf="totalBillPrice/converPoint > rewardPoint; else setMaxUsePoint">
                 <nz-input-number nzBorderless [nzMin]="0" [nzStep]="1" [nzMax]="rewardPoint" [(ngModel)]="usePoint"
                   (ngModelChange)="usePoineChange()" class="w-100" style="border-bottom: 1px solid !important;">
                 </nz-input-number>
               </div>
               <ng-template #setMaxUsePoint>
-                <nz-input-number nzBorderless [nzMin]="0" [nzStep]="1" [nzMax]="totalBillPrice/1000"
+                <nz-input-number nzBorderless [nzMin]="0" [nzStep]="1" [nzMax]="totalBillPrice/converPoint"
                   [(ngModel)]="usePoint" (ngModelChange)="usePoineChange()" class="w-100"
                   style="border-bottom: 1px solid !important;">
                 </nz-input-number>
@@ -113,13 +113,21 @@
               <h6>/ {{rewardPoint}} điểm</h6>
             </div>
           </div>
+          <div class="row">
+            <div class="col-5">
+              Thành tiến:
+            </div>
+            <div class="col-7">
+              <h6>{{usePoint * converPoint}}</h6>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-5 mb-5">
         <h6>Tiền khách đưa:</h6>
       </div>
       <div class="col-7 mb-3">
-        <nz-input-number [(ngModel)]="reciveMoney" [nzMin]="1000" [nzStep]="1000" class="w-100">
+        <nz-input-number [(ngModel)]="reciveMoney" [nzMin]="1000" [nzMax]="100000000000" [nzStep]="1000" class="w-100">
         </nz-input-number>
         <p *ngIf="totalBillPrice > 0 && reciveMoney == 0" style="color: red;">Nhập số tiền khách đưa</p>
       </div>

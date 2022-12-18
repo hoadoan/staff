@@ -27,8 +27,6 @@ export class HomeTemplateComponent implements OnInit {
         this.avatar = result.data.avatar
         this.fullname = result.data.fullname
       }, err => {
-        console.log('ok');
-
         this.notification.create(
           "error",
           err.error.message,
