@@ -37,7 +37,7 @@
         </div>
       </ng-container>
       <ng-template #footerModalCreateCustomer>
-        <div *ngIf="customerInfo !== '' || phoneNumber !== '' ; else validateCreateCustomer">
+        <div *ngIf="checkPhoneNumberFormat && phoneNumber != '' ; else validateCreateCustomer">
           <!-- <button nz-button nzType="primary" disabled>Tạo khách hàng</button> -->
           <button nz-button nzType="primary" (click)="handleOkAddNewCustomer()">Tạo khách hàng</button>
         </div>
