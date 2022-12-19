@@ -39,8 +39,11 @@ export class ReturnProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
+    console.log(this.productData);
+    
+
     this.quantityProduct = this.productData?.convertedQuantity - this.productData?.returnedQuantity
-    this.batchTotalprice = this.quantityProduct * this.productData?.unitPrice
+    this.batchTotalprice = this.quantityProduct * this.productData?.viewBaseProductUnit.baseUnitPrice
 
 
     // this.productService.getListProductUnitByProductId(this.productData.product.id).subscribe((result) => {

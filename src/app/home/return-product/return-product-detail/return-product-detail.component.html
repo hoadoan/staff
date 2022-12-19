@@ -1,17 +1,23 @@
 <td>{{index + 1}}</td>
 <td>{{ productData?.product.name }}</td>
-<td>{{ productData?.batch.name }}</td>
+<td>
+  <div *ngIf="productData?.batch.isManageInBatch">
+    {{ productData?.batch.name }}
+  </div>
+</td>
 <td>{{productData?.convertedQuantity}} {{productData?.viewBaseProductUnit.baseUnit}}</td>
 <td>{{productData?.returnedQuantity}} {{productData?.viewBaseProductUnit.baseUnit}}</td>
 <td *ngIf="checkFull == true">{{productData?.quantity * productData?.unitPrice | currency:'VND'}}</td>
-<td>{{productData?.unitPrice | currency:'VND'}} / {{productData?.viewBaseProductUnit.baseUnit}}</td>
+<td>{{productData?.viewBaseProductUnit.baseUnitPrice | currency:'VND'}} / {{productData?.viewBaseProductUnit.baseUnit}}
+</td>
 <td *ngIf="checkFull != true">
   <nz-input-number [(ngModel)]="quantityProduct" [nzMin]="1"
     [nzMax]="productData?.convertedQuantity - productData?.returnedQuantity" [nzStep]="1"
     (ngModelChange)="changeQuantity()"></nz-input-number>
 </td>
 <td *ngIf="checkFull != true">
-  <nz-input-number [(ngModel)]="batchTotalprice" [nzMin]="1" [nzStep]="1" (ngModelChange)="changeTotalPrice()">
+  <nz-input-number [(ngModel)]="batchTotalprice" [nzMin]="1" [nzMax]="1000000000" [nzStep]="1"
+    (ngModelChange)="changeTotalPrice()">
   </nz-input-number>
 </td>
 <td *ngIf="checkFull != true">

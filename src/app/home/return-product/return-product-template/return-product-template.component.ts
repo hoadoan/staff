@@ -111,6 +111,8 @@ export class ReturnProductTemplateComponent implements OnInit {
           if (result.data) {
             this.invoiceDetailData = result.data
 
+            console.log(this.invoiceDetailData);
+
             this.store.dispatch(counterSlice.addListReturnProduct(this.invoiceDetailData))
             this.invoiceDetailData$ = this.store.select(
               createSelector(counterSlice.selectFeature, (state) => state.ListReturnProduct)
@@ -144,8 +146,8 @@ export class ReturnProductTemplateComponent implements OnInit {
       this.confirmModal = this.modal.confirm({
         nzTitle: 'Xác Nhận trả hàng?',
         nzContent: 'Bấm xác nhận để trả hàng',
-        nzOkText:'Xác nhận',
-        nzOnOk: () =>{
+        nzOkText: 'Xác nhận',
+        nzOnOk: () => {
           if (this.switchFullInvocie) {
             let full = {
               goodsReceiptNoteTypeId: 2,
@@ -157,7 +159,7 @@ export class ReturnProductTemplateComponent implements OnInit {
               console.log(result)
               this.listReturnProductId = result.data
               console.log(this.listReturnProductId);
-    
+
               this.isVisibleReturnProduct = true
               this.notification.create(
                 "success",
@@ -169,7 +171,7 @@ export class ReturnProductTemplateComponent implements OnInit {
               // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
               //   this.router.navigate([currentUrl]);
               // });
-    
+
             }, err => {
               this.notification.create(
                 "error",
@@ -185,7 +187,7 @@ export class ReturnProductTemplateComponent implements OnInit {
             goodReceiptNote$.subscribe((result1) => {
               a = result1
               console.log(a);
-    
+
             }
             )
             if (a != null) {
@@ -210,7 +212,7 @@ export class ReturnProductTemplateComponent implements OnInit {
                 )
               })
             }
-    
+
           }
         }
       });
@@ -228,7 +230,7 @@ export class ReturnProductTemplateComponent implements OnInit {
 
   }
 
-  checkReturnFullProduct() {
+  async checkReturnFullProduct() {
     // this.goodsReceiptNote.isFull = this.switchFullInvocie
     let tempGoods = { ...this.goodsReceiptNote }
     let tempCreateModel = [...tempGoods.createModel]
@@ -240,34 +242,54 @@ export class ReturnProductTemplateComponent implements OnInit {
 
     if (this.switchFullInvocie == false) {
       let listBatch: any[] = []
-      this.invoiceDetailData.forEach((item: any, index: number) => {
-        this.productService.getListProductUnitByProductId(item.product.id).subscribe((result) => {
-          if (item.quantity - item.returnedQuantity > 0) {
-            listBatch = [...listBatch, {
-              batchId: item.batch.id,
-              quantity: item.quantity - item.returnedQuantity,
-              productUnitPriceId: result.data[0].id,
-              totalPrice: item.unitPrice * (item.quantity - item.returnedQuantity),
-              batch: null
-            }]
-            tempBatch = [...listBatch]
-            tempCreateModel = [{ batches: tempBatch }]
-            tempGoods.createModel = [...tempCreateModel]
-            this.goodsReceiptNote = { ...tempGoods }
-            console.log(this.goodsReceiptNote);
-            if (this.goodsReceiptNote.createModel[0].batches.length == this.invoiceDetailData.length) {
-              this.store.dispatch(counterSlice.goodReceiptNote(this.goodsReceiptNote))
-              console.log(this.goodsReceiptNote);
-            }
-          }
-        })
+      // invoiceDetailData
+
+      // console.log(this.invoiceDetailData);
+
+      for (let i = 0; i < this.invoiceDetailData.length; i++) {
+        const element = this.invoiceDetailData[i];
+        // console.log(element);
+
+      }
+
+      this.invoiceDetailData.forEach(async (item: any, index: number) => {
+
+        console.log(item);
+
+        // await this.productService.getListProductUnitByProductId(item.product.id).subscribe((result) => {
+
+        console.log(item);
+
+        // console.log(result.data);
+
+        // if (item.quantity - item.returnedQuantity > 0) {
+        listBatch = [...listBatch, {
+          batchId: item.batch.id,
+          quantity: item.quantity - item.returnedQuantity,
+          productUnitPriceId: item.viewBaseProductUnit.baseUnitId,
+          totalPrice: item.unitPrice * (item.quantity - item.returnedQuantity),
+          batch: null
+        }]
+        tempBatch = [...listBatch]
+        // console.log(tempBatch);
+
+        tempCreateModel = [{ batches: tempBatch }]
+        tempGoods.createModel = [...tempCreateModel]
+        this.goodsReceiptNote = { ...tempGoods }
+        // console.log(this.goodsReceiptNote);
+        if (this.goodsReceiptNote.createModel[0].batches.length == this.invoiceDetailData.length) {
+          this.store.dispatch(counterSlice.goodReceiptNote(this.goodsReceiptNote))
+          // console.log(this.goodsReceiptNote);
+        }
+        // }
+        // })
       })
     } else {
       tempCreateModel = [{ batches: [] }]
       tempGoods.createModel = [...tempCreateModel]
       this.goodsReceiptNote = { ...tempGoods }
       this.store.dispatch(counterSlice.goodReceiptNote(this.goodsReceiptNote))
-      console.log(this.goodsReceiptNote);
+      // console.log(this.goodsReceiptNote);
     }
   }
 
@@ -286,7 +308,6 @@ export class ReturnProductTemplateComponent implements OnInit {
     this.isVisibleReturnProduct = false
     this.store.dispatch(counterSlice.resetState('ok'))
   }
-
 
   isVisibleSearchCustomer: boolean = false
   showSearchCustomerModal() {

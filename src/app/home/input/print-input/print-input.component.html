@@ -30,7 +30,11 @@
                 <tr *ngFor="let item of listInputInfo">
                     <!-- <td>{{item.id}}</td> -->
                     <td>{{item.productName}}</td>
-                    <td>{{item.data.batch.barcode}}</td>
+                    <td>
+                        <div *ngIf="item.data.batch.expiryDate != null">
+                            {{item.data.batch.barcode}}
+                        </div>
+                    </td>
                     <td>{{item.data.batch.expiryDate|date:'dd-MM-yyyy'}}</td>
                     <td>{{item.data.quantity}}</td>
                     <td>{{item.data.unit}}</td>

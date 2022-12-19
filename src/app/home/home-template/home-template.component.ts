@@ -37,23 +37,23 @@ export class HomeTemplateComponent implements OnInit {
   ngOnInit(): void {
 
     if (localStorage.getItem(ACCESSTOKEN)) {
-      console.log(localStorage.getItem(ACCESSTOKEN));
+      // console.log(localStorage.getItem(ACCESSTOKEN));
 
-      setTimeout(() => {
-        console.log(localStorage.getItem(ACCESSTOKEN));
-        
-        this.user.getProfile().subscribe((result) => {
-          console.log(result);
-          this.avatar = result.data.avatar
-          this.fullname = result.data.fullname
-        }, err => {
-          this.notification.create(
-            "error",
-            err.error.message,
-            ""
-          )
-        })
-      }, 1000);
+      // setTimeout(() => {
+      // console.log(localStorage.getItem(ACCESSTOKEN));
+
+      this.user.getProfile().subscribe((result) => {
+        console.log(result);
+        this.avatar = result.data.avatar
+        this.fullname = result.data.fullname
+      }, err => {
+        this.notification.create(
+          "error",
+          err.error.message,
+          ""
+        )
+      })
+      // }, 1000);
 
     }
   }

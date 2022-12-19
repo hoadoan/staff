@@ -25,15 +25,15 @@ export class UserService {
   }
 
   getProfile(): Observable<any> {
-    console.log(localStorage.getItem(ACCESSTOKEN));
+    // console.log(localStorage.getItem(ACCESSTOKEN));
 
     this.headers = new HttpHeaders({
       'authorization': localStorage.getItem(ACCESSTOKEN)!,
       'accept': '*/*',
       'Access-Control-Allow-Origin': '*'
     });
-    
-    
+
+
     return this.httpClient.get(DOMAIN + 'user-management/auth/user/profile', { headers: this.headers })
   }
 
