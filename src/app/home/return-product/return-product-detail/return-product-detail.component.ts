@@ -44,6 +44,8 @@ export class ReturnProductDetailComponent implements OnInit {
 
     this.quantityProduct = this.productData?.convertedQuantity - this.productData?.returnedQuantity
     this.batchTotalprice = this.quantityProduct * this.productData?.viewBaseProductUnit.baseUnitPrice
+    console.log(this.batchTotalprice, '-', this.quantityProduct,'-', this.productData?.viewBaseProductUnit.baseUnitPrice);
+    
 
 
     // this.productService.getListProductUnitByProductId(this.productData.product.id).subscribe((result) => {
@@ -126,7 +128,7 @@ export class ReturnProductDetailComponent implements OnInit {
     let tempUnit = {...tempBatches[this.index]}
 
     tempUnit.quantity = this.quantityProduct
-    tempUnit.totalPrice = this.quantityProduct * this.productData?.unitPrice
+    tempUnit.totalPrice = this.quantityProduct * this.productData?.viewBaseProductUnit.baseUnitPrice
 
     tempBatches[this.index] = tempUnit
     let tempCreateModel = [{
@@ -134,7 +136,8 @@ export class ReturnProductDetailComponent implements OnInit {
     }]
     tempgood.createModel = tempCreateModel
 
-    this.batchTotalprice = this.quantityProduct * this.productData?.unitPrice
+    this.batchTotalprice = this.quantityProduct * this.productData?.viewBaseProductUnit.baseUnitPrice
+    console.log(this.batchTotalprice, '-', this.quantityProduct,'-', this.productData?.viewBaseProductUnit.baseUnitPrice);
 
     console.log(tempgood)
     this.goodReceiptNote = tempgood

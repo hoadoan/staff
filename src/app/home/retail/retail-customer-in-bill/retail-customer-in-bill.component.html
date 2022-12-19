@@ -17,7 +17,7 @@
             <nz-form-item>
               <nz-form-label [nzSpan]="6" nzFor="phoneNumber" nzRequired>Số điện thoại</nz-form-label>
               <nz-form-control [nzSpan]="14">
-                <input nz-input name="phoneNumber" type="tel" id="phoneNumber" nz-input [(ngModel)]="phoneNumber"
+                <input nz-input name="phoneNumber" type="text" id="phoneNumber" nz-input [(ngModel)]="phoneNumber"
                   (input)="onInput($event)" (ngModelChange)="CheckPhoneNumberCustomer()">
                 <div *ngIf="!checkPhoneNumberFormat">
                   <small style="color: red;">Số điện thoại bắt đầu bằng số 0 mà có 10 kí tự</small>
