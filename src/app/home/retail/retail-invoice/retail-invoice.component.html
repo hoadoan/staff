@@ -40,15 +40,17 @@
         </tr>
       </tbody>
     </table>
-    <nz-divider></nz-divider>
-    <div style="float: right">
-      <div style="text-align: start;">
-        <h6>Tổng tiền: {{totalBillPrice | currency:'VND'}}</h6>
-        <h6>Giảm giá: {{usePointPrice | currency:'VND'}}</h6>
-        <h6>Còn lại: {{totalBillPrice - usePointPrice | currency:'VND'}}</h6>
+    <hr>
+    <div>
+      <div style="display: flex ;justify-content: end;">
+        <div style="text-align: start;">
+          <h6>Tổng tiền: {{totalBillPrice | currency:'VND'}}</h6>
+          <h6>Giảm giá: {{usePointPrice | currency:'VND'}}</h6>
+          <h6>Còn lại: {{totalBillPrice - usePointPrice | currency:'VND'}}</h6>
+        </div>
       </div>
     </div>
-    <nz-divider></nz-divider>
+    <hr>
     <div>
       <b>Lưu ý: </b><i>Hóa đơn chỉ được đổi trả trong vòng 7 ngày kể từ ngày bán</i>
     </div>

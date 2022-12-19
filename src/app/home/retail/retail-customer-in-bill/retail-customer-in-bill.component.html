@@ -181,7 +181,7 @@
     <nz-modal [(nzVisible)]="isVisibleInvoicePrint" (nzOnCancel)="handleCancelInvoicePrint()"
       (nzOnOk)="handleOkInvoicePrint()" [nzStyle]="{width: '35%'}" nzOkText="In hóa đơn">
       <ng-container *nzModalContent>
-        <div id="print-section" style="height: 50vh; overflow: auto;">
+        <div id="print-section" style="height: 75vh; overflow: auto;">
           <app-retail-invoice [invoiceID]="invoiceID" [totalBillPrice]="totalBillPrice"
             [usePointPrice]="(usePoint * pointConvert)"></app-retail-invoice>
         </div>
