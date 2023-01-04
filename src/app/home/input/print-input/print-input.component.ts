@@ -11,6 +11,7 @@ export class PrintInputComponent implements OnInit {
 
   @Input() listInputID: any[] = []
   @Input() status: boolean = true
+  @Input() returnPoint: number = 0
 
   listInputInfo: any[] = []
   totalPriceBill: number = 0
@@ -21,11 +22,15 @@ export class PrintInputComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.listInputID);
+    console.log(this.returnPoint);
+    
+
     if (this.listInputID.length > 0) {
       this.listInputID.forEach((item: any) => {
         this.productService.getGoodsReceiptNoteById(item?.grnId).subscribe((result: any) => {
           console.log(result.data);
-          
+
           if (result?.data) {
             this.productService.getBatchById(result.data.batch.id).subscribe((product) => {
               this.listInputInfo.push({ data: result.data, productName: product.data.product.name })

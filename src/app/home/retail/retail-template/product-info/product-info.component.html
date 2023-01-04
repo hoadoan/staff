@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-6">
+      <b> Mã số đăng ký:</b>
+    </div>
+    <div class="col-6">
+        <b>{{productFullInfo?.drugRegistrationNumber}}</b>
+    </div>
+    <nz-divider></nz-divider>
+    <div class="col-6">
+        <b>Tên sản phẩm:</b>
+    </div>
+    <div class="col-6">
+       <h5> {{productFullInfo?.name}}</h5>
+    </div>
+    <nz-divider></nz-divider>
+    <div class="col-6">
+        <b>Nhà sản xuất:</b>
+    </div>
+    <div class="col-6">
+        <b>{{productFullInfo?.brand.name}}</b>
+    </div>
+    <nz-divider></nz-divider>
+    <div class="col-6">
+        <b>Vị trí:</b>
+    </div>
+    <div class="col-6">
+        <b>{{productFullInfo?.shelf.name}}</b>
+    </div>
+    <nz-divider></nz-divider>
+    <div class="col-6">
+        <b>Đường dùng:</b>
+    </div>
+    <div class="col-6">
+        <b>{{productFullInfo?.routeOfAdministration.name}}</b>
+    </div>
+    <nz-divider></nz-divider>
+    <div class="col-6">
+        <b>Quản lí theo lô:</b>
+    </div>
+    <div class="col-6">
+        <b *ngIf="productFullInfo?.isManagedInBatches == true">Có</b>
+        <b *ngIf="productFullInfo?.isManagedInBatches == false">Không</b>
+    </div>
+</div>

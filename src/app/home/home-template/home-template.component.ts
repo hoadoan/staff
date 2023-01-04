@@ -43,7 +43,7 @@ export class HomeTemplateComponent implements OnInit {
       // console.log(localStorage.getItem(ACCESSTOKEN));
 
       this.user.getProfile().subscribe((result) => {
-        console.log(result);
+        // console.log(result);
         this.avatar = result.data.avatar
         this.fullname = result.data.fullname
       }, err => {

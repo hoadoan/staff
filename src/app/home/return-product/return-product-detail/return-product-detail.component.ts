@@ -39,12 +39,11 @@ export class ReturnProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.productData);
+    // console.log(this.productData);
     
 
     this.quantityProduct = this.productData?.convertedQuantity - this.productData?.returnedQuantity
-    this.batchTotalprice = this.quantityProduct * this.productData?.viewBaseProductUnit.baseUnitPrice
-    console.log(this.batchTotalprice, '-', this.quantityProduct,'-', this.productData?.viewBaseProductUnit.baseUnitPrice);
+    this.batchTotalprice = this.quantityProduct * this.productData?.currentUnitPrice
     
 
 
@@ -94,7 +93,7 @@ export class ReturnProductDetailComponent implements OnInit {
     ))
     this.goodReceiptNote$.subscribe((result) => {
       this.goodReceiptNote = result
-      console.log(this.goodReceiptNote)
+      // console.log(this.goodReceiptNote)
       // this.quantityProduct = this.goodReceiptNote.createModel[0]?.batches[this.index]?.convertedQuantity
 
 
@@ -136,10 +135,9 @@ export class ReturnProductDetailComponent implements OnInit {
     }]
     tempgood.createModel = tempCreateModel
 
-    this.batchTotalprice = this.quantityProduct * this.productData?.viewBaseProductUnit.baseUnitPrice
-    console.log(this.batchTotalprice, '-', this.quantityProduct,'-', this.productData?.viewBaseProductUnit.baseUnitPrice);
+    this.batchTotalprice = this.quantityProduct * this.productData?.currentUnitPrice
 
-    console.log(tempgood)
+    // console.log(tempgood)
     this.goodReceiptNote = tempgood
     this.store.dispatch(counterSlice.goodReceiptNote(this.goodReceiptNote))
   }
@@ -157,7 +155,7 @@ export class ReturnProductDetailComponent implements OnInit {
     }]
     tempgood.createModel = tempCreateModel
 
-    console.log(tempgood)
+    // console.log(tempgood)
     this.goodReceiptNote = tempgood
     this.store.dispatch(counterSlice.goodReceiptNote(this.goodReceiptNote))
   }
@@ -169,7 +167,7 @@ export class ReturnProductDetailComponent implements OnInit {
       nzContent: 'Khi xóa ra khỏi hóa đơn bạn không thể thêm lại vào danh sách',
       nzOnOk: () => {
 
-        console.log(this.index);
+        // console.log(this.index);
         
         let temp = [...this.invoiceDetailData]
 
@@ -177,11 +175,11 @@ export class ReturnProductDetailComponent implements OnInit {
 
         this.invoiceDetailData = [...temp]
 
-        console.log(this.invoiceDetailData)
+        // console.log(this.invoiceDetailData)
 
         let tempgood = {...this.goodReceiptNote}
         let tempBatches = [...tempgood.createModel[0].batches]
-        console.log(tempBatches);
+        // console.log(tempBatches);
         
         tempBatches.splice(this.index, 1)
         let tempCreateModel = [{
@@ -192,7 +190,7 @@ export class ReturnProductDetailComponent implements OnInit {
         this.goodReceiptNote = tempgood
         this.store.dispatch(counterSlice.addListReturnProduct(this.invoiceDetailData))
         this.store.dispatch(counterSlice.goodReceiptNote(this.goodReceiptNote))
-        console.log(this.goodReceiptNote)
+        // console.log(this.goodReceiptNote)
       }
     });
   }

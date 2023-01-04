@@ -17,11 +17,10 @@
               </ng-template>
               <div class="tippy__search__product position-absolute" id="tippy__search__product">
                 <div *ngIf="listSearchProduct.length > 0 ; else emptySearch">
-
                 </div>
                 <div class="tippy__search__product__item" *ngFor="let item of listSearchProduct"
                   (click)="addToListBill(item.id)">
-                  <div class="row">
+                  <div class="row" nz-popover [nzPopoverContent]="contentTemplate" [nzPopoverOverlayStyle]="{width: '500px'}" nzPopoverTitle="thông tin chi tiết thuốc" nzPopoverPlacement="right">
                     <div class="col-2">
                       <h6>{{item.name}}</h6>
                     </div>
@@ -38,6 +37,10 @@
                       </div>
                     </div>
                   </div>
+
+                  <ng-template #contentTemplate>
+                    <app-product-info [productId]="item.id"></app-product-info>
+                  </ng-template>
                 </div>
               </div>
             </div>

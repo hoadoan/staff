@@ -60,7 +60,7 @@ export class ReturnProductTemplateComponent implements OnInit {
     )
     this.goodsIssueNote$.subscribe((result) => {
       this.goodsReceiptNote = result
-      console.log(this.goodsReceiptNote);
+      // console.log(this.goodsReceiptNote);
 
     })
 
@@ -84,12 +84,9 @@ export class ReturnProductTemplateComponent implements OnInit {
         this.returnTotalPrice += element.quantity * element.unitPrice
       })
     })
-
-
   }
 
   searchInvocie() {
-
     if (this.invoiceBarcode.length == 13) {
       if (this.invoiceBarcode.slice(0, 3) === 'INV') {
         this.productService.getInvocieByBarcode(this.invoiceBarcode).subscribe((result) => {
@@ -111,19 +108,19 @@ export class ReturnProductTemplateComponent implements OnInit {
           if (result.data) {
             this.invoiceDetailData = result.data
 
-            console.log(this.invoiceDetailData);
+            // console.log(this.invoiceDetailData);
 
             this.store.dispatch(counterSlice.addListReturnProduct(this.invoiceDetailData))
             this.invoiceDetailData$ = this.store.select(
               createSelector(counterSlice.selectFeature, (state) => state.ListReturnProduct)
             )
-            this.invoiceDetailData$.subscribe((result) => {
-              this.invoiceDetailData = result
-              this.returnTotalPrice = 0
-              this.invoiceDetailData.forEach((element: any, index: number) => {
-                this.returnTotalPrice += element.quantity * element.unitPrice
-              })
-            })
+            // this.invoiceDetailData$.subscribe((result) => {
+            //   this.invoiceDetailData = result
+            //   this.returnTotalPrice = 0
+            //   this.invoiceDetailData.forEach((element: any, index: number) => {
+            //     this.returnTotalPrice += element.quantity * element.unitPrice
+            //   })
+            // })
             this.switchFullInvocie = true
           }
         }, err => {
@@ -156,7 +153,7 @@ export class ReturnProductTemplateComponent implements OnInit {
               isFull: true
             }
             this.productService.PostGoodReceiptNoteManager(full).subscribe((result) => {
-              console.log(result)
+              // console.log(result)
               this.listReturnProductId = result.data
               console.log(this.listReturnProductId);
 
@@ -186,7 +183,7 @@ export class ReturnProductTemplateComponent implements OnInit {
             let a: any = null
             goodReceiptNote$.subscribe((result1) => {
               a = result1
-              console.log(a);
+              // console.log(a);
 
             }
             )
@@ -254,11 +251,11 @@ export class ReturnProductTemplateComponent implements OnInit {
 
       this.invoiceDetailData.forEach(async (item: any, index: number) => {
 
-        console.log(item);
+        // console.log(item);
 
         // await this.productService.getListProductUnitByProductId(item.product.id).subscribe((result) => {
 
-        console.log(item);
+        // console.log(item);
 
         // console.log(result.data);
 
@@ -307,6 +304,10 @@ export class ReturnProductTemplateComponent implements OnInit {
     document.getElementById('print__bill__data__return')?.click()
     this.isVisibleReturnProduct = false
     this.store.dispatch(counterSlice.resetState('ok'))
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    })
   }
 
   isVisibleSearchCustomer: boolean = false

@@ -23,6 +23,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 @NgModule({
   declarations: [],
@@ -51,7 +52,8 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
     NzDatePickerModule,
     NzDrawerModule,
     NzUploadModule,
-    NzBreadCrumbModule
+    NzBreadCrumbModule,
+    NzPopoverModule
   ]
 })
 export class AntdModule { }

@@ -63,7 +63,7 @@ export class RetailCustomerInBillComponent implements OnInit {
   ngOnInit(): void {
 
 
-    this.productservice.getPointInfomation().subscribe((result)=>{
+    this.productservice.getPointInfomation().subscribe((result) => {
       this.converPoint = result.data.toMoney
     })
 

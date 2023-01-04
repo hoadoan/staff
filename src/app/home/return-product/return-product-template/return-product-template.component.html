@@ -10,10 +10,9 @@
               <th>Lô</th>
               <th>Số lượng</th>
               <th>Đã trả</th>
-              <th *ngIf="switchFullInvocie == true">Thành tiền</th>
-              <th>Đơn giá</th>
+              <th *ngIf="switchFullInvocie == true">Giá bán</th>
               <th *ngIf="switchFullInvocie != true">Số lượng trả lại</th>
-              <th *ngIf="switchFullInvocie != true">Tổng giá</th>
+              <th *ngIf="switchFullInvocie != true">Giá bán</th>
               <th *ngIf="switchFullInvocie != true">Xóa</th>
             </tr>
           </thead>
@@ -72,7 +71,7 @@
         <div class="mb-3 row">
           <div class="col-6"><span>Giá trị hóa đơn: </span></div>
           <div class="col-6">
-            <h5>{{returnTotalPrice | currency:'VND'}}</h5>
+            <h5>{{invoiceData?.totalPrice | currency:'VND'}}</h5>
           </div>
         </div>
         <nz-divider></nz-divider>
@@ -88,6 +87,11 @@
           </div>
         </div>
         <nz-divider></nz-divider>
+        <div *ngIf="invoiceData"> 
+          <span><b>Lưu ý:</b>
+          <i> Khi trả hàng số điểm thưởng tích được từ hóa đơn sẽ bị trừ đi, hóa đơn {{invoiceBarcode}} tích được {{invoiceData?.returnPoin}} điểm</i>
+          </span>
+        </div>
         <div class="position-absolute" style="bottom: 16px; width: calc(100% - 32px);">
           <div *ngIf="invoiceData; else emptyReturn">
             <button class="w-100 btn btn-success btn-lg" (click)="ReturnProduct()" id="returnButton">Trả hàng</button>
@@ -108,7 +112,7 @@
   [nzStyle]="{ width:'60%' }">
   <ng-container *nzModalContent>
     <div id="print-section" style="height: 70vh; overflow: auto;" *ngIf="listReturnProductId != []">
-      <app-print-input [listInputID]="listReturnProductId" [status]="false"></app-print-input>
+      <app-print-input [listInputID]="listReturnProductId" [status]="false" [returnPoint]="invoiceData?.returnPoin"></app-print-input>
     </div>
   </ng-container>
 </nz-modal>

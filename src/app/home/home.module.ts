@@ -36,6 +36,7 @@ import { ReceiptNoteDetailComponent } from './profile/receipt-note-detail/receip
 import { SellDetailComponent } from './profile/sell-detail/sell-detail.component';
 import { SearchCustomerReturnProductComponent } from './return-product/return-product-template/search-customer-return-product/search-customer-return-product.component';
 import { ReportBrokenProductComponent } from './retail/broken-product/report-broken-product/report-broken-product.component';
+import { ProductInfoComponent } from './retail/retail-template/product-info/product-info.component';
 
 const homeRoute: Routes = [
   {
@@ -77,6 +78,7 @@ const homeRoute: Routes = [
     SellDetailComponent,
     SearchCustomerReturnProductComponent,
     ReportBrokenProductComponent,
+    ProductInfoComponent,
 
 
   ],
