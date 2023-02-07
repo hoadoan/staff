@@ -5,21 +5,27 @@
 
     <ng-template #ReturnProduct>
         <h1 style="text-align: center;">Phiếu trả hàng</h1>
-        
+
     </ng-template>
 
 
     <div style="margin: 20px;">
         <h3 *ngIf="status">Nhà cung cấp: {{listInputInfo[0].data.supplier.name}}</h3>
         <h3>Tổng tiền: {{totalPriceBill | currency:'VND'}}</h3>
-        <span *ngIf="!status"><b>Lưu ý:</b><i> Số điểm thưởng khi mua hàng của hóa đơn này sẽ bị trừ đi khi trả hàng, số điểm sẽ trừ là {{returnPoint}} điểm</i></span>
+        <div *ngIf="listInputID[0].customerPoint == 0; else firstReturn">
+            <span *ngIf="!status"><b>Lưu ý:</b><i> Số điểm thưởng khi mua hàng của hóa đơn này sẽ bị trừ đi khi trả
+                    hàng, số điểm sẽ trừ là {{returnPoint}} điểm</i></span>
+        </div>
+        <ng-template #firstReturn>
+            <span *ngIf="!status"><b>Lưu ý:</b><i> Số điểm thưởng khi mua hàng của hóa đơn này sẽ bị trừ đi khi trả
+                    hàng, số điểm sẽ trừ là {{returnPoint}} điểm, quý khách còn {{listInputID[0].customerPoint}}
+                    điểm</i></span>
+        </ng-template>
     </div>
     <div>
-        <!-- <h1>{{item.grnId}}</h1> -->
         <table class="table" style="width: 100%;">
             <thead class="table-light">
                 <tr style="font-size: 15px ;">
-                    <!-- <th>Mã đơn</th> -->
                     <th>Tên sản phẩm</th>
                     <th>Mã lô sản phẩm</th>
                     <th>Hạn sử dụng</th>

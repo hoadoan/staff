@@ -46,8 +46,6 @@ export class LoginTemplateComponent implements OnInit {
   }
 
   login() {
-
-    console.log('ok');
     this.check = true
     if (this.username == '') {
       this.check = false
@@ -66,8 +64,6 @@ export class LoginTemplateComponent implements OnInit {
           if (result.isAdmin == false) {
             this.token = `Bearer ${result.accessToken}`
             localStorage.setItem(ACCESSTOKEN, this.token)
-            console.log(localStorage.getItem(ACCESSTOKEN));
-
             if (localStorage.getItem(ACCESSTOKEN)) {
               this.notification.create(
                 'success',
@@ -75,7 +71,6 @@ export class LoginTemplateComponent implements OnInit {
                 ''
               );
               this.route.navigate(['home'])
-
             }
           } else {
             this.loadingClick = false

@@ -22,8 +22,8 @@ export class RetailCustomerHistoryInvoiceDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.statusReturnProduct);
-    console.log(this.Infor);
+    // console.log(this.statusReturnProduct);
+    // console.log(this.Infor);
     this.productService.getInvoiceDetailByInvoiceID(this.invoiceID).subscribe((result) => {
       this.ListProductInInvoiceDetail = result.data
     }, err => {

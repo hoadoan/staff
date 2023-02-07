@@ -45,10 +45,10 @@ const counterSlice = createSlice({
     },
     resetState: (state, action) => {
       state.ListBrokenProduct = [],
-        state.ListProductInbill = [],
-        state.ListInputProduct = [],
-        state.listGoodsReceiptNote = [],
-        state.invoice = {
+      state.ListProductInbill = [],
+      state.ListInputProduct = [],
+      state.listGoodsReceiptNote = [],
+      state.invoice = {
           goodsIssueNoteTypeId: 1,
           usePoint: 0,
           customerId: null,
@@ -56,7 +56,7 @@ const counterSlice = createSlice({
           customer: null
         }
       state.invoiceID = '',
-        state.ListReturnProduct = []
+      state.ListReturnProduct = []
       state.goodsReceiptNote = {
         goodsReceiptNoteTypeId: 2,
         createModel: [{

@@ -41,11 +41,7 @@ export class SearchCustomerReturnProductComponent implements OnInit {
   }
 
   addcustomer() {
-    
     this.id = this.selectedValue.id
-
-    console.log(this.id);
-
   }
 
 }

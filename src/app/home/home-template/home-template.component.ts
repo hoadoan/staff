@@ -3,6 +3,8 @@ import { UserService } from './../../core/services/user/user.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { NzNotificationService } from "ng-zorro-antd/notification";
+import * as counterSlice from "./../../core/store/store.slice";
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-home-template',
@@ -17,7 +19,8 @@ export class HomeTemplateComponent implements OnInit {
   constructor(
     private route: Router,
     private user: UserService,
-    private notification: NzNotificationService
+    private notification: NzNotificationService,
+    private store: Store<{}>
   ) { }
 
   ProfileInfo() {
@@ -63,6 +66,7 @@ export class HomeTemplateComponent implements OnInit {
     localStorage.removeItem(PROFILE)
     localStorage.removeItem(ACCESSTOKEN)
     this.route.navigate([''])
+    this.store.dispatch(counterSlice.resetState('ok'))
     let currentUrl = this.route.url;
     if (currentUrl == '') {
       location.reload()

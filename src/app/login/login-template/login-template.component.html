@@ -26,7 +26,7 @@
                 <nz-input-group [nzSuffix]="suffixTemplate">
 
                     <input [type]="passwordVisible ? 'text' : 'password'" style="border: none; width: 100%;"
-                        id="login__password" [(ngModel)]="password">
+                        id="login__password" [(ngModel)]="password" (keyup.enter)="login()">
 
                 </nz-input-group>
                 <div *ngIf="check == false">

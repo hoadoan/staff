@@ -27,15 +27,9 @@ export class RetailCustomerHistoryInvoiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    console.log(this.customerId);
-
-
     this.productService.getListInvoicebyCustomerID(this.customerId).subscribe((result) => {
       this.listInvoiceID = result.data
-
-      console.log(this.listInvoiceID);
-
+      // console.log(this.listInvoiceID);
     }, err => {
       this.notification.create(
         "error",
@@ -46,14 +40,11 @@ export class RetailCustomerHistoryInvoiceComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes['customerId'].currentValue);
-    console.log();
+    // console.log(changes['customerId'].currentValue);
 
     this.productService.getListInvoicebyCustomerID(changes['customerId'].currentValue).subscribe((result) => {
       this.listInvoiceID = result.data
-
-      console.log(this.listInvoiceID);
-
+      // console.log(this.listInvoiceID);
     }, err => {
       this.notification.create(
         "error",

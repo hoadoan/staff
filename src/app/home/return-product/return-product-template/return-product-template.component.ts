@@ -107,20 +107,10 @@ export class ReturnProductTemplateComponent implements OnInit {
 
           if (result.data) {
             this.invoiceDetailData = result.data
-
-            // console.log(this.invoiceDetailData);
-
             this.store.dispatch(counterSlice.addListReturnProduct(this.invoiceDetailData))
             this.invoiceDetailData$ = this.store.select(
               createSelector(counterSlice.selectFeature, (state) => state.ListReturnProduct)
             )
-            // this.invoiceDetailData$.subscribe((result) => {
-            //   this.invoiceDetailData = result
-            //   this.returnTotalPrice = 0
-            //   this.invoiceDetailData.forEach((element: any, index: number) => {
-            //     this.returnTotalPrice += element.quantity * element.unitPrice
-            //   })
-            // })
             this.switchFullInvocie = true
           }
         }, err => {
@@ -133,8 +123,6 @@ export class ReturnProductTemplateComponent implements OnInit {
       }
     }
   }
-
-
   listReturnProductId: any[] = []
 
   ReturnProduct() {
@@ -190,6 +178,7 @@ export class ReturnProductTemplateComponent implements OnInit {
             if (a != null) {
               this.productService.PostGoodReceiptNoteManager(a).subscribe((result) => {
                 this.listReturnProductId = result?.data
+                console.log(this.listReturnProductId);
                 this.isVisibleReturnProduct = true
                 this.notification.create(
                   "success",
@@ -228,7 +217,6 @@ export class ReturnProductTemplateComponent implements OnInit {
   }
 
   async checkReturnFullProduct() {
-    // this.goodsReceiptNote.isFull = this.switchFullInvocie
     let tempGoods = { ...this.goodsReceiptNote }
     let tempCreateModel = [...tempGoods.createModel]
     let tempBatch = [...tempCreateModel[0].batches]
@@ -239,54 +227,36 @@ export class ReturnProductTemplateComponent implements OnInit {
 
     if (this.switchFullInvocie == false) {
       let listBatch: any[] = []
-      // invoiceDetailData
-
-      // console.log(this.invoiceDetailData);
-
       for (let i = 0; i < this.invoiceDetailData.length; i++) {
         const element = this.invoiceDetailData[i];
-        // console.log(element);
-
       }
-
       this.invoiceDetailData.forEach(async (item: any, index: number) => {
 
-        // console.log(item);
+        console.log(item);
 
-        // await this.productService.getListProductUnitByProductId(item.product.id).subscribe((result) => {
 
-        // console.log(item);
-
-        // console.log(result.data);
-
-        // if (item.quantity - item.returnedQuantity > 0) {
         listBatch = [...listBatch, {
           batchId: item.batch.id,
-          quantity: item.quantity - item.returnedQuantity,
+          quantity: item.convertedQuantity - item.returnedQuantity,
           productUnitPriceId: item.viewBaseProductUnit.baseUnitId,
-          totalPrice: item.unitPrice * (item.quantity - item.returnedQuantity),
+          totalPrice: (item.totalPrice / item.convertedQuantity) * (item.convertedQuantity - item.returnedQuantity),
           batch: null
         }]
         tempBatch = [...listBatch]
-        // console.log(tempBatch);
+        console.log(tempBatch);
 
         tempCreateModel = [{ batches: tempBatch }]
         tempGoods.createModel = [...tempCreateModel]
         this.goodsReceiptNote = { ...tempGoods }
-        // console.log(this.goodsReceiptNote);
         if (this.goodsReceiptNote.createModel[0].batches.length == this.invoiceDetailData.length) {
           this.store.dispatch(counterSlice.goodReceiptNote(this.goodsReceiptNote))
-          // console.log(this.goodsReceiptNote);
         }
-        // }
-        // })
       })
     } else {
       tempCreateModel = [{ batches: [] }]
       tempGoods.createModel = [...tempCreateModel]
       this.goodsReceiptNote = { ...tempGoods }
       this.store.dispatch(counterSlice.goodReceiptNote(this.goodsReceiptNote))
-      // console.log(this.goodsReceiptNote);
     }
   }
 

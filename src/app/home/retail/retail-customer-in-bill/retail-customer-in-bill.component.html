@@ -114,11 +114,13 @@
             </div>
           </div>
         </div>
-        <div class="col-5">
-          <h6>Thành tiền:</h6>
-        </div>
-        <div class="col-7 mb-3">
-          <h6>{{usePoint * converPoint | currency:'VND'}}</h6>
+        <div class="row mb-3" *ngIf="usePoint > 0">
+          <div class="col-5">
+            <h6>Quy đổi được:</h6>
+          </div>
+          <div class="col-7 mb-3">
+            <h6>{{usePoint * converPoint | currency:'VND'}}</h6>
+          </div>
         </div>
       </div>
       <div class="col-5 mb-5">

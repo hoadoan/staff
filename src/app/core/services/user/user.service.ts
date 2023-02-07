@@ -13,15 +13,16 @@ export class UserService {
   constructor(
     private httpClient: HttpClient
   ) {
-    this.headers = new HttpHeaders({
-      'authorization': localStorage.getItem(ACCESSTOKEN)!,
-      'accept': '*/*',
-      'Access-Control-Allow-Origin': '*'
-    });
   }
 
   getListCustomerSearch(value: string): Observable<any> {
-    return this.httpClient.get(DOMAIN + `user-management/customers/filter?phoneNumber=${value}&pageSize=10`, { headers: this.headers })
+    return this.httpClient.get(DOMAIN + `user-management/customers/filter?phoneNumber=${value}&pageSize=10`, {
+      headers: new HttpHeaders({
+        'authorization': localStorage.getItem(ACCESSTOKEN)!,
+        'accept': '*/*',
+        'Access-Control-Allow-Origin': '*'
+      })
+    })
   }
 
   getProfile(): Observable<any> {
@@ -33,26 +34,61 @@ export class UserService {
       'Access-Control-Allow-Origin': '*'
     });
 
-
-    return this.httpClient.get(DOMAIN + 'user-management/auth/user/profile', { headers: this.headers })
+    return this.httpClient.get(DOMAIN + 'user-management/auth/user/profile', {
+      headers: new HttpHeaders({
+        'authorization': localStorage.getItem(ACCESSTOKEN)!,
+        'accept': '*/*',
+        'Access-Control-Allow-Origin': '*'
+      })
+    })
   }
 
   updateProfile(data: FormData): Observable<any> {
-    return this.httpClient.put(DOMAIN + 'user-management/staffs/profile', data, { headers: this.headers })
+    return this.httpClient.put(DOMAIN + 'user-management/staffs/profile', data, {
+      headers: new HttpHeaders({
+        'authorization': localStorage.getItem(ACCESSTOKEN)!,
+        'accept': '*/*',
+        'Access-Control-Allow-Origin': '*'
+      })
+    })
   }
 
   changePassword(data: FormData): Observable<any> {
-    return this.httpClient.put(DOMAIN + 'user-management/accounts/change-password', data, { headers: this.headers })
+    return this.httpClient.put(DOMAIN + 'user-management/accounts/change-password', data, {
+      headers: new HttpHeaders({
+        'authorization': localStorage.getItem(ACCESSTOKEN)!,
+        'accept': '*/*',
+        'Access-Control-Allow-Origin': '*'
+      })
+    })
   }
 
   getCustomerByID(id: number): Observable<any> {
-    return this.httpClient.get(DOMAIN + `user-management/customers/${id}`, { headers: this.headers })
+    return this.httpClient.get(DOMAIN + `user-management/customers/${id}`, {
+      headers: new HttpHeaders({
+        'authorization': localStorage.getItem(ACCESSTOKEN)!,
+        'accept': '*/*',
+        'Access-Control-Allow-Origin': '*'
+      })
+    })
   }
   getInvoiceByIdStaff(id: number): Observable<any> {
-    return this.httpClient.get(DOMAIN + `invoice-management/users/${id}/invoices`, { headers: this.headers })
+    return this.httpClient.get(DOMAIN + `invoice-management/users/${id}/invoices`, {
+      headers: new HttpHeaders({
+        'authorization': localStorage.getItem(ACCESSTOKEN)!,
+        'accept': '*/*',
+        'Access-Control-Allow-Origin': '*'
+      })
+    })
   }
   getGRNByIdStaff(id: number): Observable<any> {
-    return this.httpClient.get(DOMAIN + `goods-receipt-note-management/staff/goods-receipt-notes`, { headers: this.headers })
+    return this.httpClient.get(DOMAIN + `goods-receipt-note-management/staff/goods-receipt-notes`, {
+      headers: new HttpHeaders({
+        'authorization': localStorage.getItem(ACCESSTOKEN)!,
+        'accept': '*/*',
+        'Access-Control-Allow-Origin': '*'
+      })
+    })
   }
 
   getTokenVerifyPassword(data: any): Observable<any> {
